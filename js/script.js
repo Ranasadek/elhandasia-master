@@ -203,35 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* دالة تحديث رقم الكارت في الهيدر */
 
-function updateCartBadge() {
-
-    const badge = document.getElementById("cart-count");
-
-    if (!badge) return;
-
-   
-
-    let cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
-
-    // حساب إجمالي الكمية (عدد القطع)
-
-    let totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-
-   
-
-    if (totalCount > 0) {
-
-        badge.textContent = totalCount;
-
-        badge.style.display = "block";
-
-    } else {
-
-        badge.style.display = "none";
-
-    }
-
-}
+// Duplicate updateCartBadge removed (see ~line 887)
 
 
 
@@ -658,61 +630,7 @@ function setupHearts() {
     });
 }
 
-function setupCartListener() {
-    document.addEventListener("click", e => {
-        const cartBtn = e.target.closest(".add-to-cart");
-        if (!cartBtn) return;
-  
-        // حفظ النص الأصلي والستايل الأصلي للزرار قبل التغيير
-        const originalText = "Add to Cart"; // أو يمكنك استخدام cartBtn.textContent لو كان النص متغيراً
-        const originalBg = ""; // الستايل الأصلي من ملف CSS
-        const originalColor = "";
-  
-        const product = {
-            id: cartBtn.dataset.id,
-            name: cartBtn.dataset.name,
-            price: cartBtn.dataset.price,
-            img: cartBtn.dataset.img,
-            quantity: 1
-        };
-  
-        let cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
-        const existing = cart.find(item => item.id === product.id);
-        
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cart.push(product);
-        }
-  
-        localStorage.setItem("shopping_cart", JSON.stringify(cart));
-  
-        // 1. تغيير شكل الزرار للحالة "تمت الإضافة"
-        cartBtn.textContent = "Added! ✓";
-        cartBtn.style.background = "#4CAF50";
-        cartBtn.style.color = "white";
-        cartBtn.disabled = true; // اختياري: منع الضغط المتكرر أثناء الأنيميشن
-  
-        // 2. تحديث الرقم في الهيدر
-        updateCartBadge();
-  
-        // 3. العودة للحالة الأصلية بعد ثانية واحدة (1000 مللي ثانية)
-        setTimeout(() => {
-            cartBtn.textContent = originalText;
-            cartBtn.style.background = originalBg;
-            cartBtn.style.color = originalColor;
-            cartBtn.disabled = false;
-        }, 1000); 
- 
-
-
-      // تحديث الرقم في الهيدر فوراً بعد الإضافة
-
-      updateCartBadge();
-
-  });
-
-}
+// Duplicate setupCartListener removed (see ~line 1006)
 
 
 
@@ -1302,52 +1220,74 @@ document.addEventListener("DOMContentLoaded", syncFavorites);
 
 // /////////////////////////////////////////////////////////////////////////
 document.addEventListener("DOMContentLoaded", () => {
-    const BASE_URL = "https://el-handasia.runasp.net";
-    const navWrappers = document.querySelectorAll(".nav-item-wrapper");
+  const BASE_URL = "https://el-handasia.runasp.net";
+  const navWrappers = document.querySelectorAll(".nav-item-wrapper");
 
-    // 1. تعريف "الخريطة" (Map): هنا بنربط رقم القسم (index) بمجموعة الـ IDs بتاعته
-    // الميزة هنا إنك لو زودتي أي صنف جديد، بتضيفي الـ ID بتاعه هنا بس
-    const categoryMapping = new Map([
-        [0, [1, 2, 3, 4, 37, 38, 42, 43]],     // اللابتوب (كل الـ 8 لابتوبات)
-        [1, [5, 6, 7, 8]],                     // البرنترات
-        [2, [9, 10, 11, 12, 44, 45, 46]],     // الكمبيوتر (تلقائياً بياخد pppp ولالالا و ooo)
-        [3, [13, 14, 15, 16]],                 // الإكسسوارات
-        [4, [17, 18, 19, 20]],                 // Solutions
-        [5, [21, 22, 23, 24]],                 // Smart Home
-        [6, [25]]                              // General
-    ]);
+  // Fallback Mapping: Maps Category ID (from HTML) to Subcategory IDs
+  // We use this because the API /api/SubCategories does NOT return the categoryId for each item.
+  const categoryIdToSubIds = {
+    "1": [1, 2, 3, 4, 37, 38, 42, 43],   // Laptops
+    "2": [5, 6, 7, 8],                   // Printers
+    "3": [9, 10, 11, 12, 44, 45, 46],    // Computer
+    "4": [13, 14, 15, 16],               // Computer Accessories
+    "5": [17, 18, 19, 20],               // Companies Solution
+    "6": [21, 22, 23, 24],               // Smart Home
+    "7": [25]                            // Uncategorized
+  };
 
-    navWrappers.forEach((wrapper, index) => {
-        wrapper.addEventListener("mouseenter", async function () {
-            const submenu = this.querySelector(".dropdown-menu");
+  navWrappers.forEach((wrapper) => {
+    wrapper.addEventListener("mouseenter", async function () {
+      const submenu = this.querySelector(".dropdown-menu");
+      const categoryLink = this.querySelector(".nav-item");
+      const categoryId = categoryLink?.dataset?.categoryId;
 
-            if (submenu.innerHTML !== "" && !submenu.innerHTML.includes("Loading")) return;
+      if (!submenu || !categoryId) return;
+      if (submenu.innerHTML !== "" && !submenu.innerHTML.includes("Loading")) return;
 
-            try {
-                submenu.innerHTML = '<li style="padding:10px; font-size:12px;">Loading...</li>';
-                
-                const response = await fetch(`${BASE_URL}/api/SubCategories`);
-                const allData = await response.json();
+      try {
+        submenu.innerHTML = '<li style="padding:10px; font-size:12px;">Loading...</li>';
 
-                // 2. سحب الـ IDs المحددة للقسم الحالي من الـ Map
-                const allowedIds = categoryMapping.get(index) || [];
+        const response = await fetch(`${BASE_URL}/api/SubCategories`);
+        const raw = await response.json();
 
-                // 3. فلترة "اللكشة" بناءً على الـ Map (الـ Parsing الحقيقي)
-                const filteredData = allData.filter(item => allowedIds.includes(item.id));
+        // Normalize response (array or object)
+        const allData = Array.isArray(raw)
+          ? raw
+          : raw.items || raw.data || raw.subCategories || [];
 
-                if (filteredData.length > 0) {
-                    // 4. استخدام map لعرض البيانات النهائية
-                    submenu.innerHTML = filteredData.map(sub => `
-                        <li><a href="category.html?subId=${sub.id}">${sub.name}</a></li>
-                    `).join("");
-                } else {
-                    submenu.innerHTML = '<li style="padding:10px;">No items found</li>';
-                }
+        // Normalize fields safely
+        const normalized = allData.map(item => ({
+          id: item.id ?? item.Id,
+          name: item.name ?? item.Name,
+          // If the API ever adds categoryId, we can use it here:
+          categoryId: item.categoryId ?? item.CategoryId ?? item.category?.id
+        }));
 
-            } catch (error) {
-                console.error("Parsing Error:", error);
-                submenu.innerHTML = '<li style="padding:10px;">Error loading data</li>';
-            }
-        });
+        // Filter: Use API categoryId if available, otherwise use hardcoded map
+        let filtered = [];
+        
+        // Check if API provided categoryId (Dynamic)
+        const hasDynamicId = normalized.some(sub => sub.categoryId !== undefined);
+        
+        if (hasDynamicId) {
+             filtered = normalized.filter(sub => String(sub.categoryId) === String(categoryId));
+        } else {
+             // Fallback to static map
+             const allowedIds = categoryIdToSubIds[categoryId] || [];
+             filtered = normalized.filter(sub => allowedIds.includes(sub.id));
+        }
+
+        if (filtered.length) {
+          submenu.innerHTML = filtered.map(sub =>
+            `<li><a href="category.html?subId=${sub.id}">${sub.name}</a></li>`
+          ).join("");
+        } else {
+          submenu.innerHTML = '<li style="padding:10px;">No items found</li>';
+        }
+      } catch (error) {
+        console.error("Parsing Error:", error);
+        submenu.innerHTML = '<li style="padding:10px;">Error loading data</li>';
+      }
     });
+  });
 });
