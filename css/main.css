@@ -1,0 +1,4043 @@
+* {
+  box-sizing: border-box;
+ 
+  direction: ltr; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  font-family: 'Arial', sans-serif;
+}
+
+
+.navbar {
+  position: absolute !important; /* عشان يركب فوق الصورة */
+  top: 0 !important;
+  left: 0;
+  width: 100%;
+  z-index: 9999 !important; /* عشان ميكونش مستخبي ورا الصورة */
+  
+  /* الخصائص دي لضمان الظهور الفوري */
+  display: flex !important; 
+  opacity: 1 !important; 
+  visibility: visible !important;
+  background: transparent !important; /* عشان يبان إنه فوق الصورة */
+}
+
+/* لضمان أن الكلام واللوجو يظهروا بوضوح فوق الصورة */
+.nav-item, .logo-box h2, .logo-box p {
+  color: #ffffff !important; /* جربي الأبيض لو الصورة غامقة */
+}
+.logo-box {
+margin-left: 14px;
+}
+.navbar-inner {
+
+/* max-width: 1500px;  */
+width: 100%; 
+margin: 0 auto; 
+
+padding: 0 40px 10px 40px; 
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px solid rgba(255,255,255,0.2); 
+color: #F8F8F8;
+}
+
+/* في الشاشات الصغيرة (الموبايل) */
+@media (max-width: 768px) {
+  .navbar {
+      position: absolute !important; /* هيخليه في أول الصفحة بس ومينزلش معاكي */
+      top: 0 !important;
+      width: 100%;
+  }
+  
+  /* لو عايزة الـ Navbar يختفي تماماً لما تنزلي في الموبايل */
+  /* تأكدي إن مفيش كود جافا سكريبت بيغير الـ position لـ fixed في الموبايل */
+}
+
+/* لو عايزاه يثبت في اللاب توب بس */
+@media (min-width: 769px) {
+  .navbar {
+      position: fixed; 
+      top: 0;
+      z-index: 1000;
+  }
+}
+.logo-box h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  font-family: Nunito;
+}
+
+.logo-box span {
+  color: #FF7B00;
+}
+
+.logo-box p {
+  margin: 0;
+  font-size: 15px;
+  color:#F8F8F8;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+.get-started::after {
+content: none !important;
+}
+
+
+.get-started:hover {
+background: #FF7B00;
+color: white;
+text-decoration: none; 
+}
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  /* padding-bottom: 3px; */
+  position: relative;
+  transition: 0.2s;
+}
+
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -27px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #FF7B00;
+  transition: 0.25s ease-in-out;
+}
+
+
+.nav-links a:hover {
+  font-weight: 600;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+.nav-links a.active {
+  font-weight: 600;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+
+.get-started {
+  background: #FF7B00;
+  color: white;
+  padding: 6px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+
+.section1{
+position: relative;
+/* min-height: 620px; */
+background-image: url('../img/1.jpeg');
+/* height: 580px; */
+background-size: cover;
+background-position: center;
+color: #fff;
+overflow: hidden;
+display:flex;
+align-items:flex-start;
+}
+
+
+.container.section1-content{
+z-index:2;
+width:100%;
+max-width:1200px;
+margin: 84px 30px;
+display:flex;
+gap:20px;
+padding: 20px;
+align-items:flex-start;
+}
+
+
+/* .left{
+flex:1;
+max-width:680px;
+padding-left:18px;
+} */
+
+.company-btn {
+  display: inline-flex;
+  align-items: center;
+  background:#FF7B00;
+  color: #fff;
+  padding: 5px 18px;
+  border-radius: 28px;
+  font-weight: 600;
+  text-decoration: none;
+  gap: 10px;
+}
+
+
+.company-btn i {
+  font-size: 20px;    
+  line-height: 1;   
+  display: flex;
+  align-items: center;
+}
+
+
+
+.section1-title {
+font-family: Nunito;
+  font-size: 42px;
+  margin: 35px 0px 35px 0;
+  color: #ffffff;
+}
+
+.accent-line {
+  width: 67px;
+  height: 2px;
+  background: #FF7B00;
+  margin-left: 154px;
+}
+
+
+.section1-desc {
+  max-width: 395px;
+  font-size: 17px;
+  margin-bottom: 25px;
+}
+
+
+.section1-actions{
+display:flex;
+gap:16px;
+margin-top:6px;
+}
+.btn-black{
+background:#0b0b0b;
+color:#fff;
+padding: 18px 22px;
+border-radius:12px;
+border:none;
+cursor:pointer;
+font-weight:600;
+}
+.btn-light{
+background: #D9D9D9;
+color:#222;
+padding: 18px 22px;
+
+border-radius:12px;
+border:none;
+cursor:pointer;
+font-weight:600;
+}
+
+
+.trusted-wrap {
+  position: absolute;
+  right: 54px;
+  bottom: 36px;
+  z-index: 2;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.trusted{
+display:flex;
+align-items:center;
+gap:8px;
+color:#fff;
+font-family: 'Inter', sans-serif;
+margin-left: 14px;
+}
+.trusted-plus{
+font-weight:800;
+font-size:28px;
+color:#fff;
+}
+.trusted-text{
+font-size:18px;
+opacity:0.95;
+}
+
+
+.trusted-underline{
+position:relative;
+width:281px; 
+height:18px;
+display:flex;
+align-items:center;
+justify-content:flex-end;
+gap:12px;
+}
+.trusted-underline .line{
+display:block;
+height: 2px;
+width:100%;
+background: #FF7B00;
+border-radius:4px;
+transform: translateX(0);
+}
+.trusted-underline .dot{
+display:block;
+width:34px;
+height:34px;
+border-radius:50%;
+background:#FF7B00;
+box-shadow:#FF7B00;
+margin-left: -18px; 
+border: 3px solid rgba(0,0,0,0.08);
+}
+
+.services {
+  display: flex;
+  justify-content: space-around; /* توزيع أعدل للأيقونات */
+  align-items: center;
+  padding: 40px 5%; /* بادينج مرن */
+  /* background: #fff; */
+  width: 100%;
+  max-width: 1400px; /* سقف للعرض عشان م يفرشش زيادة */
+  margin: 0 auto;
+  box-sizing: border-box;
+  flex-wrap: wrap; /* عشان لو الزوم كبر أوي الأيقونات تنزل تحت بعض بدل ما تخرج برا */
+}
+
+.service-box {
+  text-align: center;
+  flex: 1; /* بياخد مساحة متساوية */
+  min-width: 150px; /* أقل عرض مسموح به عشان الكلام م يتقطعش */
+  position: relative;
+  padding: 10px;
+}
+
+/* الديفايدر (الخط البرتقالي) - هنخفيه في الشاشات الصغيرة عشان ميبوظش الشكل */
+.divider {
+  width: 1px;
+  height: 54px;
+  background: #FF7B00;
+}
+
+/* @media (max-width: 768px) {
+  .divider { display: none; }
+}
+   */
+  .service-box img {
+  width: 60px;
+  display: block;
+  margin: 0 auto;
+  }
+  
+  
+  /* .divider {
+  width: 1px;
+  height: 54px;
+  background: #FF7B00;
+  }
+   */
+  
+  .service-title {
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 10px;
+  color: #000;
+  }
+  
+  
+  .service-text {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #71717A;
+  }
+  
+  
+  .support-icon {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      margin: auto;
+    }
+    
+    .support-icon .icon-base {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .support-icon .icon-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 35px; 
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    
+    .section3-header {
+      text-align: center;       
+      margin-bottom: 0.5em; 
+      margin-top: 50px;
+    }
+    
+    .section3-header h1 {
+      font-size: 34px;
+      margin: 0;
+      font-weight: 400;
+    }
+    .section3-header p {
+      font-size: 12px;          
+      margin: 8px 0 0 0;         
+      color: #71717A;                
+    }
+    .section3-text {
+      display: grid;
+      /* 12 عمود - ده اللي هيخلي الصناديق مرصوصة صح */
+      grid-template-columns: repeat(12, 1fr);
+      /* ارتفاع تلقائي - لو الكلام كبر الصندوق يطول معاه وميخرجش بره */
+      grid-auto-rows: minmax(160px, auto); 
+      gap: 15px;
+      width: 95%;
+      max-width: 1400px;
+      margin: 40px auto;
+  }
+  
+  .box {
+      border-radius: 12px;
+      padding: 20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      /* بيخلي العنوان فوق والزرار تحت بانتظام */
+      justify-content: space-between; 
+      align-items: flex-start;
+      /* مسحنا الـ height الثابت والمارجن السالب نهائياً */
+  }
+  
+  /* توزيع المساحات بالمللي زي صورتك */
+  #big   { grid-column: 1 / 13; background: #241468; min-height: 120px; }
+  #lap   { grid-column: 1 / 7; background: #592525; }
+  #print { grid-column: 7 / 13; background: #241468; }
+  
+/* التعديل هنا لـ Smart Home */
+#s1 { 
+  grid-column: 1 / 4; 
+  grid-row: 3 / 5; /* يخليه يبدأ من السطر الثالث وينتهي مع نهاية السطر الرابع */
+  background: #720D0D; 
+}
+
+/* باقي العناصر تفضل زي ما هي */
+#s2 { grid-column: 4 / 7; background: #224a6b; }
+
+#s3 { grid-column: 4 / 7; background: #504E72; } /* غيرنا الكولوم هنا عشان ميزحمش s1 */
+#s4 { grid-column: 4 / 7; background: #3A6344; } /* هيترتبوا تحت بعض في العمود التاني */
+  
+  #right { 
+      grid-column: 7 / 13; 
+      grid-row: 3 / 5; /* ده الصندوق الطويل اللي على اليمين */
+      background: #8D819C;
+      min-height: 335px; /* طول سطرين + الفراغ */
+  }
+  
+  
+  /* تنسيق النصوص جوه الصناديق عشان متبوظش الزوم */
+  .box h2 {
+      font-size: clamp(18px, 2vw, 24px); /* خط مرن بيكبر ويصغر مع الشاشة */
+      margin-bottom: 5px;
+  }
+  
+  .box p {
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 15px;
+      opacity: 0.9;
+  }
+  
+  .box button {
+      padding: 8px 16px;
+      background: #FF4141;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+  }
+  
+  /* لو نزلتي عن 100% زوم أو صغرتي الشاشة */
+  @media (max-width: 900px) {
+    .section3-text { 
+        display: grid;
+        /* بنخليها عمود واحد أو اتنين حسب الرغبة، الأفضل للشاشات الصغيرة عمود واحد */
+        grid-template-columns: repeat(2, 1fr); 
+        grid-auto-rows: min-content; /* عشان الطول يتحدد حسب المحتوى */
+        height: auto; /* مهم جداً عشان مفيش حاجة تختفي */
+    }
+
+    /* نصفر كل تحديدات الصفوف القديمة */
+    #big, #lap, #print, #right, #s1, #s2, #s3, #s4 { 
+        grid-column: span 2; 
+        grid-row: auto !important; /* بيلغي أي Row قديم عملناه في الشاشة الكبيرة */
+        min-height: 150px;
+    }
+
+    /* لو عايزة ترتبي عنصر معين يظهر في الأول أو الآخر من غير ما تغيري الـ HTML */
+    #right { 
+        order: 10; /* ده هيخليه ينزل تحت خالص في الميديا كويري */
+    }
+}
+  .containers{
+      max-width:1237px;
+      margin:0 auto;
+      margin-top: 60px;
+    }
+
+   .containers h1{
+      font-size:22px;
+      margin:0 0 6px;
+      font-weight:600;
+     
+    }
+    p.subtitle{
+      margin:0 0 28px;
+      color:#71717A;
+      font-size:13px;
+    }
+
+  
+    .grid2{
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap:28px;
+    }
+
+  
+    .card{
+      background:#fff;
+      /* border-radius:var(--card-radius);
+      border:1px solid var(--card-border); */
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 257px;
+    }
+
+    .img-wrap{
+      position:relative;
+      height: 230px;
+      background:#f5f5f5;
+    }
+    .img-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+   
+    .fav{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:34px;
+      height:34px;
+      background:white;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #fff;
+      box-shadow:var(--small-shadow);
+      cursor:pointer;
+    }
+    .fav i{
+      color:#b3b7bb;
+      font-size:14px;
+    }
+    .fav.active i{
+      color:red;
+    }
+
+    
+    .card-body{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .title{
+      font-weight:600;
+      font-size:13px;
+      min-height:36px;
+    }
+
+    .rating{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:13px;
+
+      margin-top: -10px;
+    }
+    .rating .stars{
+      color:#f1b33b;
+    }
+    p.num {
+    color:#71717A;
+}
+  .rating  span {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+    .price{
+      font-weight:700;
+      color: #FF6B00;
+      font-size:16px;
+      margin-top:11px;
+      margin-bottom:6px;
+    }
+
+    .btn {
+      border: none;
+      padding: 10px 12px;
+      border-radius: 6px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(52, 179, 58, 0.12);
+      font-size: 14px;
+      background:#FF6B00;
+      color:#fff;
+     
+    }
+  /* الشكل الأساسي للزرار */
+.add-to-cart {
+  background-color: #FF6B00; /* لون برتقالي */
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease; /* عشان الحركة تكون ناعمة */
+}
+
+/* شكل الزرار عند الـ Hover */
+.add-to-cart:hover {
+  background-color: #4CAF50;
+  color:white; /* درجة أغمق شوية عند الوقوف عليه */
+}
+
+/* شكل الزرار عند الضغط عليه */
+.add-to-cart:active {
+  transform: translateY(0);
+  background-color: #cc5500;
+}
+    /* .btn .add-to-cart:hover{
+      background:#4CAF50;
+      color:white;
+    } */
+    
+.img-wraps{
+  position:relative;
+  height: 230px;
+  background:#f5f5f5;
+}
+
+.img-wraps img{
+  width:100%;
+  height:100%;
+  object-fit:contain;   
+}
+
+
+
+.section5 {
+  width: 72%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+
+.banner1 {
+  width: 100%;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.banner1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section6 {
+width: 72%;
+max-width: 1200px;
+margin: auto;
+}
+
+
+.big-banner {
+width: 100%;
+height: 250px;
+border-radius: 20px;
+overflow: hidden;
+margin-top: 30px;
+}
+
+.big-banner img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+
+.row-banners {
+display: flex;
+justify-content: space-between;
+margin-top: 25px;
+gap: 20px;
+}
+
+.small-banner {
+flex: 1;
+height: 288px;
+}
+.smalls-banner img{
+border-radius: 27px;
+height: 288px;
+}
+
+.small-banner img {
+width: 100%;
+height: 303px;
+object-fit: cover;
+border-radius: 22px;
+}
+
+
+.section-title {
+margin-top: 40px;
+}
+
+.section-title h2 {
+margin: 0;
+font-size: 28px;
+font-weight: bold;
+}
+
+.section-title p {
+margin: 5px 0;
+font-size: 14px;
+color: gray;
+}
+
+
+.products {
+margin-top: 20px;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+}
+
+.product-card {
+width: 100%;
+height: 180px;
+border-radius: 15px;
+overflow: hidden;
+background: #f5f5f5;
+}
+
+.product-card img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+/* .section7 {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 25px;
+width: 1131px;
+margin: 40px auto;
+transform: translateX(45px); 
+}
+
+
+.sec7 {
+  background: #01b7cc;
+  height: 340px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.35s ease;
+  cursor: pointer;
+  width: 475px;
+} */
+
+.sec7 img {
+width: 100%;
+height: 100%;
+object-fit: cover;          
+transition: 0.35s ease;
+}
+
+.sec7:hover img {
+transform: scale(1.12);     
+}
+
+.sec7:hover {
+transform: translateY(-6px);
+box-shadow: 0px 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.section8 {
+  width: 90%; 
+  max-width: 1200px;
+  /* إلغاء الـ margin-top الكبير وحذفه في الموبايل */
+  margin: 10px auto 0 auto; 
+}
+
+.top {
+  width: 100%;
+  /* حذفنا الـ height و الـ min-height الثابت عشان الصورة متتحشرش وتتقص */
+  height: auto; 
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  position: relative;
+  /* للتأكد من عدم وجود أي فراغ أبيض فوق الصورة */
+  display: flex; 
+}
+
+.top img {
+  width: 100%;
+  /* أهم سطر: auto يخلي الصورة تظهر كاملة بأبعادها الحقيقية */
+  height: auto; 
+  /* تغييره لـ contain لو عايزة تضمني إنها متتقصش نهائي مهما كان حجم الشاشة */
+  object-fit: contain; 
+  display: block;
+}
+
+/* ميديا كويري مخصصة فقط لتصفير أي مسافة فوق البانر الأول */
+
+.bottom {
+  display: grid;
+  /* تقسيم مرن للأعمدة */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  /* لو عايزة تحافظي على التقسيمة القديمة بالظبط (1fr 1fr 1.6fr) في الشاشات الكبيرة: */
+  /* grid-template-columns: 1fr 1fr 1.6fr; */
+  gap: 18px;
+}
+
+.left-box,
+.right-box {
+  /* min-height: 207px; */
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.left-box img,
+.right-box img {
+  width: 100%;
+  height: 100%; /* خليتها 100% بدل 106% عشان متخرجش برا الصندوق */
+  object-fit: cover;
+  transition: 0.3s ease;
+}
+
+/* تأثير الهوفر - خليته أخف شوية عشان الزوم ميعملش Scroll */
+.left-box:hover,
+.right-box:hover {
+  transform: translateY(-5px); /* رفع بسيط بدل التكبير الضخم */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.left-box:hover img,
+.right-box:hover img {
+  transform: scale(1.08);
+}
+
+/* ميديا كويري للموبايل عشان الجريد ميبقاش رفيع أوي */
+@media (max-width: 768px) {
+  .bottom {
+    grid-template-columns: 1fr; /* الصور تترص تحت بعض في الموبايل */
+  }
+  .section8 {
+    width: 82%;
+    margin-top: -25px;
+  }
+}
+
+
+
+
+.containers{
+max-width:1237px;
+margin:0 auto;
+margin-top: 50px;
+position: relative; 
+padding: 0 50px; 
+}
+
+
+
+
+/* الحاوية الكبيرة */
+.containers {
+  position: relative; /* مهم عشان الأسهم تتحرك بالنسبة له */
+  padding: 0 60px;    /* مساحة للأسهم في الجوانب */
+  margin-bottom: 50px;
+}
+
+/* المنطقة اللي بتقص الصور الزيادة */
+.slider-wrapper {
+  width: 100%;
+  overflow: hidden; 
+}
+
+/* الشريط الطويل اللي جواه المجموعات */
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* كل صفحة (فيها 4 كروت) */
+.slide-group {
+  min-width: 100%; /* الصفحة تاخد العرض كامل */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 أعمدة بالظبط */
+  gap: 20px;
+  padding: 10px 0;
+}
+
+/* تنسيق الأسهم (زي الصورة التانية) */
+.arrow {
+  position: absolute;
+  top: 55%; /* ينزل لمستوى نص الكروت */
+  transform: translateY(-50%);
+  background: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left { left: 0px; }  /* السهم الشمال في أول الـ containers */
+.right { right: 0px; } /* السهم اليمين في آخر الـ containers */
+
+.arrow:hover { background: #f0f0f0; }
+
+.site-footer{
+background: linear-gradient(180deg, #151517 0%, #0f0f10 100%);
+padding: 48px 16px 2px 16px;
+border-top: 1px solid rgba(255,255,255,0.02);
+margin-top: 52px;
+}
+
+.footer-inner{
+max-width: 1400px;
+margin: 0 auto;
+grid-template-columns: 2fr 1fr 1fr 1.8fr; 
+display: grid;
+gap: 28px;
+align-items: start;
+}
+
+
+.footer-footer{
+display:flex;
+flex-direction: column; 
+gap: 0;
+align-items:flex-start;
+}
+.footer-header{
+display: flex;
+gap: 18px;
+align-items: center; 
+margin-bottom: 12px;
+}
+.footer-left{
+min-width:120px;
+}
+.footer-left img{
+width:120px;
+height:auto;
+display:block;
+}
+.footer-right h3{
+margin:0;
+font-size:18px;
+font-weight:700;
+color:white;
+}
+.footer-right p{
+margin:8px 0 0 0;
+color:#9a9aa0;
+font-size:13px;
+max-width:380px;
+}
+.footer-description{
+ margin: 0 0 18px 0;
+ color:#9a9aa0;
+ font-size:13px;
+ max-width:380px;
+}
+
+.socials{
+display:flex;
+gap:10px;
+}
+.socials a{
+display:inline-flex;
+width:36px;
+height:36px;
+border-radius:50%;
+background:#f97316;
+color:white;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+box-shadow:0 2px 0 rgba(0,0,0,0.25);
+font-size:14px;
+}
+
+
+.footer-col h4{
+margin:0 0 14px 0;
+font-size:15px;
+font-weight:700;
+color:white;
+}
+.links, .cats{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+.links a, .cats a{
+color:#9a9aa0;
+text-decoration:none;
+font-size:13px;
+text-align: left; 
+}
+.links a:hover, .cats a:hover{color:white}
+
+.contact .info{
+display:flex;
+flex-direction:column;
+gap:10px;
+color: #9a9aa0;
+font-size:13px;
+text-align: left; 
+margin-top: 0; 
+}
+.contact .info .row{
+display:flex;
+gap:8px;
+align-items:center;
+justify-content: flex-start; 
+}
+.contact .info i{
+color:#f97316;
+ min-width:18px;
+  text-align:center;
+}
+
+.contact .info a {
+color: inherit;
+text-decoration: none;
+}
+.contact .info a:hover {
+color:white;
+text-decoration: underline;
+}
+
+
+.contact-content {
+display: flex;
+gap: 20px;
+align-items: flex-start;
+}
+
+
+.map{
+width:100%;
+max-width:280px; 
+height: 150px; 
+border-radius:12px;
+overflow:hidden;
+box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+border: 1px solid rgba(255,255,255,0.03);
+margin-left: auto;
+margin-right: 0;
+
+display: block; 
+margin-top: -29px;
+background-color: transparent; 
+text-decoration: none;
+color: white;
+transition: opacity 0.2s; 
+}
+.map:hover {
+opacity: 0.85;
+}
+
+
+.map img{
+display:block;
+width:100%;
+height:100%; 
+object-fit: cover; 
+}
+.old-price del {
+color: #71717A;
+font-size: 13px; 
+}
+
+
+
+.footer-divider{
+margin:28px auto 18px;
+max-width: 1400px;
+border-top: 1px solid #9E9E9E;
+}
+
+
+.footer-bottom{
+max-width:1400px;
+margin: 10px auto 36px;
+display:flex;
+align-items:center;
+justify-content:space-between; 
+gap:12px;
+color:#9a9aa0;
+font-size:13px;
+direction: ltr; 
+}
+.copyright{ color:#9a9aa0 }
+
+.developed{
+text-align:center;
+/* flex:0 0 280px; */
+color:white;
+font-weight:700;
+direction: ltr; 
+}
+.developed .by{ 
+font-weight:700; 
+margin-right:0; 
+color:white; 
+font-size:13px ;
+}
+.developed .beta{ 
+color:#f97316; 
+font-size:18px; 
+margin-left:0; 
+font-weight:800; 
+letter-spacing:0.6px ;
+}
+
+.bottom-links{
+display:flex;
+gap:18px;
+flex-direction: row; 
+}
+.bottom-links a{ color:#9a9aa0; text-decoration:none; font-size:13px }
+.bottom-links a:hover{ color:white }
+
+/* .elhandasia-header {
+background: linear-gradient(to bottom, #222 50px, #FF6B00 50px, #FFB74D 100px, #FFE0B2 150px, #ffffff 400px);
+color: #333;
+} */
+
+
+.top-bar {
+background-color: #222;
+display: flex;
+justify-content: space-between; 
+align-items: center;
+padding: 16px 76px;
+height: 36px;
+}
+
+.btn-login {
+background-color: #FF6B00;
+color: black;
+padding: 5px 24px;
+border-radius: 20px;
+font-weight: bold;
+font-size: 14px;
+text-decoration: none;
+margin-left: 0; 
+}
+
+.title-row {
+display: flex;
+align-items: center;
+justify-content: flex-start;
+gap: 15px;
+width: 100%; 
+margin-left: -7px;
+}
+.title-row p{
+
+  font-size: 14px;
+
+}
+.contact-row {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.contact-text {
+background-color: #FF6B00;
+padding: 6px 17px;
+border-radius: 20px;
+font-weight: bold;
+color: black;
+text-decoration: none;
+display: flex;
+align-items: center;
+white-space: nowrap;   
+}
+
+.contact-number {
+font-weight: bold;
+color: white;
+text-decoration: none;
+display: flex;
+align-items: center;
+white-space: nowrap;   
+}
+
+
+.main-header-content {
+display: flex;
+align-items: center;
+padding: 0px 5%;
+gap: 10px;
+padding-top: 5px; 
+}
+
+.logo-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative; 
+}
+
+.logo-image {
+width: 175px;
+height: 53px;
+margin-bottom: 5px;
+
+mask-size: cover;
+}
+
+.logo-container h2 {
+margin: 0;
+font-size: 18px;
+font-weight: 900;
+color: #333;
+line-height: 1; 
+}
+
+
+.logo-container  h2::after {
+content: ''; 
+display: inline-block;
+width: 8px;
+height: 8px;
+background-color: #FF6B00; 
+border-radius: 50%;
+margin-left: 5px; 
+transform: translateY(-1px);
+}
+
+
+.search-bar {
+display: flex;
+flex-grow: 1;
+max-width: 650px;
+border-radius: 27px;
+overflow: hidden;
+background-color: #F2EEEE;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+height: 41px;
+margin: 7px 146px
+}
+
+.category-dropdown {
+background-color: white; 
+border: none; 
+padding: 0 15px;
+font-size: 16px;
+cursor: pointer;
+outline: none;
+color: #6CBE45;
+min-width: 120px;
+
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M283.475%20147.712l-14.28-14.28c-1.907-1.907-4.148-2.86-6.84-2.86h-243.3c-2.69%200-4.93%200.953-6.84%202.86l-14.28%2014.28c-1.907%201.907-1.907%204.66%200%206.567l133.74%20133.74c1.907%201.907%204.148%202.86%206.84%202.86s4.93-0.953%206.84-2.86l133.74-133.74c1.907-1.907%201.907-4.66%200-6.567z%22%2F%3E%3C%2Fsvg%3E');
+background-repeat: no-repeat;
+background-position: right 8px center;
+background-size: 8px;
+padding-right: 30px; 
+
+border-right: 1px solid #ddd;
+}
+
+.search-bar input[type="text"] {
+flex-grow: 1;
+border: none;
+padding: 0 15px;
+font-size: 13px;
+outline: none;
+text-align: left;
+}
+
+.search-icon-btn {
+background-color: white;
+border: none;
+padding: 0 20px;
+cursor: pointer;
+font-size: 18px;
+color: #888;
+}
+
+.user-icons {
+display: flex;
+gap: 12px; 
+text-align: center;
+margin-left: auto;
+margin-top: 6px;
+padding: 0px 0px 12px;
+
+
+}
+
+.icon-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+cursor: pointer;
+text-decoration: none;
+color: #333;
+transition: color 0.2s;
+padding: 0 15px; 
+position: relative;
+}
+
+.icon-item:not(:last-child)::after {
+content: '';
+position: absolute;
+top: 50%;
+right: 0; 
+transform: translateY(-50%);
+height: 70%; 
+width: 1px;
+background-color: #ccc;
+}
+
+.icon-item i {
+font-size: 21px;
+color: #333;
+line-height: 1; 
+}
+
+.icon-item .icon-label {
+margin-top: 5px;
+font-size: 12px;
+}
+
+
+.main-nav-menu-wrapper {
+/* border-bottom: 2px solid #aaa;  */
+padding-bottom: 5px;
+}
+
+.main-nav-menu {
+display: flex;
+justify-content: center;
+margin-top: -44px;
+}
+
+.main-nav-menu a {
+text-decoration: none;
+color: #333;
+font-weight: 400; 
+padding: 5px 15px 10px 15px;
+position: relative;
+transition: color 0.2s, font-weight 0.2s;
+}
+
+
+.main-nav-menu a:hover,
+.main-nav-menu .active-item {
+font-weight: bold;
+color: #000;
+}
+
+.main-nav-menu a::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 0;
+height: 4px;
+background-color: black;
+transition: width 0.3s ease;
+}
+
+
+.main-nav-menu .active-item::after,
+.main-nav-menu a:hover::after {
+width: calc(100% - 30px);
+}
+
+
+.elhandasia-header {
+display: none;
+opacity: 0;
+transform: translateY(-8px);
+transition: opacity .22s ease, transform .22s ease;
+width: 100%;
+}
+
+
+.elhandasia-header.visible {
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 9999;
+width: 100%;
+background: linear-gradient(
+  to bottom,
+  #FF7B00 24%,    
+  #FFFFFF 93%    
+);
+
+
+color: #0b1220;       
+box-shadow: 0 6px 24px rgba(11,18,32,0.12);
+opacity: 1;
+transform: translateY(0);
+}
+
+
+
+.navbar.hidden {
+opacity: 0;
+transform: translateY(-8px);
+pointer-events: none;
+height: 0;        
+overflow: hidden;
+transition: opacity .18s ease, transform .18s ease, height .18s ease;
+}
+
+
+body.header-shown {
+padding-top: var(--elheader-height);
+transition: padding-top .18s ease;
+}
+
+
+/* ////////////////////////////////////////////////////////// */
+/* تنسيق عنوان القسم مع الأيقونة */
+.containers h1 {
+  display: flex;
+  align-items: center; /* يخلي الأيقونة والنص على خط واحد */
+  gap: 15px;           /* مسافة بين الأيقونة والاسم */
+  font-size: 24px;
+  margin-bottom: 5px;
+  background-color: #FF6B00;
+}
+
+.category-icon {
+  width: 40px;         /* حجم الأيقونة */
+  height: 40px;
+  object-fit: contain; /* عشان الصورة متمطش */
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); /* ظل خفيف للأيقونة */
+}
+
+/* في الموبايل نصغر الأيقونة شوية */
+@media (max-width: 600px) {
+  .containers h1 {
+      font-size: 20px;
+      /* justify-content: center; توسيط العنوان في الموبايل لو تحبي */
+  }
+  .category-icon {
+      width: 30px;
+      height: 30px;
+  }
+}
+.see-more-link {
+  padding: 8px 15px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* تنسيق الحاوية الأساسية */
+.containers {
+  position: relative; /* ضروري عشان تحديد مكان اللينك بالنسبة لها */
+}
+
+/* تنسيق زر Show More */
+.show-more-btn {
+  position: absolute;
+  right: 67px;
+  top: 4px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  /* background: rgba(0, 0, 0, 0.2); */
+  padding: 5px 12px;
+  border-radius: 4px;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+
+/* لو الشاشة صغيرة (موبايل) ممكن ننزله تحت شوية */
+@media (max-width: 768px) {
+  .show-more-btn {
+    top: 8px;
+    margin-right: -54px;
+    font-size: 12px;
+  }
+}
+
+/* /////////////////////////////////////////////////////////////// */
+
+.hamburger {
+display: none;
+font-size: 28px;
+color: white;
+cursor: pointer;
+}
+
+
+.nav-links {
+display: flex;
+gap: 25px;
+align-items: center;
+}
+header {
+position: relative;
+z-index: 1;
+}
+
+.nav-links {
+position: relative;
+z-index: 9999;
+}
+
+
+
+/* تنسيق سكشن الإحصائيات للمقاسات المحددة */
+@media (max-width: 1024px) {
+  .store-statistics .footer-inner {
+      flex-direction: column; /* ترتيب رأسي */
+      align-items: center;    /* توسيط العناصر */
+      gap: 30px;              /* مسافة بين العناصر */
+  }
+
+  .stat-item {
+      width: 80%;             /* عرض العنصر داخل السكشن */
+      padding: 15px;
+      background: #ffffff;    /* خلفية بيضاء خفيفة لكل عنصر */
+      border-radius: 10px;    /* حواف ناعمة */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* ظل خفيف جداً */
+  }
+}
+
+/* تعديل إضافي لمقاس 600px (الموبايل) */
+@media (max-width: 600px) {
+  .stat-item {
+      width: 100%;           /* العرض كامل في الشاشات الصغيرة جداً */
+  }
+  
+  .stat-item h2 {
+      font-size: 1.6rem;      /* تصغير الخط قليلاً ليناسب الموبايل */
+  }
+}
+
+
+
+
+@media screen and (max-width: 1024px) {
+.nav-links {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 100%;
+  display: none;
+
+  flex-direction: column;
+  padding: 20px 0;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  background: rgba(78, 82, 82, 0.7);
+
+  z-index: 999;
+}
+
+
+.nav-links.show {
+  display: flex;
+}
+
+.hamburger {
+  display: block;
+}
+
+.get-started {
+  margin: 10px 0 0 0;
+}
+
+.section1 {
+  min-height: 500px; 
+}
+
+.section1-content {
+  flex-direction: column;
+  margin: 100px 15px;
+  align-items: flex-start;
+}
+
+.trusted-wrap {
+  right: 20px;
+  bottom: 20px;
+}
+
+.section1-title {
+  font-size: 28px;
+}
+
+.section1-desc {
+  font-size: 15px;
+  max-width: 100%;
+}
+
+.accent-line {
+  margin-left: 74px;
+  margin-top: -19px;
+}
+}
+
+.nav-links a {
+position: relative; 
+
+}
+
+.nav-links a::after {
+content: "";
+position: absolute;
+
+bottom: -29px; 
+left: 0;
+width: 0%;
+height: 2px;
+background: #FF7B00;
+transition: 0.25s ease-in-out;
+}
+
+.nav-links a:hover::after {
+width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+.nav-links a::after {
+ 
+    bottom: -5px; 
+    height: 1.5px; 
+}
+}
+
+
+
+@media screen and (max-width: 600px) {
+.section1-title {
+  font-size: 24px;
+}
+
+.section1-desc {
+  font-size: 14px;
+}
+
+.section1-actions {
+  flex-direction: column;
+  gap: 10px;
+}
+}
+/* //////////////////////////////////////////////// */
+
+@media screen and (max-width: 1024px) {
+  .services {
+      flex-direction: column; /* السطر ده هو اللي هيجيبهم تحت بعض */
+      align-items: center;    /* يسنترهم في نص الشاشة */
+      gap: 20px;             /* يخلي فيه مسافة بين كل واحدة والتانية */
+      padding: 30px 15px;
+  }
+
+  .service-box {
+      width: 100%;           /* يخلي كل بوكس ياخد عرض الشاشة كله */
+      max-width: 300px;      /* اختياري: عشان ميبقوش عراض زيادة عن اللزوم */
+  }
+
+  .divider {
+      display: none;         /* يخفي الخطوط البرتقالي عشان بيبقى شكلها وحش لما يجوا تحت بعض */
+  }
+}
+
+@media screen and (max-width: 600px) {
+.service-box {
+  width: 100%; 
+  margin-bottom: 15px;
+}
+}
+
+
+@media screen and (max-width: 1024px) {
+.section3-text {
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+}
+
+#big { grid-column: 1 / 7; }
+#lap { grid-column: 1 / 3; }
+#print { grid-column: 3 / 5; }
+#s1 { grid-column: 1 / 2; }
+#s2 { grid-column: 2 / 3; }
+#s3 { grid-column: 3 / 4; }
+#s4 { grid-column: 4 / 5; }
+#right { grid-column: 5 / 7; grid-row: 3 / 5; }
+}
+
+@media screen and (max-width: 768px) {
+.section3-text {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+#big { grid-column: 1 / 5; }
+#lap { grid-column: 1 / 2; }
+#print { grid-column: 2 / 3; }
+#s1 { grid-column: 3 / 4; }
+#s2 { grid-column: 4 / 5; }
+#s3 { grid-column: 1 / 2; grid-row: 3; }
+#s4 { grid-column: 2 / 3; grid-row: 3; }
+#right { grid-column: 3 / 5; grid-row: 3 / 4; }
+}
+
+@media screen and (max-width: 480px) {
+.section3-text {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+#big, #lap, #print, #s1, #s2, #s3, #s4, #right {
+  grid-column: 1 / 2;
+  height: auto;
+}
+
+.box {
+  padding: 20px;
+  font-size: 20px;
+}
+
+.box h2 {
+  font-size: 16px;
+}
+
+.box p {
+  font-size: 11px;
+  margin-top: 19px;
+}
+
+.box button {
+  width: 100px;
+  padding: 8px;
+  margin-top: 29px;
+}
+
+.computers {
+  margin-top: 10px;
+}
+}
+/* //////////////////////////////////////////////////////////// */
+
+
+.grid2 {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 28px;
+}
+
+/* شاشات التابلت (أقل من 1024px) */
+@media screen and (max-width: 1024px) {
+  .grid2 {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+  }
+  .img-wrap {
+      height: 180px;
+  }
+}
+
+/* شاشات الموبايل (أقل من 600px) */
+@media screen and (max-width: 600px) {
+  .containers {
+      padding: 0 10px !important;
+  }
+
+  .grid2, .slide-group {
+      grid-template-columns: repeat(2, 1fr) !important; /* كارتين في الصف */
+      gap: 8px !important;
+  }
+
+  .img-wrap {
+      height: 140px !important; /* تقليل حجم الصورة لترك مساحة للمحتوى */
+  }
+
+  .card-body {
+      padding: 8px !important;
+  }
+
+  .title {
+      font-size: 12px !important;
+      height: 32px !important; /* مساحة أصغر للعنوان */
+      margin-bottom: 4px;
+  }
+
+  .price-box {
+      margin-bottom: 5px;
+  }
+
+  .new-price, .price {
+      font-size: 14px !important; /* توضيح السعر في الموبايل */
+  }
+
+  .old-price {
+      font-size: 13px !important;
+  }
+
+  .btn {
+      padding: 8px 5px !important;
+      font-size: 11px !important;
+      border-radius: 4px;
+      margin-top: 5px;
+  }
+
+  /* ضبط حجم النجوم في الموبايل */
+  .rating {
+      font-size: 10px !important;
+      /* gap: 2px !important; */
+      margin-top: -21px;
+  }
+  .stars i {
+      font-size: 8px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+@media screen and (max-width: 800px) {
+  .sec7, .small-banner, .left-box, .right-box {
+    min-height: 115px;
+  }
+  .big-banner, .banner1, .top {
+      height: 200px;
+      margin-top: -7px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .sec7, .small-banner, .left-box, .right-box {
+      height: 180px;
+  }
+  .big-banner, .banner1, .top {
+    height: 66px;
+  }
+}
+
+.slide-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+
+@media screen and (max-width: 1200px) {
+  .slide-group {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+  .slide-group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .slide-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- الكود الأساسي (اللاب توب) --- */
+.section7 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 جنب بعض */
+  gap: 25px;
+  width: 90%; /* خليه مرن بدل الرقم الثابت */
+  max-width: 1100px; 
+  margin: 40px auto;
+  /* شلت الـ transform عشان هو اللي كان ب يزقهم على الجنب */
+  justify-items: center; 
+}
+
+.sec7 {
+  background: #01b7cc;
+  height: 340px;
+  width: 100%; /* خليه ياخد مساحة الـ Grid */
+  max-width: 475px; /* أقصى عرض يوصله */
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.35s ease;
+  cursor: pointer;
+}
+
+/* --- الميديا كويري (الموبايل أقل من 770px) --- */
+@media screen and (max-width: 770px) {
+  .section7 {
+      grid-template-columns: 1fr !important; /* عمود واحد */
+      width: 95% !important;
+      transform: none !important;
+      margin: 20px auto !important;
+      gap: 20px !important;
+  }
+
+  .sec7 {
+      width: 90% !important; /* حجم صغير في النص */
+      max-width: 320px !important; 
+      height: 250px !important; /* صغرنا الارتفاع للموبايل */
+      margin: 0 auto !important;
+  }
+
+  .sec7 img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+  }
+}
+
+
+
+@media screen and (max-width: 1024px) {
+.footer-inner {
+  
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    justify-items: start; 
+    text-align: left; 
+}
+
+
+.footer-inner > div:nth-child(1) {
+    grid-column: 1 / 3;
+    text-align: center; 
+}
+
+
+
+
+.footer-col:nth-child(3) {
+    /* grid-column: 2 / 3; */
+    margin-right: 17px;
+}
+
+
+.footer-col:nth-child(4) {
+    grid-column: 1 / 3; 
+    text-align: left; 
+}
+
+
+.contact-content {
+
+    flex-direction: row; 
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap; 
+}
+
+.map {
+
+    max-width: 250px; 
+    height: 150px;
+    margin: 0; 
+    order: 2; 
+}
+
+.info {
+    flex: 1;
+    order: 1;
+}
+ .contact h4{
+ 
+  margin: 0px 4px 14px 42px;
+}
+
+.footer-col h4,
+.links, .cats, .contact .info {
+    text-align: left; 
+    align-items: flex-start;
+}
+
+
+.footer-left,
+.footer-right,
+.footer-footer {
+    text-align: center; 
+    justify-content: center;
+    align-items: center;
+} 
+
+.socials {
+    justify-content: center;
+}
+
+
+.footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.bottom-links {
+    order: -1; 
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+.footer-inner {
+    grid-template-columns: 1fr; 
+    gap: 15px;
+    justify-items: center;
+    text-align: center;
+}
+
+
+.contact-content {
+ 
+    flex-direction: row; 
+    align-items: flex-start;
+    gap: 15px;
+    flex-wrap: nowrap; 
+    width: 100%; 
+    justify-content: space-between; 
+    padding: 0 16px;
+}
+
+
+.info {
+  
+    flex: 1 1 58%; 
+    text-align: left; 
+}
+
+.map {
+ 
+    max-width: 120px; 
+    min-width: 120px;
+    height: 120px;
+    margin: 0; 
+    flex: 0 0 auto; 
+    order: 2;
+}
+
+
+.contact .info {
+    text-align: left; 
+    align-items: flex-start;
+}
+
+
+.footer-left img {
+    margin: 0 auto;
+}
+
+.footer-left,
+.footer-right,
+.footer-footer {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-right p,
+.footer-description {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.socials {
+    justify-content: center;
+    margin-bottom: 15px; 
+    margin-top: 11px;
+}
+
+
+.footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.bottom-links {
+    order: -1; 
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+}
+/* ///////////////////////////////////////////////////////// */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+.header, .media-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.header * {
+  max-width: 100%;
+}
+  
+.row-banners {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* .small-banner,
+.smalls-banner {
+  width: 66%;
+  height: 300px; 
+} */
+
+.small-banner img,
+.smalls-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+
+.row-banners {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.small-banner,
+.smalls-banner {
+    width: 100% !important;
+}
+
+.small-banner img,
+.smalls-banner img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 14px;
+}
+}
+@media (max-width: 768px) {
+
+.section7 {
+  width: 80% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px;
+    transform: translateX(0) !important;
+}
+
+.sec7 {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.sec7 img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 14px;
+}
+
+
+.section8 .top,
+.section8 .bottom,
+.left-box,
+.right-box {
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: 15px;
+}
+
+.left-box img,
+.right-box img,
+.section8 .top img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 14px;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+}
+
+a {
+  color: white;
+  text-decoration: none}
+.section8 .bottom {
+display: grid;
+grid-template-columns: 1fr 1fr 1.6fr;
+gap: 18px;
+width: 100%;
+}
+
+.left-box,
+.right-box {
+position: relative;
+/* height: 207px;  */
+border-radius: 18px;
+overflow: hidden;
+cursor: pointer;
+}
+
+.left-box img,
+.right-box img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+position: relative; 
+}
+
+
+.left-box:hover,
+.right-box:hover {
+transform: scale(1.05);
+box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+}
+
+.left-box:hover img,
+.right-box:hover img {
+transform: scale(1.1);
+}
+
+
+@media (max-width: 768px) {
+.section8 .bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.left-box,
+.right-box {
+  height: 180px;
+}
+}
+
+/* ////////////////////////////////////////////////////////////// */
+
+@media screen and (max-width: 1024px) {
+
+
+.elhandasia-header {
+  background: linear-gradient(to bottom, #FF7B00 24%,  #FFFFFF 93% )!important;
+    /* background: #FF6B00 !important; */
+    height: 50px;
+
+    box-shadow: none !important;
+    /* padding: 10px 0; */
+}
+
+
+.top-bar {
+    display: none !important;
+}
+
+
+.logo-container h2 {
+    color: black !important;
+    font-size: 16px !important;
+    margin: 0;
+}
+
+
+.search-bar {
+    width: 100%;
+    background: white;
+    border-radius: 30px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+
+.search-bar select {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    outline: none;
+}
+
+
+.search-bar input {
+    border: none;
+    flex: 1;
+    font-size: 15px;
+    outline: none;
+}
+
+
+.search-bar .search-icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.search-bar .fa-search {
+    font-size: 20px !important;
+    color: #333 !important;
+}
+
+
+.user-icons {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+ 
+    gap: 21px;
+    margin-top: 10px;
+    border-left: none !important; 
+    
+}
+
+.user-icons .icon-item:nth-child(2),
+.user-icons .icon-item:nth-child(3) {
+    display: none !important;
+}
+
+.user-icons .icon-item:frist-child {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: black;
+}
+
+/* .user-icons .icon-item i {
+  font-size: 24px !important;
+  color: black !important;
+  margin-top: -9px;
+
+  margin-right: -27px;
+} */
+
+.user-icons .icon-label {
+    font-size: 14px;
+    color: black !important;
+}
+}
+@media screen and (max-width: 1024px) {
+.user-icons .icon-label {
+    display: none !important;
+}
+}
+
+@media (max-width: 768px) {
+.logo-container h2 {
+    display: inline-flex;
+    align-items: center;
+    margin-top: -3px;
+}
+
+.logo-container h2::after {
+    content: '';
+    width: 5px;
+    height: 6px;
+    /* background-color: white; */
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-top: 8px;
+ 
+}
+}
+@media screen and (max-width: 1024px) {
+
+
+.user-icons .icon-item {
+    border: none !important;
+}
+
+.user-icons {
+    border: none !important;
+}
+
+}
+@media screen and (max-width: 1024px) {
+
+
+.user-icons .icon-item::before,
+.user-icons .icon-item::after {
+    display: none !important;
+    content: none !important;
+}
+
+}
+
+
+.mobile-menu-icon {
+display: none;
+font-size: 24px;
+color: black;
+cursor: pointer;
+}
+
+
+@media screen and (max-width: 1024px) {
+.mobile-menu-icon {
+    display: block !important;
+}
+}
+
+@media screen and (max-width: 1024px) {
+.search-bar {
+    display: none !important;
+}
+}
+
+@media screen and (max-width: 1024px) {
+.search-bar {
+    display: none !important;
+}
+
+
+.mobile-search-icon {
+    display: block !important;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+    /* margin-left: 62px; */
+    /* margin-top: 4px; */
+    margin-right: -29px;
+}
+}
+
+.mobile-search-icon {
+display: none;
+}
+
+
+
+.mobile-categories {
+display: none;
+background: white;
+list-style: none;
+padding: 56px;
+margin: 0;
+position: absolute;
+top: 56px;
+right: 10px;
+width: 100%;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+z-index: 1000;
+}
+
+.mobile-categories li {
+padding: 12px 10px;
+border-bottom: 1px solid #ddd;
+font-size: 16px;
+text-align: center;
+}
+
+.mobile-categories.show {
+display: block;
+}
+
+
+.mobile-menu-icon {
+display: none; 
+font-size: 24px;
+color: black;
+cursor: pointer;
+}
+
+
+@media screen and (max-width: 1024px) {
+.mobile-menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+}
+
+
+
+/* ///////////////////////////الجزء اللي قبل الاخير////////////////////////// */
+
+
+
+
+
+@media screen and (max-width: 900px) {
+.arrow.left,
+.arrow.right {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+}
+
+@media screen and (max-width: 900px) {
+
+
+.containers .slider-wrapper .arrow,
+.containers .slider-wrapper .arrow.left,
+.containers .slider-wrapper .arrow.right {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+
+.containers .grid2,
+.containers .slide-group {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+}
+
+
+.containers .slider {
+  display: block !important;
+  width: 100% !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.containers .slide-group {
+  min-width: auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+
+.containers .img-wrap,
+.containers .img-wraps {
+  height: 135px !important;
+}
+
+
+.containers .card {
+  width: 159px;
+}
+
+.containers .card-body {
+  padding: 12px !important;
+}
+
+.containers .btn {
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+  margin-bottom: 0 !important;
+}
+
+.containers {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+}
+
+
+@media screen and (max-width: 600px) {
+.containers .grid2,
+.containers .slide-group {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+/* .containers .img-wrap,
+.containers .img-wraps {
+  height: 110px !important;
+} */
+}
+
+/* //////////////////////////////////////////// */
+/* صفحه الداش بورد */
+
+
+
+
+* { margin: 0; 
+padding: 0;
+ box-sizing: border-box;
+  font-family: 'Inter', sans-serif; 
+}
+
+body {
+ display: flex; 
+ flex-direction: column;
+ }
+
+/* الهيدر والخط العرضي الممتد للآخر */
+.main-header {
+  width: 100%;
+  height: 85px;
+  background: linear-gradient(
+  to bottom,
+  #ff7b0096 24%,   
+  #FFFFFF 93%    
+);
+  display: flex;
+  border-bottom: 1px solid #eeeeee; /* الخط ممتد بعرض الشاشة كلها */
+  position: sticky; top: 0; z-index: 1000;
+}
+
+.logo-area {
+  width: 260px;
+   height: 100%;
+  border-right: 1px solid #f0f0f0;
+  display: flex; 
+  align-items: center; 
+  padding: 0 5px;
+   gap: 12px;
+}
+.logo-img {
+height: 34px;
+width: 90px;
+}
+.logo-info h2 {
+ font-size: 18px;
+  color: #333; 
+  font-weight: 700;
+ }
+.logo-info p {  
+   font-size: 13px;
+   color: #71717A;
+margin-left: 13px;
+}
+@media (max-width: 768px) {
+  /* إخفاء الصورة والـ h2 */
+  .logo-img, 
+  .logo-info h2 {
+      display: none;
+  }
+
+  /* تعديل مكان الـ p ليصبح على اليمين */
+  .logo-info p {
+    text-align: right;
+    margin-left: 171px;
+    margin-right: 4px;
+}
+}
+.header-body { flex: 1; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; }
+.welcome h1 { font-size: 20px; color: #222; }
+.welcome p {
+     font-size: 15px;
+     color: #71717A; }
+
+.user-info { text-align: right; display: flex; flex-direction: column; }
+.user-info strong { font-size: 14px; color: #333;    margin-right: 20px;
+}
+.user-info span { font-size: 12px;     color: #71717A; }
+nav.menu {
+margin-top: 22px;
+}
+.page-container { display: flex; width: 100%; }
+
+/* السايد بار والـ Hover */
+.sidebar {
+  width: 260px;
+  /* height: calc(100vh - 85px); */
+  border-right: 1px solid #f0f0f0;
+  background: #fff;
+  padding: 25px 15px;
+}
+
+.item {
+  display: flex; align-items: center; gap: 15px;
+  text-decoration: none; color: #71717A;
+  padding: 14px 20px; border-radius: 12px;
+  margin-bottom: 8px; font-size: 15px; transition: 0.3s;
+}
+
+/* التعديل: Hover بيقلب اللون برتقالي ويشيل التحديد من الباقي */
+.item:hover, .item.active {
+  background: #FF6B00;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2);
+}
+.item:hover i, .item.active i { color: #fff; }
+
+.main-content { flex: 1; padding: 40px 50px; }
+.page-header h2 { font-size: 28px; margin-bottom: 5px; color: #222; }
+.page-header p { font-size: 14px;    color: #71717A; margin-bottom: 40px; }
+
+/* الكروت: حل مشكلة مكان الأيقونة */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px; }
+/* الكروت: حل مشكلة مكان الأيقونة */
+.cardss {
+background: #fff; 
+border: 1px solid #f2f2f2; 
+border-radius: 16px;
+padding: 25px;
+display: flex; /* تفعيل الفليكس */
+flex-direction: row; /* عشان العناصر تترص بالعرض جنب بعض */
+justify-content: space-between; /* ده اللي بيزق النص شمال والأيقونة يمين */
+align-items: flex-start; /* بيخلي الأيقونة تبدأ من فوق بمحاذاة النص */
+}
+
+.cardss-info {
+display: flex;
+flex-direction: column; /* النص (العنوان والرقم) يفضلوا فوق بعض */
+}
+
+/* شكل المربعات للأيقونات */
+.icon-wrapper { 
+width: 48px; 
+height: 48px; 
+border-radius: 12px; 
+display: flex; 
+align-items: center; 
+justify-content: center;
+font-size: 20px;
+flex-shrink: 0; /* بيمنع الأيقونة إنها تصغر لو النص زاد */
+}
+
+/* .card-info { display: flex; flex-direction: column; } */
+.cardss-info span { font-size: 14px; color: #71717A; font-weight: 500; }
+.cardss-info h3 { font-size: 40px; font-weight: 700; margin-top: 15px; color: #333; }
+
+
+.blue-box { background: #f0f7ff; color: #3b82f6;    margin-top: 13px; }
+.green-box { background: #f0fff4; color: #22c55e;     margin-top: 13px;}
+.orange-box { background: #fff7f0; color: #f97316;     margin-top: 13px;}
+
+/* الجدول */
+.table-section { background: #fff; border: 1px solid #f2f2f2; border-radius: 16px; padding: 30px; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { text-align: left; color: #71717A; font-size: 13px; padding-bottom: 15px; border-bottom: 1px solid #f9f9f9; }
+td { padding: 20px 0; border-bottom: 1px solid #f9f9f9; font-size: 14px; color: #444; }
+
+
+/* --- إخفاء عناصر الموبايل في الشاشات الكبيرة --- */
+.hamburger {
+display: none;
+}
+
+/* --- بداية الميديا كويري للموبايل والتابلت --- */
+@media (max-width: 992px) {
+
+/* 1. إظهار وتنسيق أيقونة التلات شرط */
+.hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    cursor: pointer;
+    color: #333;
+}
+.hamburger svg { width: 28px; height: 28px; }
+
+/* 2. الهيدر في الموبايل */
+.logo-area {
+    width: auto;
+    border-right: none;
+    padding: 0 10px;
+}
+.welcome { display: none; } /* إخفاء رسالة الترحيب لتوفير مساحة */
+.header-body { padding: 0 15px; }
+
+/* 3. السايد بار يتحول لـ Dropdown */
+.page-container {
+    flex-direction: column; /* العناصر تحت بعض */
+    position: relative;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0; /* يبدأ من تحت الهيدر مباشرة */
+    left: 0;
+    width: 100%;
+    height: 0; /* مخفي */
+    padding: 0 20px;
+    overflow: hidden;
+    background: #fff;
+    border-right: none;
+    border-bottom: 2px solid #FF6B00;
+    z-index: 1001;
+    transition: 0.4s ease-in-out;
+}
+
+/* 4. حركة الفتح والقفل عند الضغط على التلات شرط */
+.nav-toggler:checked ~ .page-container .sidebar {
+    height: 380px; /* طول القائمة وهي مفتوحة */
+    padding: 20px 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* 5. المحتوى الرئيسي */
+.main-content {
+    margin-left: 0;
+    padding: 20px;
+}
+
+/* 6. المربعات الـ 3 يبقوا تحت بعض */
+.stats-grid {
+    grid-template-columns: 1fr; /* عمود واحد فقط */
+    gap: 20px;
+}
+
+.cardss {
+    padding: 20px; /* تقليل الـ padding شوية للموبايل */
+}
+
+.cardss-info h3 {
+    font-size: 32px; /* تصغير حجم الرقم شوية */
+}
+
+/* 7. الجدول (عشان ميبوظش عرض الشاشة) */
+.table-section {
+    overflow-x: auto; /* سكرول بالعرض للجدول بس */
+    padding: 15px;
+}
+table {
+    min-width: 500px; /* يمنع الجدول من الانضغاط */
+}
+}/* إخفاء التشيك بوكس والزرار في الكمبيوتر */
+.nav-toggler, .hamburger {
+display: none;
+}
+
+@media (max-width: 992px) {
+/* 1. إظهار زرار التلات شرط */
+.hamburger {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    cursor: pointer;
+    z-index: 1100;
+}
+.hamburger svg { width: 30px; height: 30px; }
+
+/* 2. الهيدر: فكه من بعضه عشان ميزحمش الموبايل */
+.main-header {
+    justify-content: space-between;
+    padding-right: 15px;
+}
+.logo-area {
+    width: auto;
+    border-right: none;
+}
+.welcome { display: none; } /* رسالة الترحيب تختفي */
+.header-body { flex: none; }
+
+/* 3. السايد بار (الناف): يدخل جوه التلات شرط */
+.page-container {
+    display: block; /* نغيره من flex لـ block عشان العناصر تنزل تحت بعض */
+    position: relative;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* ياخد عرض الموبايل كله */
+    height: 0; /* يبدأ مخفي */
+    overflow: hidden;
+    background: #ffffff;
+    z-index: 1005;
+    border-right: none;
+    border-bottom: 2px solid #FF6B00;
+    transition: 0.4s ease;
+    padding: 0 15px; /* مخفي في البداية */
+}
+
+/* 4. حركة الفتح: لما نضغط على التلات شرط */
+.nav-toggler:checked ~ .page-container .sidebar {
+    height: auto;
+    padding: 20px 15px;
+}
+
+/* 5. المربعات الـ 3: نخليهم تحت بعض بالظبط */
+.main-content {
+    width: 100%;
+    padding: 20px;
+}
+
+.stats-grid {
+    display: flex; /* نغيرها لـ flex تحت بعض */
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cardss {
+    width: 100%; /* المربع ياخد عرض الشاشة */
+    margin-bottom: 0;
+}
+
+/* 6. الجدول: يلم نفسه */
+.table-section {
+    width: 100%;
+    overflow-x: auto; /* سكرول يمين وشمال للجدول فقط */
+}
+table {
+    width: 100%;
+    min-width: 500px; /* يحافظ على شكل الجدول جوه السكرول */
+}
+}
+/* الهامبرجر مخفي على الديسكتوب */
+.hamburger {
+display: none;
+font-size: 28px;
+cursor: pointer;
+}
+
+/* للموبايل والتابلت */
+@media screen and (max-width: 1024px) {
+.hamburger {
+  display: block; /* يظهر على الموبايل والتاب */
+}
+
+/* اخفاء الـ sidebar التقليدي */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px; /* مخفي */
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.sidebar.show {
+  left: 0; /* يظهر */
+}
+
+/* اخفاء الـ header-body على الموبايل */
+.header-body {
+  display: none;
+}
+}
+.close-btn {
+font-size: 28px;
+cursor: pointer;
+text-align: right;
+margin-bottom: 20px;
+display: none; /* يظهر فقط على الموبايل */
+}
+
+@media screen and (max-width: 1024px) {
+.close-btn {
+  display: block;
+}
+}
+/* ////////////////////////////////////////////////////////////////////////////////////// */
+/* log in */
+
+
+
+/* * {
+box-sizing: border-box;
+font-family: Arial, sans-serif;
+}
+
+body {
+margin: 0;
+background: #ffffff; 
+} */
+
+.page {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.login-box {
+background: #fff;
+width: 100%;
+max-width: 439px;
+padding: 80px 40px;
+border-radius: 8px;
+box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+text-align: center;
+}
+
+.login-box h1 {
+font-size: 28px;
+margin: 0;
+font-weight: 600;
+}
+
+.subtitle {
+margin: 10px 0 40px;
+color: #71717A;
+font-size: 14px;
+}
+
+form {
+width: 100%; /* غيريها من 360px لـ 100% */
+max-width: 360px; /* عشان ميكبرش بزيادة في الشاشات الكبيرة */
+margin: auto;
+}
+
+.field {
+margin-bottom: 20px;
+text-align: left;
+}
+
+label {
+font-size: 14px;
+margin-bottom: 6px;
+display: block;
+}
+
+
+.buttons {
+width: 100%;
+padding: 14px;
+background: #ff7a00;
+color: white;
+border: none;
+border-radius: 6px;
+font-size: 15px;
+cursor: pointer;
+margin-top: 10px;
+}
+
+.buttons:hover {
+background: #e86f00;
+}
+
+.signup {
+margin-top: 20px;
+font-size: 14px;
+color: #71717A;
+}
+
+.signup a {
+color: #18181B;
+/* font-weight: 600; */
+text-decoration: none;
+}
+
+.error-message {
+color: red;
+font-size: 12px;
+margin-top: 5px;
+}
+.input-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.toggle-password:hover {
+  color: #000;
+}
+.input-wrapper {
+display: flex;
+align-items: center;
+gap: 10px;
+border: 1px solid #ccc;
+padding: 12px;
+border-radius: 8px;
+}
+
+/* الانبوت */
+.input-wrapper input {
+flex: 1;
+border: none;
+outline: none;
+font-size: 16px;
+}
+
+/* أيقونات */
+.input-wrapper i {
+color: #888;
+cursor: pointer;
+}
+
+/* ////////////////////////////////////////////////////// */
+@media (max-width: 1024px) {
+.login-box {
+  width: 90%; /* بياخد مساحة من الشاشة */
+  max-width: 578px;
+  padding: 101px 83px;/* قللنا الفراغ اللي فوق وتحت عشان العناصر تقرب */
+  border-radius: 12px;
+}
+
+form {
+  width: 100%; /* عشان يملأ البوكس بالظبط */
+  max-width: 100%; 
+}
+
+.login-box h1 {
+  font-size: 46px; /* حجم الخط */
+  margin-bottom: 8px;
+}
+.page .login-box p.subtitle{
+font-size: 13px;
+}
+.subtitle {
+  margin: 0 0 30px; /* تقليل المسافة تحت كلمة Welcome back */
+}
+
+.input-wrapper {
+  padding: 10px 15px; /* تصغير حجم حقل الإدخال شوية */
+  margin-bottom: 15px; /* تقريب الحقول من بعضها */
+}
+.buttons {
+  padding: 12px;
+  font-size: 21px;
+  
+}
+.signup {
+
+  font-size: 13px !important; /* تصغير الخط عشان يناسب الموبايل */
+ 
+}
+
+}
+@media (max-width: 600px) {
+.login-box {
+  max-width: 90%; /* عرض البوكس بالنسبة للشاشة */
+  padding: 30px 20px; /* قللت الـ 80px لـ 30px عشان البوكس ميطولش */
+  border-radius: 12px;
+}
+
+  .input-wrapper input {
+    font-size: 16px; /* لازم 16px */
+  
+}
+
+.login-box h1 { /* اتأكدي إنه h1 مش h2 حسب الكود بتاعك */
+  font-size: 24px;
+}
+
+.subtitle {
+  margin: 5px 0 25px; /* قللت المسافات بين العنوان والمدخلات */
+  font-size: 13px;
+}
+
+/* ضبط طول حقول الإدخال */
+.input-wrapper {
+  padding: 10px; /* تقليل الحشو الداخلي */
+}
+
+/* .input-wrapper input {
+  font-size: 14px;
+  height: auto; 
+} */
+
+.buttons {
+  /* padding: 12px; */
+  font-size: 15px;
+  margin-top: 5px;
+}
+}
+
+/* ///////////////////////////////////////////////////////////////////// */
+/* signup */
+
+
+
+
+
+.auth-page {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.auth-box {
+background: #fff;
+width: 100%;
+max-width: 480px;
+padding: 70px 40px;
+border-radius: 12px;
+box-shadow: 0 12px 30px rgba(0,0,0,.12);
+text-align: center;
+}
+
+.auth-field {
+margin-bottom: 18px;
+text-align: left;
+}
+
+.auth-input-wrap {
+display: flex;
+align-items: center;
+border: 1px solid #ddd;
+border-radius: 10px;
+padding: 0 14px;
+height: 52px;
+}
+
+.auth-input-wrap i {
+color: #888;
+}
+
+.auth-input-wrap input {
+border: none;
+outline: none;
+flex: 1;
+padding: 0 10px;
+font-size: 15px;
+}
+
+.auth-toggle {
+cursor: pointer;
+}
+
+.auth-btn {
+width: 100%;
+height: 52px;
+background: #ff7a00;
+border: none;
+color: #fff;
+border-radius: 10px;
+font-size: 16px;
+cursor: pointer;
+}
+
+.auth-error {
+color: red;
+font-size: 13px;
+margin-top: 6px;
+}
+
+.signups {
+margin-top: 20px;
+font-size: 14px;
+color: #71717A;
+}
+
+.signups a {
+color: #18181B;
+/* font-weight: 600; */
+text-decoration: none;
+}
+
+@media (max-width: 600px) {
+/* 1. الكارت الأساسي */
+.auth-box, .login-box {
+    width: 92% !important; /* يضمن إنه أصغر من الشاشة */
+    max-width: none !important;
+    padding: 30px 15px !important; /* تقليل المسافة الجانبية عشان نوسع للي جواه */
+    margin: 0 auto !important;
+    overflow: hidden; /* أي حاجة تخرج بره تتقص أو تختفي */
+}
+
+/* 2. الأنبوبة (الـ Input Wrap) */
+.auth-input-wrap {
+    width: 95% !important; /* يجبرها تاخد عرض الكارت بس */
+    max-width: 100% !important;
+    margin-left: 0 !important; /* إلغاء أي ترحيل يمين أو شمال */
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    height: 34px; /* أهم سطر: عشان الـ Padding ميزودش العرض */
+}
+
+/* 3. الزرار (Sign up Button) */
+.auth-btn, .login-box button {
+    /* width: 95% !important; 
+    margin-left: -12px !important; */
+    margin-right: 0 !important;
+    height: 41px !important;
+}
+
+/* 4. الجملة اللي تحت الزرار */
+.signup, .auth-footer {
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: 0 !important;
+    display: block !important;
+}
+
+/* 5. أي Input جوه الأنبوبة */
+.auth-input-wrap input {
+    width: 100% !important;
+    min-width: 0 !important; /* بيخليه ينكمش وميزقش الأب لبره */
+}
+.signups {
+  width: 100% !important; /* عشان ياخد مساحة العرض المتاحة */
+  text-align: center !important; /* يوسطن الجملة في نص الكارت بالظبط */
+  margin-top: 15px !important; /* تقليل المسافة العلوية شوية */
+  font-size: 13px !important; /* تصغير الخط عشان يناسب الموبايل */
+  display: block !important;
+  margin-left: -16px; /* نضمن إنه واخد سطر لوحده */
+}
+
+.signups a {
+  display: inline-block; /* عشان اللينك يكون سهل الضغط عليه */
+  margin-top: 5px; 
+  font-weight: 600; /* نبرز كلمة Login في الموبايل */
+}
+}
+/* ////////////////////////////////////////////////////////////////////////////////// */
+/* product */
+
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { background-color: #fcfcfc; margin: 0; }
+
+headers { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.title-section h1 { margin: 0; font-size: 26px; }
+.title-section p { color: #888; margin: 5px 0; font-size: 14px; }
+.actions-section { display: flex; gap: 223px; }
+#searchInput { padding: 10px 15px; border: 1px solid #ddd; border-radius: 8px; width: 400px; }
+.add-btn { background-color: #ff7a00; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.table-containers {  border: 1px solid #eee; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th {  color: #999; padding: 15px; border-bottom: 1px solid #eee; font-size: 13px; }
+td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; }
+.old-price { text-decoration: line-through; color: #aaa; margin-right: 5px; }
+.badge { background: #f0f0f0; padding: 4px 12px; border-radius: 15px; font-size: 12px; color: #555; }
+.actions i { margin-right: 15px; cursor: pointer; font-size: 18px; }
+.fa-trash-can { color: #ff4d4d; }
+.old-price {
+  text-decoration: line-through;
+  color: #a1a1aa; /* لون رمادي فاتح للسعر القديم */
+  margin-right: 5px;
+  font-size: 0.9em;
+}
+
+
+
+
+/* ميديا //////////////////////////////////////////////// */
+/* ميديا مخصصة لصفحة الأوردرات والمنتجات */
+@media screen and (max-width: 1024px) {
+    
+  /* 1. إخفاء العنوان والوصف لتوفير مساحة */
+  headers .title-section, .title-section p {
+      display: none !important;
+  }
+
+  /* 2. تنسيق البحث والزرار (لو موجودين) */
+  .actions-section {
+      display: flex !important;
+      flex-direction: row !important; 
+      gap: 10px !important;
+      width: 100% !important;
+  }
+
+  /* 3. أهم جزء: تنسيق الجدول ومنع اختفاء الـ Summary */
+  .table-card, .table-containers {
+      overflow-x: auto !important; /* تفعيل التمرير الجانبي */
+      display: block !important;
+      -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+      min-width: 700px !important; /* يضمن أن الأعمدة لها مساحة تظهر فيها */
+      width: 100%;
+  }
+
+  /* السماح للنص الطويل في الـ Summary بالنزول لسطر جديد بدل ما يختفي */
+  td:nth-child(3) {
+      white-space: normal !important; 
+      min-width: 200px !important; /* مساحة مخصصة للملخص */
+  }
+
+  th, td {
+      padding: 10px 8px !important;
+      font-size: 13px !important;
+      /* نلغي خاصية الإخفاء اللي كانت موجودة في كودك القديم */
+      display: table-cell !important; 
+  }
+
+  /* 4. تعديل بسيط للشاشات الصغيرة جداً (أقل من 600) */
+  @media screen and (max-width: 600px) {
+      /* لو عايزة تخفي حاجة في صفحة الأوردرات، ممكن تخفي التاريخ مثلاً */
+      /* لكن ابعدي عن رقم 3 لأنه هو الـ Summary */
+      
+      /* th:nth-child(4), td:nth-child(4) { display: none !important; } */ /* اختيارياً إخفاء التاريخ */
+  }
+}
+/* ///////////////////////////////////////////////////////////////////////////////////// */
+/* add product */
+.main-content {
+  padding: 20px;
+  display: block; /* نلغي الفليكس لو كان بيخلي الحاجه في النص */
+  background-color: #f9fafb;
+}
+
+.page-header {
+  margin-bottom: 25px;
+  text-align: left; /* البداية من الشمال زي الصورة */
+}
+
+.page-header h2 {
+  font-size: 24px;
+  color: #111827;
+  margin: 0;
+}
+
+.page-header p {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.form-container {
+  background-color: white;
+padding: 30px;
+border-radius: 12px;
+border: 1px solid #f3f4f6;
+max-width: 740px;
+margin: 0;
+margin-left: 176px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+/* صف السعر والخصم: 3 أعمدة متساوية */
+.form-row-triple {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+.pppp{
+font-size: 18px;
+margin-bottom: 17px;
+margin-top: -19px;
+}
+/* صف الوصف والبراند: عمودين */
+.form-row-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-actions {
+display: flex;
+gap: 15px;
+margin-top: 30px;
+justify-content: center; /* هذا السطر هو اللي بيجيب الأزرار في النص */
+width: 100%; /* عشان نضمن إنه واخد عرض الفورم كامل فيقدر يتوسط */
+max-width: none; /* شيلنا الـ 400px عشان ميبقاش محذوف ناحية الشمال */
+}
+
+/* لو عايزة الأزرار يكون ليها عرض محدد وهي في النص */
+.create-btn, .cancel-btn {
+min-width: 150px; /* بيخلي حجم الأزرار متناسق */
+flex: 0 1 auto; /* بيخلي الأزرار ماتاخدش عرض الصفحة كله لو مش عايزة */
+}
+.create-btn {
+  background-color: #ff7a00;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+}
+
+.cancel-btn {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.old-price {
+text-decoration: line-through;
+color: #a1a1aa; /* لون رمادي فاتح للسعر القديم */
+margin-right: 5px;
+font-size: 0.9em;
+}
+
+/* رسالة الخطأ باللون الأحمر */
+.error-msg {
+  color: #ff4d4d; /* لون أحمر واضح */
+  font-size: 11px;
+  display: block;
+  margin-top: 4px;
+  min-height: 15px;
+  font-weight: 500;
+}
+
+/* تلوين إطار المربع باللون الأحمر عند الخطأ */
+.invalid-border {
+  border: 1.5px solid #ff4d4d !important;
+  background-color: #fff8f8; /* خلفية محمرة خفيفة جداً لتمييز الحقل */
+}
+/* --- تابلت (1024px وأقل) --- */
+@media screen and (max-width: 1024px) {
+  /* ضبط الحاوية لإلغاء الترحيل لليسار */
+  .form-container {
+      margin-left: auto !important; 
+      margin-right: auto !important;
+      width: 90%;
+      max-width: 90%;
+      padding: 25px;
+  }
+
+  /* جعل الصفوف الثلاثية ثنائية لتوفير مساحة */
+  .form-row-triple {
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+  }
+  
+  /* جعل الحقل الثالث في الصف الثلاثي يأخذ عرض كامل */
+  .form-row-triple > .form-group:last-child {
+      grid-column: span 2;
+  }
+}
+
+/* --- موبايل (600px وأقل) --- */
+@media screen and (max-width: 600px) {
+  .main-content {
+      padding: 10px;
+  }
+
+  /* الفورم يأخذ عرض الشاشة بالكامل تقريباً */
+  .form-container {
+      width: 100%;
+      padding: 15px;
+      border-radius: 0; /* شكل أبسط للموبايل */
+      border: none;
+      box-shadow: none;
+  }
+
+  /* تحويل كل الشبكات (Grids) لعمود واحد فقط */
+  .form-row-triple, 
+  .form-row-double {
+      grid-template-columns: 1fr !important;
+      gap: 0;
+  }
+  
+  .form-row-triple > .form-group:last-child {
+      grid-column: span 1;
+  }
+
+  /* تكبير حجم الإدخال ليسهل الضغط عليه */
+  .form-group input, .form-group select, .form-group textarea {
+      padding: 12px;
+      font-size: 16px; /* يمنع الـ Zoom التلقائي في الآيفون */
+  }
+
+  /* الأزرار تحت بعضها */
+  .form-actions {
+      flex-direction: column;
+      gap: 12px;
+  }
+
+  .create-btn, .cancel-btn {
+      width: 100%;
+      height: 50px;
+      font-size: 16px;
+  }
+
+  /* تصغير العناوين لتناسب الشاشة */
+  .page-title-area h2 {
+      font-size: 20px;
+  }
+  
+  .pppp {
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-top: 1px;
+  }
+}
+/* /////////////////////////////////////////////////////////////*/
+.price-box{
+  margin-bottom:8px;
+}
+.old-price{
+
+ text-decoration:line-through;
+  color:#999;
+   font-size:16px;
+   margin-right:5px;
+}
+.new-price{
+  color:#FF6B00;
+  
+  font-weight:bold;
+   font-size: 1.25rem;}
+   .price{
+
+    font-weight:bold; 
+    font-size: 1.25rem;}
+
+
+    /* /////////////////////////////////////////////////// */
+    
+
+    @media (max-width: 768px) {
+      /* إخفاء الكلمة (النص) داخل أيقونات المستخدم في الموبايل */
+      .user-icons .icon-item span, 
+      #admin-dash-link span, 
+      #userAccountIcon span {
+        display: none !important;
+      }
+    
+      /* جعل الأيقونة تظهر بشكل أوضح وبدون مسافات إضافية */
+      .user-icons .icon-item i {
+        font-size: 22px;
+        /* margin: 0; */
+        margin-right: -29px;
+        margin-top: 4px;
+      }
+    }
+
+
+    /* إخفاء أيقونة سلة الموبايل في الشاشات الكبيرة (الكمبيوتر) */
+@media (min-width: 769px) {
+  .mobile-search-icon {
+    display: none !important;
+  }
+}
+
+
+.empty-icon-wrapper i {
+  border: 2px solid #f0f0f0;
+  transition: transform 0.3s ease;
+}
+
+.browse-btn:hover {
+  background: #FF6B00 !important; /* لون البراند بتاعك عند الهوفر */
+  color: white !important;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+
+
+/* /////////////////////////////////////////// */
+.mobile-categories li a {
+  text-decoration: none;
+  color: inherit; /* تأخذ نفس لون النص الأصلي */
+  display: block;
+  width: 100%;
+}
+
+/* لجعل الحركة ناعمة */
+html {
+  scroll-behavior: smooth;
+}
+
+/* مسافة عشان القسم ميبقاش مستخبي تحت الناف بار */
+span[id^="go-"] {
+  display: block;
+  position: relative;
+  top: -100px; /* غيّر الرقم ده حسب ارتفاع الهيدر عندك */
+  visibility: hidden;
+}
+/* في الحالة العادية القائمة مخفية */
+#mobile-categories {
+  display: none; 
+}
+
+/* لما نديها كلاس show تظهر */
+#mobile-categories.show {
+  display: block !important;
+}
+
+
+/* --- إعدادات الكمبيوتر (Desktop) --- */
+@media (min-width: 769px) {
+  .desktop-only {
+      display: block !important; /* تظهر في اللاب توب */
+  }
+  .mobile-only {
+      display: none !important; /* تختفي قائمة الموبايل تماماً */
+  }
+  .mobile-menu-icon {
+      display: none !important; /* يخفي الثلاث شرط في اللاب توب */
+  }
+}
+
+/* --- إعدادات الموبايل (Mobile) --- */
+@media (max-width: 768px) {
+  .desktop-only {
+      display: none !important; /* تختفي القائمة المفرودة */
+  }
+  .mobile-only {
+      /* القائمة هنا هتكون display: none في العادي وتفتح لما نضغط toggle */
+      display: none; 
+  }
+  .mobile-only.show {
+      display: block !important; /* تظهر لما تدوسي على الثلاث شرط */
+  }
+  .mobile-menu-icon {
+      display: block !important; /* تظهر الثلاث شرط */
+  }
+}
+
+
+@media (max-width: 768px) {
+  /* نحدد العنصر الأب للأيقونة عشان الرقم يتحرك جواه بالظبط */
+  #wishlist-link {
+      position: relative; 
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+  }
+
+  /* تظبيط مكان الرقم فوق القلب */
+  #wishlist-count {
+      position: absolute;
+      top: -2px !important;    /* قللي الرقم ده لو عايزاه ينزل أكتر */
+      right: -7px !important;  /* قللي الرقم ده لو عايزاه يدخل شمال أكتر */
+      
+      /* تصغير الحجم عشان يناسب الموبايل */
+      font-size: 9px !important;
+      padding: 2px 4px !important;
+      min-width: 15px;
+      height: 15px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+  }
+}
+
+/* إخفاء أيقونة المفضلة والعداد تماماً في كل الشاشات كبداية */
+#wishlist-link, #wishlist-count {
+  display: none !important;
+}
+
+/* إخفاء الأيقونة والعداد تماماً في كل الشاشات كبداية */
+#wishlist-link, #wishlist-count {
+  display: none !important;
+}
+
+/* حل مشكلة الخط: لو الخط عبارة عن border في الـ icon-item */
+.user-icons .icon-item {
+  border-right: none !important;
+  border-left: none !important;
+}
+
+/* 1. الحالة العادية: السلة واخدة خط فاصل */
+.user-icons a[href="cart.html"] {
+  border-right: 1px solid #ccc; /* أو أي لون خط عندك */
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+/* 2. الحركة السحرية: لو أيقونة المفضلة اختفت، شيل الخط فوراً */
+#wishlist-link[style*="display: none"] ~ a[href="cart.html"],
+#wishlist-link.hidden ~ a[href="cart.html"] {
+  border-right: none !important;
+}
+
+/* أو الحل الأبسط والأسلم: شيل الخط من السلة خالص في الموبايل واللاب للأدمن */
+@media (max-width: 768px) {
+  .user-icons a {
+      border: none !important;
+  }
+}
+
+a#wishlist-link {
+  /* margin-right: -10px; */
+  margin-left: -18px;
+}
+
+
+
+/* تنسيق عام للسلة */
+#cart-link {
+  display: flex; /* سيتم التحكم فيه بالجافا سكريبت لاحقاً */
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+/* تنسيق الرقم (البادج) */
+#cart-count {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+  background: #FF6B00;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* تأكدي أن حاوية الأيقونات تظهر في الموبايل */
+@media screen and (max-width: 768px) {
+  .user-icons {
+      display: flex !important; /* إظهارها في الموبايل */
+      gap: 15px;
+  }
+  .icon-label {
+      display: none; /* إخفاء كلمة Cart في الموبايل لتوفير مساحة */
+  }
+}
+
+
+
+
+
+/* إخفاء الأيقونات في البداية والجافا سكريبت هيظهر المناسب */
+#userAccountIcon, #admin-dash-link, #cart-link {
+  display: none !important; 
+}
+
+/* تنسيق عداد السلة (الرقم) */
+/* #cart-count {
+  position: absolute;
+  top: -5px;
+  right: 8px;
+  background: #FF6B00;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* ميديا كويري للموبايل عشان الأيقونات تظهر جنب اللوجو */
+@media screen and (max-width: 768px) {
+  .user-icons {
+      display: flex !important;
+      gap: 15px;
+  }
+  .icon-label { display: none; }
+  #cart-count{
+    top: -5px;
+    right: -15px;
+  } /* بنخفي الكلمة في الموبايل */
+}
+
+
+
+/* تنسيق الـ Badge */
+.cart-badge, .wishlist-badge {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+  background: #FF6B00;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  display: none; /* مخفي افتراضياً */
+  min-width: 15px;
+  height: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* في الشاشات الصغيرة (الموبايل) */
+@media (max-width: 768px) {
+  .icon-label {
+      display: none; /* إخفاء الكلمات مثل "Cart" و "Account" لتبقى الأيقونات فقط */
+  }
+  .user-icons {
+      gap: 15px; /* مسافة بين الأيقونات */
+  }
+  .cart-badge {
+      right: -5px; /* ضبط مكان الرقم في الموبايل */
+  }
+}
+
+@media (max-width: 768px) {
+  .icon-label {
+      display: none; /* إخفاء النص أسفل الأيقونة في الموبايل */
+  }
+  .user-icons {
+      display: flex;
+      gap: 15px; /* مسافة بين الأيقونات في الموبايل */
+  }
+}
+
+/* /////////////////////////////////////////////////////// */
+/* ده هيصلح تداخل الأيقونات مع الوصف */
+.description-box, .trust-icons, .offer-card {
+  position: relative !important;
+  display: block !important;
+  clear: both !important;
+  float: none !important;
+  margin-top: 40px !important;
+  z-index: 5;
+}
+
+/* لو اللاب توب عارضهم فوق بعض */
+@media (min-width: 992px) {
+  #product-page {
+      display: block !important; /* إلغاء أي جريد قديم مسبب تداخل */
+  }
+}
+/* ///////////////////////////////////////////////////////////////////////////////// */
+.nav-item-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+  z-index: 1000;
+  list-style: none;
+  padding: 10px 0;
+  border-radius: 4px;
+  border-top: 3px solid #ff6b00; /* لون البراند */
+}
+
+.nav-item-wrapper:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li a {
+  color: #333 !important;
+  padding: 10px 20px;
+  display: block;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f8f9fa;
+  color: #ff6b00 !important;
+  padding-left: 25px;
+}

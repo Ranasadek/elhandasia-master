@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Elhandasiya</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="login-box">
+            <h1>Create account</h1>
+            <p class="subtitle">Enter your details to get started</p>
+    
+            <form id="signupForm">
+                <div class="auth-field">
+                    <label>Name</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" id="su-name" placeholder="">
+                    </div>
+                </div>
+      
+                <div class="auth-field">
+                    <label>Email</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" id="su-email" placeholder="">
+                    </div>
+                </div>
+      
+                <div class="auth-field">
+                    <label>Phone number</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="text" id="su-phone" placeholder="">
+                    </div>
+                </div>
+
+                <div class="auth-field">
+                    <label>WhatsApp Number</label> 
+                    <div class="auth-input-wrap">
+                        <i class="fa-solid fa-phone" ></i>
+                        <input type="text" id="su-whatsapp" placeholder=""> 
+                    </div>
+                </div>
+      
+                <div class="auth-field">
+                    <label>Password</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="su-password" placeholder="">
+                        <i class="fa-regular fa-eye auth-toggle" data-target="su-password" style="cursor: pointer;"></i>
+                    </div>
+                </div>
+      
+                <div class="auth-field">
+                    <label>Confirm Password</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="su-confirm" placeholder="">
+                    </div>
+                </div>
+      
+                <button type="submit" class="auth-btn" id="signupBtn">Sign up</button>
+                
+                <p class="signups">
+                    Already have an account? <a href="login.html">login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+      
+<script>
+// --- إعدادات الـ API ---
+const BASE_URL = "https://el-handasia.runasp.net"; 
+
+const form = document.getElementById("signupForm");
+const signupBtn = document.getElementById("signupBtn");
+
+form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearErrors();
+
+    // جلب عناصر الإدخال
+    const nameEl = document.getElementById("su-name");
+    const emailEl = document.getElementById("su-email");
+    const phoneEl = document.getElementById("su-phone");
+    const whatsappEl = document.getElementById('su-whatsapp');
+    const passwordEl = document.getElementById("su-password");
+    const confirmEl = document.getElementById("su-confirm");
+
+    let valid = true;
+
+    // --- التحقق من البيانات (Client-side Validation) ---
+    if (!nameEl.value.trim()) { showError(nameEl, "Name is required."); valid = false; }
+
+    if (!emailEl.value.trim()) {
+        showError(emailEl, "Email is required.");
+        valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        showError(emailEl, "Invalid email format.");
+        valid = false;
+    }
+
+    if (!phoneEl.value.trim() || !/^\d{11}$/.test(phoneEl.value)) {
+        showError(phoneEl, "Must be 11 digits.");
+        valid = false;
+    }
+
+    if (!whatsappEl.value.trim() || !/^\d{11}$/.test(whatsappEl.value)) {
+        showError(whatsappEl, "Must be 11 digits.");
+        valid = false;
+    }
+
+    // Password validation: min 6 chars, at least 1 uppercase, at least 1 special character
+    const password = passwordEl.value;
+    if (password.length < 6) {
+        showError(passwordEl, "Password must be at least 6 characters.");
+        valid = false;
+    } else {
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
+        
+        if (!hasUppercase) {
+            showError(passwordEl, "Password must contain at least one uppercase letter (A-Z).");
+            valid = false;
+        }
+        if (!hasSpecialChar) {
+            showError(passwordEl, "Password must contain at least one special character (!@#$%^&*...).");
+            valid = false;
+        }
+    }
+
+    if (passwordEl.value !== confirmEl.value) {
+        showError(confirmEl, "Passwords do not match.");
+        valid = false;
+    }
+
+    // --- إرسال البيانات للسيرفر ---
+    if (valid) {
+        const signupData = {
+            name: nameEl.value.trim(),
+            email: emailEl.value.trim(),
+            phoneNumber: phoneEl.value.trim(),
+            whatsappNumber: whatsappEl.value.trim(),
+            password: passwordEl.value,
+            confirmPassword: confirmEl.value
+        };
+
+        try {
+            signupBtn.disabled = true;
+            signupBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+
+            const response = await fetch(`${BASE_URL}/api/auth/signup`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(signupData)
+            });
+
+            const result = await response.json();
+            console.log(result)
+
+            if (response.ok) {
+                // نجاح التسجيل - عرض رسالة ثم التوجه للوجن
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Account Created!',
+                    text: 'Your account has been set up. Please login.',
+                    confirmButtonText: 'Login Now',
+                    confirmButtonColor: '#3085d6'
+                }).then((res) => {
+                    // التوجه لصفحة اللوجن
+                    window.location.href = "login.html";
+                });
+            } else {
+                // فشل (مثلاً الايميل مكرر)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Registration Failed',
+                    text: result.message || 'Check your data and try again.'
+                });
+            }
+
+        } catch (error) {
+            console.error("API Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error',
+                text: 'Could not connect to the server.'
+            });
+        } finally {
+            signupBtn.disabled = false;
+            signupBtn.innerText = "Sign up";
+        }
+    }
+});
+
+// وظائف مساعدة
+function showError(input, message) {
+    const error = document.createElement("div");
+    error.className = "auth-error";
+    error.style.color = "#ff4d4d";
+    error.style.fontSize = "11px";
+    error.style.marginTop = "4px";
+    error.textContent = message;
+    input.closest(".auth-field").appendChild(error);
+    input.style.borderColor = "#ff4d4d";
+}
+
+function clearErrors() {
+    document.querySelectorAll(".auth-error").forEach(e => e.remove());
+    document.querySelectorAll("input").forEach(i => i.style.borderColor = "");
+}
+
+// إظهار وإخفاء كلمة المرور
+document.querySelectorAll(".auth-toggle").forEach(icon => {
+    icon.addEventListener("click", () => {
+        const input = document.getElementById(icon.dataset.target);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+    });
+});
+</script>
+</body>
+</html>

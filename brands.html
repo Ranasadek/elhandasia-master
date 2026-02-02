@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brands Management - Elhandasiya</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .main-content { padding: 30px; background: #f9f9f9; min-height: 100vh; }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .btn-add { background: #ff7a00; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+        .table-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { text-align: left; padding: 15px; color: #888; border-bottom: 1px solid #eee; font-size: 14px; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; }
+        .brand-logo { width: 45px; height: 45px; border-radius: 6px; object-fit: contain; border: 1px solid #eee; }
+        .loading-spinner { text-align: center; padding: 40px; color: #ff7a00; }
+        .btn-delete { color: #ff4d4d; border: none; background: none; cursor: pointer; transition: 0.3s; }
+        .btn-delete:hover { transform: scale(1.2); }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-area">
+            <div class="hamburger">&#9776;</div>
+            <img src="img/Logo.png" alt="Logo" class="logo-img">
+            <div class="logo-info">
+                <h2>Elhandasiya</h2>
+                <p>Admin Panel</p>
+            </div>
+        </div>
+        <div class="header-body">
+            <div class="welcome">
+                <h1>Welcome back, Admin</h1>
+                <p>Here's what's happening today</p>
+            </div>
+            <div class="user-info">
+                <strong>Admin User</strong>
+                <span>admin@eshop.com</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <aside class="sidebar">
+            <div class="close-btn">&times;</div>
+            <nav class="menu">
+                <a href="index.html" class="item"><i data-lucide="home"></i>Home</a>
+                <a href="Dashboard.html" class="item"><i data-lucide="layout-grid"></i>Dashboard</a>
+                <a href="product.html" class="item"><i data-lucide="package"></i>Products</a>
+                <a href="categories.html" class="item"><i data-lucide="folder"></i>Categories</a>
+                <a href="order.html" class="item"><i data-lucide="shopping-cart"></i>Orders</a>
+                <a href="brands.html" class="item active"><i data-lucide="award"></i>Brands</a>
+                <a href="governorates.html" class="item "><i data-lucide="truck"></i>Governorates</a>
+                <!-- <a href="#" class="item "><i data-lucide="image"></i>Banners</a> -->
+                <!-- <a class="item"><i data-lucide="settings"></i>Settings</a> -->
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-flex">
+                <div class="title-section">
+                    <h1>Brands</h1>
+                    <p>View and manage your partner brands</p>
+                </div>
+                <button class="btn-add" onclick="addNewBrand()">
+                    <i data-lucide="plus"></i> Add New Brand
+                </button>
+            </div>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Logo</th>
+                            <th>Brand Name</th>
+                            <th>ID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="brandsTableBody">
+                        <tr><td colspan="4" class="loading-spinner">Loading brands...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+<script>
+    const API_URL = 'https://el-handasia.runasp.net/api/Brands';
+    let allBrands = []; // مصفوفة لتخزين البيانات محلياً
+
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        fetchBrands();
+        setupSidebar();
+    });
+
+    // 1. جلب البيانات
+    async function fetchBrands() {
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        try {
+            const response = await fetch(API_URL, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!response.ok) throw new Error('Failed to fetch');
+            allBrands = await response.json();
+            renderBrands(allBrands);
+        } catch (error) {
+            document.getElementById('brandsTableBody').innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Error loading brands</td></tr>`;
+        }
+    }
+
+    // 2. عرض البيانات في الجدول
+    function renderBrands(brands) {
+        const tableBody = document.getElementById('brandsTableBody');
+        tableBody.innerHTML = brands.map(brand => `
+            <tr>
+                <td><img src="${brand.imageUrl || 'img/Logo.png'}" class="brand-logo" onerror="this.src='img/Logo.png'"></td>
+                <td><strong>${brand.name}</strong></td>
+                <td>#${brand.id}</td>
+                <td>
+                    <button class="btn-delete" onclick="confirmDeleteBrand(${brand.id}, '${brand.name}')">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+        lucide.createIcons();
+    }
+
+    // 3. إضافة براند جديد
+    async function addNewBrand() {
+        const { value: formValues } = await Swal.fire({
+            title: 'Add New Brand',
+            html: `
+                <input id="swal-name" class="swal2-input" placeholder="Brand Name">
+             
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#ff7a00',
+            preConfirm: () => {
+                const name = document.getElementById('swal-name').value;
+              
+                if (!name) { Swal.showValidationMessage('Name is required'); return false; }
+                return { name};
+            }
+        });
+
+        if (formValues) {
+            const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formValues)
+                });
+                if (response.ok) {
+                    Swal.fire('Success', 'Brand added', 'success');
+                    fetchBrands();
+                }
+            } catch (err) {
+                Swal.fire('Error', 'Failed to add', 'error');
+            }
+        }
+    }
+
+    // 4. حذف براند (تماما مثل كود المنتجات الخاص بكِ)
+    async function confirmDeleteBrand(brandId, brandName) {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to delete brand: "${brandName}".`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+                const url = `${API_URL}/${brandId}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        // محاولة قراءة رسالة الخطأ من السيرفر (قد يكون مرتبط بمنتجات)
+                        const errorMsg = await response.text();
+                        throw new Error(errorMsg || 'Server denied deletion (Linked data?)');
+                    }
+                    return true;
+                } catch (error) {
+                    Swal.showValidationMessage(`Request failed: ${error.message}`);
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
+
+        if (result.isConfirmed) {
+            allBrands = allBrands.filter(b => b.id != brandId);
+            renderBrands(allBrands);
+            Swal.fire('Deleted!', 'Brand deleted successfully.', 'success');
+        }
+    }
+
+    function setupSidebar() {
+        const burger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const close = document.querySelector('.close-btn');
+        if(burger) burger.onclick = () => sidebar.classList.add('show');
+        if(close) close.onclick = () => sidebar.classList.remove('show');
+    }
+</script>
+</body>
+</html>

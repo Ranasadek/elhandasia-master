@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elhandasia E-commerce Header (Final Code & Dynamic Hover)</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* أنماط شريط البحث التلقائي - أولاً */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #FF6B00;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fff;
+            color: #333;
+        }
+
+        .search-wrapper input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
+            border-color: #FF6B00;
+        }
+
+        .search-icon-btn {
+            position: absolute;
+            right: 10px;
+            background: #FF6B00;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .search-icon-btn:hover {
+            background: #e65c00;
+            transform: scale(1.05);
+        }
+
+        /* Auto Complete Dropdown */
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            margin-top: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            color: #333;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: #f9f9f9;
+        }
+
+        .autocomplete-item.active {
+            background: #FF6B00;
+            color: white;
+        }
+
+        .autocomplete-item i {
+            margin-right: 10px;
+            color: #FF6B00;
+            width: 20px;
+            text-align: center;
+        }
+
+        .autocomplete-item.active i {
+            color: white;
+        }
+
+        /* Responsive للبحث */
+        @media (max-width: 768px) {
+    /* التأكد من أن الحاوية تسمح بتموضع الأيقونة داخلها */
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 236%;
+        margin-left: -134px;
+
+        margin-top: 22px;
+    }
+   
+    .user-icons {
+        /* margin-left: 0; */
+        /* margin-top: 5px; */
+        gap: 5px;
+        margin-top: 9px;
+    }
+
+    .search-container {
+        max-width: 100%;
+        padding: 0 15px; /* زيادة الهامش الجانبي قليلاً */
+        width: 100%;
+        margin-top: 15px; /* مسافة أوضح من اللوجو */
+    }
+
+    .main-header-content {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    /* ضبط شكل شريط البحث */
+    .search-wrapper input {
+        width: 100%;
+        padding: 0px 45px 10px 20px; /* الـ 45px لترك مساحة للأيقونة يمينًا */
+        font-size: 15px;
+        border-radius: 30px; /* حواف دائرية مثل الصورة */
+        border: 1px solid #ddd;
+        outline: none;
+    }
+
+    /* ضبط مكان وحجم الأيقونة */
+    .search-icon-btn {
+        position: absolute;
+        right: 15px; /* المسافة من اليمين */
+        top: 50%;
+        transform: translateY(-50%); /* التوسيط الرأسي الدقيق */
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* الحجم بناءً على الصورة */
+        width: 25px; 
+        height: 25px;
+        color: #777; /* لون رمادي مثل الصورة */
+    }
+
+    /* حجم الأيقونة نفسها بالداخل */
+    .search-icon-btn i {
+        font-size: 18px; 
+    }
+        }
+
+@media screen and (max-width: 768px) {
+    .icon-item {
+        padding: 0 8px;
+        margin-top: -31px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .logo-container h2 {
+        font-size: 18px;
+        margin-top: -31px;
+    }
+}
+
+        /* شريط تمرير للصور المصغرة فقط */
+        .thumbnails {
+            overflow-y: auto !important;
+            max-height: 500px !important;
+            scrollbar-width: thin !important;
+            scrollbar-color: #FF6B00 #f5f5f5 !important;
+        }
+        
+        /* تخصيص شريط التمرير (ويب كيت) */
+        .thumbnails::-webkit-scrollbar {
+            width: 6px !important;
+        }
+        
+        .thumbnails::-webkit-scrollbar-track {
+            background: #f5f5f5 !important;
+            border-radius: 3px !important;
+        }
+        
+        .thumbnails::-webkit-scrollbar-thumb {
+            background: #FF6B00 !important;
+            border-radius: 3px !important;
+        }
+        
+        .thumbnails::-webkit-scrollbar-thumb:hover {
+            background: #e65c00 !important;
+        }
+        
+        /* تأكد أن الصور المصغرة تبقى كما هي */
+        .thumbnails img {
+            flex-shrink: 0 !important;
+        }
+        
+        /* منع تأثير التمرير على الصفحة */
+        .thumbnails {
+            overscroll-behavior: contain !important;
+        }
+
+        .btn-order:hover {
+            background: linear-gradient(135deg, #27ae60, #219653) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4) !important;
+            
+        }
+
+        .btn-order:active {
+            transform: translateY(-1px) !important;
+        }
+
+        /* Action buttons container */
+        .action-btns {
+            display: flex !important;
+            gap: 20px !important;
+            margin-top: 30px !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+        }
+
+        /* Responsive design for buttons */
+        @media (max-width: 768px) {
+            .action-btns {
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+            
+            .btn-cart, .btn-order {
+                flex: 1 !important;
+                min-width: 0 !important;
+                padding: 12px 5px !important;
+                font-size: 14px !important;
+                text-align: center !important;
+            }
+            
+            .containers h1{
+                font-size:22px;
+                margin:0 0 6px;
+                font-weight:600;
+                margin-left: 15px;
+            }
+            
+            p.subtitle{
+                margin:0 0 28px;
+                color:#71717A;
+                font-size:13px;
+                margin-left: 15px;
+            }
+        }
+        
+        /* Add to Cart button styling for consistency */
+        .btn-cart {
+            background: linear-gradient(135deg, #FF6B00, #e65c00) !important;
+            color: white !important;
+            border: none !important;
+            padding: 14px 28px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            min-width: 180px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3) !important;
+            letter-spacing: 0.5px !important;
+            margin-top: 118px;
+           
+        }
+
+        .btn-cart:hover {
+            background: linear-gradient(135deg, #e65c00, #cc5200) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4) !important;
+        }
+
+        .btn-cart:active {
+            transform: translateY(-1px) !important;
+        }
+        
+        /* زر Add to Cart في صفحة التفاصيل */
+        .btn-cart {
+            background: #FF6B00 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            border-radius: 4px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            min-width: 160px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+        }
+        
+        .btn-cart:hover {
+            background: #e65c00 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3) !important;
+        }
+        
+        /* زر Order Now في صفحة التفاصيل */
+        .btn-order {
+            background: #2ecc71 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            border-radius: 4px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            min-width: 160px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            margin-top: 118px;
+
+
+        }
+        
+        .btn-order:hover {
+            background: #27ae60 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3) !important;
+        }
+        
+        /* حاوية الأزرار */
+        .action-btns {
+            display: flex !important;
+            gap: 15px !important;
+            /* margin-top: 25px !important; */
+            flex-wrap: wrap !important;
+        }
+        
+        /* Search animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @media (max-width: 768px) {
+    /* استهداف الـ span الموجود داخل رابط الداشبورد فقط */
+    #admin-dash-link span {
+        display: none !important;
+    }
+
+    /* اختياري: توسيط الأيقونة بعد اختفاء الكلمة */
+    #admin-dash-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+#admin-dash-link {
+    display: none !important;
+}
+/* button.btn.btn-order {
+    margin-top: -183px;
+} */
+ /* كود الـ CSS اللي بعتهولك في الرد اللي فات */
+ .whatsapp-float-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; align-items: center; gap: 10px; }
+        .whatsapp-btn { width: 60px; height: 60px; background-color: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s ease; text-decoration: none; }
+        .whatsapp-btn:hover { transform: scale(1.1); background-color: #128c7e; }
+        .whatsapp-tooltip { background-color: #333; color: white; padding: 8px 15px; border-radius: 20px; font-size: 14px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; white-space: nowrap; direction: rtl; }
+        .whatsapp-float-container:hover .whatsapp-tooltip { opacity: 1; visibility: visible; }
+
+   </style>
+</head>
+<body>
+    <header class="elhandasia-header">
+        <div class="top-bar">
+            <a href="login.html" id="mainLoginBtn" class="btn-login">Log In</a>
+            <div class="contact-info">
+                <span class="contact-text">Contact Us</span>
+                <a href="tel:01095938913" class="contact-number">01095938913</a>
+            </div>
+        </div>
+
+        <div class="main-header-content">
+            <div class="logo-container">
+                <img src="img/Logo.png" alt="Elhandasia Logo" class="logo-image">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">Elhandasia</a></h2>
+            </div>
+            
+            <!-- شريط البحث الجديد -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search for product..." autocomplete="off">
+                    <button class="search-icon-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="autocomplete-dropdown" id="autocompleteDropdown">
+                        <!-- Auto complete items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-icons">
+                <a href="settings.html" id="userAccountIcon" class="icon-item" style="display: none;">
+                    <i class="far fa-user"></i>
+                    <span class="icon-label">Account</span>
+                </a>
+            </div>
+            <a href="Dashboard.html" class="icon-item" id="admin-dash-link">
+                <i class="fas fa-th-large"></i>
+                <span style="    font-size: 12px;
+            margin-top: 5px;">Dashboard</span> </a>
+            <a href="javascript:void(0)" onclick="handleCartClick()" class="icon-item"> 
+                <i class="fas fa-shopping-cart"></i>
+                <span class="icon-label">Cart</span>
+            </a>
+        </div>
+    </header>
+    
+    <div class="container" id="product-page">
+        <!-- Product will be loaded here -->
+    </div>
+    
+    <div class="section2">
+        <div class="services">
+            <div class="service-box">
+                <img src="img/2.jpeg" alt="Free Shipping">
+                <div class="service-title">Free Shipping</div>
+                <div class="service-text">Orders above 20K EGP</div>
+            </div>
+            
+            <div class="divider" aria-hidden="true"></div>
+            
+            <div class="service-box">
+                <img src="img/3.jpeg" alt="Secure Payment">
+                <div class="service-title">Secure Payment</div>
+                <div class="service-text">Got 100% Payment Safe</div>
+            </div>
+            
+            <div class="divider" aria-hidden="true"></div>
+            
+            <div class="service-box">
+                <div class="support-icon">
+                    <img src="img/4.jpeg" class="icon-base" alt="Support">
+                </div>
+                <div class="service-title">Support 24/7</div>
+                <div class="service-text">Top quality 24/7 Support</div>
+            </div>
+            
+            <div class="divider" aria-hidden="true"></div>
+            
+            <div class="service-box">
+                <img src="img/6.jpeg" alt="Money Back">
+                <div class="service-title">100% Money Back</div>
+                <div class="service-text">Customers Money Backs</div>
+            </div>
+            
+            <div class="divider" aria-hidden="true"></div>
+            
+            <div class="service-box">
+                <img src="img/8.jpeg" alt="Quality Products">
+                <div class="service-title">Quality Products</div>
+                <div class="service-text">15 Years of Quality and Trust</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="containers">
+        <h1>Products related to this item</h1>
+        <p class="subtitle">Modern, Powerful Selection</p>
+        <div class="grid2" id="related-products-grid">
+            <!-- Related products will be loaded here -->
+        </div>
+    </div>
+
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+            
+            <div>
+                <div class="footer-footer">
+                    <div class="footer-header">
+                         <div class="footer-left">
+                            <img src="img/Logo.png" alt="El-Handasiya Logo">
+                        </div>
+                        <div class="footer-right">
+                            <h3>El-Handasia</h3>
+                            <p style="margin: 0; ">Electronics & Technology</p>
+                        </div>
+                    </div>
+      
+                    <p class="footer-description">Your trusted partner for electronics, laptops, CCTV systems, and computer accessories in Egypt.</p>
+                    <div class="socials" aria-hidden="false">
+                      <a href="https://www.facebook.com/share/16uDx46Ntk/" target="_blank" rel="noopener noreferrer" aria-label="facebook">
+                          <i class="fab fa-facebook-f"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="twitter">
+                          <i class="fab fa-twitter"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="instagram">
+                          <i class="fab fa-instagram"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="youtube">
+                          <i class="fab fa-youtube"></i>
+                      </a>
+                  </div>
+                  
+                </div>
+            </div>
+      
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <nav class="links" aria-label="Quick Links">
+                    <a href="#">About Us</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Track Order</a>
+                    <a href="#">Returns & Refunds</a>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">FAQs</a>
+                </nav>
+            </div>
+      
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <nav class="cats" aria-label="Categories">
+                    <a href="#">Laptops</a>
+                    <a href="#">Storage Devices</a>
+                    <a href="#">CCTV Systems</a>
+                    <a href="#">Accessories</a>
+                    <a href="#">Keyboards & Mice</a>
+                    <a href="#">Audio Devices</a>
+                </nav>
+            </div>
+      
+            <div class="footer-col contact">
+                <h4>Contact Us</h4>
+                
+                <div class="contact-content">
+                    
+                    <div class="info">
+                        <div class="row"><i class="fa-solid fa-location-dot"></i><div>Cairo, Egypt<br><small style="color:var(--muted)">Nasr City, Main Street</small></div></div>
+                        
+                        <div class="row">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <a href="tel:+201234567890">+20 123 456 7890</a>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <i class="fa-regular fa-envelope"></i>
+                            <div>
+                                <a href="mailto:info@elhandasia.com">info@elhandasia.com</a>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size:12px; color:var(--muted); margin-top:6px; text-align: left;">
+                            <strong style="color:var(--white)">Working Hours:</strong><br>
+                            Sat - Thu: 9:00 AM - 9:00 PM<br>
+                            Friday: 2:00 PM - 9:00 PM
+                        </div>
+                    </div>
+      
+                    <a href="https://maps.app.goo.gl/YZeAaQPLviXbDjHDA?g_st=ac" target="_blank" class="map" aria-label="View location on Google Maps">
+                        <img src="img/WhatsApp Image 2025-12-07 at 11.58.15 PM.jpeg" alt="Map location ">
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-divider"></div>
+      
+        <div class="footer-bottom">
+            <div class="copyright">© 2024 El-Handasia Company. All rights reserved.</div>
+      
+            <div class="developed" aria-hidden="false">
+                <span class="by">Developed By</span>
+                <span class="beta">BETA</span>
+            </div>
+            
+            <div class="bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+      </footer>
+    
+    <!-- Modal HTML -->
+    <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;">
+        <div class="modal-content"  style="background: white; padding: 40px; border-radius: 25px; width: 90%;    max-width: 447px;
+    height: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.2); position: relative; font-family: sans-serif;">
+            <a href="javascript:void(0)" onclick="closeModal()" style="color: #FF6B00; text-decoration: none; font-size: 14px; display: block; margin-bottom: 20px; font-weight: 500; text-align: left;">
+                <i class="fas fa-arrow-left"></i> Back to Product
+            </a>
+            <div style="font-size: 28px; font-weight: bold; margin-bottom: 25px; color: #111;">Order Summary</div>
+            
+            <div id="summaryBox" style="background: #fcfcfc; border: 1px solid #f0f0f0; border-radius: 15px; padding: 20px; margin-bottom: 25px;">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <button onclick="sendToWhatsApp()" style="background: #25D366; color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.3s ease;">
+                <i class="fab fa-whatsapp" style="font-size: 24px;"></i> Send Order via WhatsApp
+            </button>
+            
+            <p style="color: #777; font-size: 12px; margin-top: 15px;">
+                <i class="fas fa-info-circle"></i> Our team will contact you within 24 hours to confirm your order.
+            </p>
+        </div>
+    </div>
+    <div class="whatsapp-float-container">
+        <span class="whatsapp-tooltip">استفسارات</span>
+        <a href="https://wa.me/201018413535" id="whatsapp-link" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+    <script>
+// كود الـ JS عشان يلقط اسم المنتج
+document.addEventListener('click', function(e) {
+            if (e.target.closest('#whatsapp-link')) {
+                const whatsappLink = document.getElementById('whatsapp-link');
+                const productName = document.querySelector('.product-details h1')?.innerText || "هذا المنتج";
+                const message = encodeURIComponent(`السلام عليكم، كنت حابب استفسر عن منتج: ${productName}`);
+                whatsappLink.href = `https://wa.me/201018413535?text=${message}`;
+            }
+        });
+    </script>
+
+<script src="js/js.js"></script>
+<script src="js/jss.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product - Elhandasiya</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-area">
+        <div class="hamburger">&#9776;</div>
+        <img src="img/Logo.png" alt="Logo" class="logo-img">
+        <div class="logo-info">
+            <h2>Elhandasiya</h2>
+            <p>Admin Panel</p>
+        </div>
+    </div>
+    <div class="header-body">
+        <div class="welcome">
+            <h1>Welcome back, Admin</h1>
+            <p>Here's what's happening today</p>
+        </div>
+        <div class="user-info">
+            <strong>Admin User</strong>
+            <span>admin@eshop.com</span>
+        </div>
+    </div>
+</header>
+
+<div class="page-container">
+    <aside class="sidebar">
+        <div class="close-btn">&times;</div> <!-- زر الإكس -->
+        <nav class="menu">
+            <a href="index.html" class="item"><i data-lucide="home"></i>Home</a>
+          <a href="Dashboard.html" class="item "><i data-lucide="layout-grid"></i>Dashboard</a>
+          <a href="product.html" class="item active"><i data-lucide="package"></i>Products</a>
+          <a href="categories.html" class="item"> <i data-lucide="folder"></i>Categories</a>
+          <a href="order.html" class="item"><i data-lucide="shopping-cart"></i>Orders</a>
+          <a href="brands.html" class="item"><i data-lucide="award"></i>Brands</a>
+          <!-- <a href="#" class="item"><i data-lucide="image"></i>Banners</a> -->
+          <!-- <a class="item"><i data-lucide="settings"></i>Settings</a> -->
+        </nav>
+      </aside>
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-title-area" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <a href="product.html" class="back-link" style="color: #333; display: flex; align-items: center; text-decoration: none;">
+                    <i data-lucide="arrow-left" style="width: 20px; height: 20px; cursor: pointer;"></i>
+                </a>
+                <div class="title-text">
+                    <h2 style="margin: 0; font-size: 24px;">Add Product</h2>
+                    <p style="margin: 0; color: #888; font-size: 14px;">Create a new product</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div id="addProductForm">
+                <p class="pppp">Product Information</p>
+                
+                <div class="form-group">
+                    <label>Product name</label>
+                    <input type="text" id="p-name" placeholder="Enter product name">
+                </div>
+
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="text" id="p-image-display" placeholder="Image name will appear here" readonly>
+                    <div style="margin-top: 8px;">
+                        <a href="javascript:void(0)" onclick="document.getElementById('file-upload').click()" style="color: #71717A; font-size: 13px; text-decoration: none; font-weight: 500;">
+                           <i data-lucide="upload" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i>
+                           Upload a product image (JPG, PNG, or WebP)
+                        </a>
+                    </div>
+                    <input type="file" id="file-upload" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="handleFileSelect(this)">
+                </div>
+
+                <div class="form-row-triple" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" id="p-price" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount Start</label>
+                        <input type="datetime-local" id="p-discount-start">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount End</label>
+                        <input type="datetime-local" id="p-discount-end">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount Price</label>
+                        <input type="number" id="p-discount-price" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="p-category" onchange="handleCategoryChange(this.value)">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Sub Category</label>
+                    <select id="p-sub-category">
+                        <option value="">Select Sub Category (Optional)</option>
+                    </select>
+                </div>
+                
+                <div id="specs-container" style="display: none; margin: 20px 0; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
+                    <h3 style="font-size: 14px; font-weight: bold; margin-bottom: 12px; color: #374151;">Product Specifications</h3>
+                    <div id="specs-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        </div>
+                </div>
+                
+
+                <div class="form-row-double">
+                    <div class="form-group">
+                        <label>Product description</label>
+                        <input type="text" id="p-description" placeholder="Short description">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Brand</label>
+                        <select id="p-brand">
+                            <option value="">Select Brand</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Information</label>
+                    <input type="text" id="p-info" placeholder="Detailed technical info">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="create-btn" id="saveBtn">Create Product</button>
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const BASE_URL = 'https://el-handasia.runasp.net'; 
+    const TOKEN = (localStorage.getItem('userToken') || localStorage.getItem('token'))?.trim(); 
+    let selectedFile = null;
+
+    // 1. دالة لتحديث الأيقونات
+    function refreshIcons() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
+    // 2. جلب الخصائص + الأقسام الفرعية عند اختيار القسم الرئيسي
+    async function handleCategoryChange(categoryId) {
+        const specsContainer = document.getElementById('specs-container');
+        const specsList = document.getElementById('specs-list');
+        const subSelect = document.getElementById('p-sub-category'); // تأكدي أن id هذا الـ select موجود في الـ HTML
+        
+        if (!categoryId) {
+            if (specsContainer) specsContainer.style.display = 'none';
+            if (subSelect) subSelect.innerHTML = '<option value="">Select Sub Category</option>';
+            return;
+        }
+
+        // --- أولاً: جلب الأقسام الفرعية ---
+        if (subSelect) {
+            try {
+                subSelect.innerHTML = '<option value="">Loading sub-categories...</option>';
+                const subRes = await fetch(`${BASE_URL}/api/SubCategories/by-category/${categoryId}`, {
+                    headers: { 'Authorization': `Bearer ${TOKEN}` }
+                });
+                const subCategories = await subRes.json();
+                subSelect.innerHTML = '<option value="">Select Sub Category (Optional)</option>';
+                subCategories.forEach(sub => {
+                    subSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
+                });
+            } catch (error) {
+                console.error("Sub-Category Error:", error);
+                subSelect.innerHTML = '<option value="">No sub-categories found</option>';
+            }
+        }
+
+        // --- ثانياً: جلب المواصفات (كودك الأصلي) ---
+        try {
+            const response = await fetch(`${BASE_URL}/api/admin/categories/${categoryId}/specifications`, {
+                headers: { 'Authorization': `Bearer ${TOKEN}` }
+            });
+
+            if (!response.ok) throw new Error('Specs not found');
+
+            const specifications = await response.json();
+            specsList.innerHTML = ''; 
+
+            if (specifications && specifications.length > 0) {
+                specsContainer.style.display = 'block';
+                specifications.forEach(spec => {
+                    specsList.innerHTML += `
+                        <div class="spec-item" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label style="font-size: 13px; font-weight: bold; color: #374151;">${spec.specificationName}</label>
+                            <input type="text" 
+                                   class="product-spec-input" 
+                                   data-spec-id="${spec.id}" 
+                                   placeholder="Enter ${spec.specificationName}..."
+                                   style="padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                        </div>`;
+                });
+                refreshIcons();
+            } else {
+                specsContainer.style.display = 'none';
+            }
+        } catch (error) {
+            console.error("Specs Error:", error);
+            if (specsContainer) specsContainer.style.display = 'none';
+        }
+    }
+
+    // 3. تحميل البيانات الأساسية (أقسام وبراندات)
+    async function loadInitialData() {
+        try {
+            const [catRes, brandRes] = await Promise.all([
+                fetch(`${BASE_URL}/api/admin/categories`, { headers: { 'Authorization': `Bearer ${TOKEN}` } }),
+                fetch(`${BASE_URL}/api/Brands`, { headers: { 'Authorization': `Bearer ${TOKEN}` } })
+            ]);
+
+            if (catRes.ok) {
+                const categories = await catRes.json();
+                const catSelect = document.getElementById('p-category');
+                catSelect.innerHTML = '<option value="">Select Category</option>';
+                categories.forEach(c => catSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`);
+            }
+
+            if (brandRes.ok) {
+                const brands = await brandRes.json();
+                const brandSelect = document.getElementById('p-brand');
+                brandSelect.innerHTML = '<option value="">Select Brand</option>';
+                brands.forEach(b => brandSelect.innerHTML += `<option value="${b.id}">${b.name}</option>`);
+            }
+        } catch (e) {
+            console.error("Load Error:", e);
+        } finally {
+            refreshIcons();
+        }
+    }
+
+    // 4. حفظ المنتج (تم إضافة الـ SubCategoryId هنا)
+    async function saveProduct() {
+        const name = document.getElementById('p-name').value.trim();
+        const price = document.getElementById('p-price').value;
+        const catId = document.getElementById('p-category').value;
+        const subCatId = document.getElementById('p-sub-category')?.value; // سحب قيمة القسم الفرعي
+        const brandId = document.getElementById('p-brand').value;
+        const discountPrice = document.getElementById('p-discount-price').value;
+        const startDate = document.getElementById('p-discount-start').value;
+        const endDate = document.getElementById('p-discount-end').value;
+
+        if (!name || !price || !catId || !selectedFile) {
+            Swal.fire('تنبيه', 'برجاء ملء البيانات الأساسية واختيار صورة', 'warning');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('Name', name);
+        formData.append('Price', parseFloat(price));
+        
+        // إرسال القسم الرئيسي
+        formData.append('CategoryId', parseInt(catId));
+        
+        // إرسال القسم الفرعي إذا تم اختياره
+        if (subCatId) {
+            formData.append('SubCategoryId', parseInt(subCatId));
+        }
+
+        // إرسال الخصم والتواريخ
+        formData.append('DiscountPrice', discountPrice ? parseFloat(discountPrice) : 0);
+        if (startDate) formData.append('DiscountStartDate', new Date(startDate).toISOString());
+        if (endDate) formData.append('DiscountEndDate', new Date(endDate).toISOString());
+
+        formData.append('Description', document.getElementById('p-description').value || "");
+        formData.append('BrandId', parseInt(brandId));
+        formData.append('MainImage', selectedFile);
+        formData.append('AdditionalInformation', document.getElementById('p-info').value || "");
+
+        // تجميع الخصائص
+        const specInputs = document.querySelectorAll('.product-spec-input');
+        specInputs.forEach((input, index) => {
+            if (input.value.trim()) {
+                formData.append(`Specifications[${index}].CategorySpecificationId`, input.dataset.specId);
+                formData.append(`Specifications[${index}].Value`, input.value.trim());
+            }
+        });
+
+        try {
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true; 
+            btn.textContent = 'Saving...';
+
+            const response = await fetch(`${BASE_URL}/api/admin/products`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${TOKEN}` },
+                body: formData
+            });
+
+            if (response.ok) {
+                Swal.fire('Success!', 'Product has been added successfully', 'success')
+                    .then(() => window.location.href = 'product.html');
+            } else {
+                const err = await response.text();
+                Swal.fire('خطأ', err, 'error');
+            }
+        } catch (err) {
+            Swal.fire('خطأ', 'فشل الاتصال بالسيرفر', 'error');
+        } finally {
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = false;
+            btn.textContent = 'Create Product';
+        }
+    }
+
+    // 5. عند بدء تشغيل الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!TOKEN) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // ربط الأحداث
+        document.getElementById('p-category').onchange = (e) => handleCategoryChange(e.target.value);
+        document.getElementById('saveBtn').onclick = saveProduct;
+        document.getElementById('cancelBtn').onclick = () => window.location.href = 'product.html';
+
+        loadInitialData();
+        refreshIcons();
+    });
+
+    function handleFileSelect(input) {
+        if (input.files && input.files[0]) {
+            selectedFile = input.files[0];
+            document.getElementById('p-image-display').value = selectedFile.name;
+        }
+    }
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</body>
+</html>

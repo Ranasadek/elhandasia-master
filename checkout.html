@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - ElHandasia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #f4f4f4; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        
+        .checkout-container { 
+            width: 100%; 
+            max-width: 500px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            text-align: center; 
+        }
+
+        .back-link { 
+            text-decoration: none; 
+            color: #FF6B00; 
+            font-weight: 500; 
+            display: block; 
+            margin-bottom: 20px; 
+        }
+
+        h2 { margin-bottom: 25px; font-weight: 700; }
+
+        /* تنسيق الحقول: العنوان فوق الحقل */
+        .customer-info-section {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #FF6B00;
+            box-shadow: 0 0 5px rgba(255, 107, 0, 0.2);
+        }
+
+        /* ملخص الطلب */
+        .order-summary { 
+            background: #f9f9f9; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            border: 1px solid #eee; 
+            text-align: left; 
+        }
+
+        .summary-item { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 10px 0; 
+            border-bottom: 1px solid #eee; 
+        }
+
+        .total-row { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 15px; 
+            padding-top: 15px; 
+            border-top: 2px solid #ddd; 
+            font-weight: bold; 
+            font-size: 1.2rem; 
+        }
+
+        /* زر الواتساب */
+        .submit-btn { 
+            width: 100%; 
+            padding: 16px; 
+            background: #25D366; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+        }
+
+        .submit-btn:hover { background: #1ebc5a; }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <a href="cart.html" class="back-link">← Back to Shopping Cart</a>
+    <h2>Order Summary</h2>
+    
+    <div class="customer-info-section">
+        <div class="form-group">
+            <label for="customer-name">Your Name:</label>
+            <input type="text" id="customer-name" placeholder="" required>
+        </div>
+        <div class="form-group">
+            <label for="customer-phone">Phone Number:</label>
+            <input type="tel" id="customer-phone" placeholder="" required>
+        </div>
+    </div>
+    
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+    <div class="order-summary">
+        <div id="summary-items"></div> 
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="summary-total" style="color: #FF6B00;">0 EGP</span>
+        </div>
+    </div>
+
+    <button onclick="sendToWhatsApp()" class="submit-btn">
+        <i class="fab fa-whatsapp"></i> Inquiry via WhatsApp
+    </button>
+</div>
+<script>
+    // 1. تحميل ملخص الطلب للعرض في الصفحة
+    function loadSummary() {
+        const container = document.getElementById("summary-items");
+        const totalEl = document.getElementById("summary-total");
+        const cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = "<p style='text-align:center;'>Your cart is empty</p>";
+            return;
+        }
+
+        container.innerHTML = cart.map(item => {
+            const price = parseFloat(item.price.toString().replace(/[^0-9.]/g, '')) || 0;
+            const qty = parseInt(item.quantity) || 1;
+            total += (price * qty);
+            return `
+                <div class="summary-item">
+                    <span>${item.name} (x${qty})</span>
+                    <strong>${(price * qty).toLocaleString()} EGP</strong>
+                </div>
+            `;
+        }).join("");
+
+        totalEl.textContent = `${total.toLocaleString()} EGP`;
+    }
+
+    // 2. إرسال الطلب للسيرفر + رسالة الواتساب بالشكل المطلوب
+    async function sendToWhatsApp() {
+        const cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+        const customerName = document.getElementById("customer-name").value.trim();
+        const customerPhone = document.getElementById("customer-phone").value.trim();
+        const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+
+        if (cart.length === 0 || !customerName || !customerPhone) {
+            alert("الرجاء إكمال البيانات وإضافة منتجات للسلة");
+            return;
+        }
+
+        // --- الجزء الخاص بالتسميع في السيرفر ---
+        const orderData = {
+            customerPhone: customerPhone,
+            whatsappNumber: "201018413535",
+            notes: `العميل: ${customerName}`,
+            items: cart.map(item => ({
+                productId: Number(item.id || item.productId),
+                quantity: Number(item.quantity)
+            }))
+        };
+
+        try {
+            await fetch('https://el-handasia.runasp.net/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(orderData)
+            });
+        } catch (error) { console.error("Error syncing with server", error); }
+
+        // --- الجزء الخاص بتنسيق رسالة الواتساب (بالشكل اللي طلبتيه) ---
+        let productListText = "";
+        let total = 0;
+
+        cart.forEach(item => {
+            const price = parseFloat(item.price.toString().replace(/[^0-9.]/g, '')) || 0;
+            const qty = parseInt(item.quantity) || 1;
+            total += (price * qty);
+            
+            // التنسيق المطلوب للمنتجات
+            productListText += `*📦 المنتج:* ${item.name}%0A` +
+                               `*💰 السعر:* ${price.toLocaleString()} EGP%0A` +
+                               `*🔢 الكمية:* ${qty}%0A%0A`;
+        });
+
+        const whatsappNumber = "201018413535";
+        const message = `السلام عليكم، أريد طلب المنتجات التالية:%0A%0A` +
+                        `${productListText}` +
+                        `--------------------------%0A` +
+                        `*👤 بيانات العميل:*%0A` +
+                        `*الاسم:* ${customerName}%0A` +
+                        `*الهاتف:* ${customerPhone}%0A%0A` +
+                        `*💵 الإجمالي:* ${total.toLocaleString()} EGP`;
+
+        // فتح الواتساب
+        window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+        
+        // تنظيف السلة وإعادة تحميل الصفحة
+        localStorage.removeItem("shopping_cart");
+        setTimeout(() => location.reload(), 2000);
+    }
+
+    window.onload = loadSummary;
+</script>
+</body>
+</html>

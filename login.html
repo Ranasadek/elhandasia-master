@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ستايل بسيط لرسالة الخطأ لضمان ظهورها */
+        .error-message {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="login-box">
+        <h1>Welcome back</h1>
+        <p class="subtitle">Enter your credentials to login</p>
+
+        <form id="loginForm">
+            <div class="field">
+                <label>Email</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" id="email" placeholder="email@example.com" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock icon-left"></i>
+                    <input type="password" id="password" required>
+                    <i class="fa-regular fa-eye toggle-password" id="togglePassword" style="cursor: pointer;"></i>
+                </div>
+            </div>
+
+            <button type="submit" id="loginBtn" class="buttons"><p style="    margin-top: -4px;">Login</p></button>
+
+            <p class="signup">
+                Don't have an account? <a href="signup.html">Sign up</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+
+    // 1. وظيفة إظهار/إخفاء كلمة المرور
+    const togglePassword = document.getElementById("togglePassword");
+    togglePassword.addEventListener("click", function () {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+
+    // 2. معالجة إرسال الفورم
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        
+        clearErrors();
+        let isValid = true;
+
+        // التحقق من الإيميل
+        if (!emailInput.value.includes("@")) {
+            showError(emailInput, "Please enter a valid email.");
+            isValid = false;
+        }
+
+        // التحقق من طول كلمة المرور
+        if (passwordInput.value.length < 6) {
+            showError(passwordInput, "Password must be at least 6 characters.");
+            isValid = false;
+        }
+
+        if (isValid) {
+            await loginUser(emailInput.value, passwordInput.value);
+        }
+    });
+
+    async function loginUser(email, password) {
+        loginBtn.disabled = true;
+        loginBtn.innerText = "Logging in...";
+
+        const apiUrl = "https://el-handasia.runasp.net/api/auth/login";
+
+        console.log("Attempting login to:", apiUrl);
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                mode: 'cors', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            console.log("Response status:", response.status, response.statusText);
+
+            if (!response.ok) {
+                let errorMessage = "Invalid email or password";
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    errorMessage = response.statusText || errorMessage;
+                }
+                showError(passwordInput, errorMessage);
+                return;
+            }
+
+            const data = await response.json();
+
+            console.log("Login Success - Full Response:", data);
+            
+            const token = data.token || data.accessToken || data.data?.token;
+            if (token) {
+                localStorage.setItem("token", token);
+                localStorage.setItem("userToken", token);
+                
+                // Try to decode JWT token to check for role (if it's a JWT)
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    console.log("Token payload:", payload);
+                    if (payload.role) {
+                        localStorage.setItem("userRole", payload.role);
+                    }
+                    if (payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']) {
+                        localStorage.setItem("userRole", payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+                    }
+                } catch (e) {
+                    console.log("Token is not a JWT or couldn't be decoded:", e);
+                }
+            }
+            
+            // Store user info
+            if (data.email) {
+                localStorage.setItem("userEmail", data.email);
+            }
+            if (data.role) {
+                localStorage.setItem("userRole", data.role);
+            }
+            if (data.userRole) {
+                localStorage.setItem("userRole", data.userRole);
+            }
+            
+            // Check if user has admin role
+            const userRole = localStorage.getItem("userRole");
+            console.log("User Role:", userRole);
+
+            // Use SweetAlert2 if available, otherwise use alert
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Success!',
+                    text: 'Welcome back!',
+                    confirmButtonText: 'Continue',
+                    confirmButtonColor: '#FF6B00'
+                }).then(() => {
+                    window.location.href = "index.html"; 
+                });
+            } else {
+                alert("Login Success ✅");
+                window.location.href = "index.html"; 
+            }
+            
+        } catch (error) {
+            console.error("Network Error:", error);
+            
+            // More specific error messages
+            let errorMsg = "Connection error. Please try again later.";
+            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                errorMsg = "Cannot connect to server. Please check your internet connection or try again later.";
+            } else if (error.message.includes('CORS')) {
+                errorMsg = "CORS error. Please contact the administrator.";
+            }
+            
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: errorMsg
+                });
+            } else {
+                alert(errorMsg);
+            }
+        } finally {
+            // إعادة الزر لوضعه الطبيعي
+            loginBtn.disabled = false;
+            loginBtn.innerText = "Login";
+        }
+    }
+
+    // وظائف مساعدة للإشعارات
+    function showError(input, message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.textContent = message;
+        input.closest(".field").appendChild(errorDiv);
+    }
+
+    function clearErrors() {
+        document.querySelectorAll(".error-message").forEach(e => e.remove());
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>

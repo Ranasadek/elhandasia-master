@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Elhandasiya</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --border-color: #f0f0f0;
+            --text-main: #1a1a1a;
+            --text-muted: #888;
+            --brand-orange: #FF6B00;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .main-headers {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5%;
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            height: 70px;
+        }
+
+        .brand-identity {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 150px;
+            height: auto;
+        }
+
+        .brand-name {
+            font-size: 26px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 -28px 0 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-name::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--brand-orange);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 4px;
+            margin-top: 8px;
+        }
+
+        .search-bar {
+            display: none; /* سيتم التحكم فيه عبر JS */
+            align-items: center;
+            flex-grow: 1;
+            max-width: 450px;
+            border-radius: 27px;
+            overflow: hidden;
+            background-color: #F2EEEE;
+            height: 38px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0 15px;
+            outline: none;
+        }
+
+        .search-icon-btn {
+            border: none;
+            background: transparent;
+            padding-right: 15px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        a.icon-items {
+            color: black;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .wishlist-page-container {
+            max-width: 1337px;
+            margin: 0 auto;
+            padding: 20px 5%;
+        }
+
+        .wishlist-headers h1 {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin: 30px 0 40px 0;
+        }
+
+        .empty-wishlist-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .heart-circle {
+            background-color: #f9f9f9;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .heart-circle i {
+            font-size: 60px;
+            color: #e0e0e0;
+        }
+
+        .btn-browse {
+            background-color: #FF6B00;
+            color: white;
+            padding: 12px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-browse:hover {
+            background-color: #4CAF50;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            max-width: 1100px;
+            gap: 21px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 0;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            width: 257px;
+            flex-direction: column;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .card-info {
+            padding: 10px;
+        }
+        
+        .remove-fav {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--brand-orange);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 55%;
+            padding: 1px 7px;
+            min-width: 8px;
+            text-align: center;
+            border: 2px solid white;
+        }
+ 
+        /* تنسيقات الموبايل */
+        @media (max-width: 600px) {
+            /* 1. تنسيق الحاوية الأساسية */
+            .wishlist-page-container {
+                padding: 10px !important;
+                max-width: 100% !important;
+            }
+
+           /* 2. الهيدر */
+.main-headers {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 5px 10px !important;
+    height: 60px !important;
+    
+    /* الإضافة الجديدة لتغيير الاتجاه */
+    direction: rtl !important; 
+}
+            /* إخفاء العناصر غير الضرورية */
+            .brand-identity, .user-name, .account-text, .brand-name {
+                display: none !important;
+            }
+
+            /* شريط البحث - إخفاء عندما لا توجد منتجات */
+            .search-bar.hidden {
+                display: none !important;
+            }
+            
+            .search-bar {
+                display: flex !important;
+                flex: 1 !important;
+                margin: 0 8px !important;
+                height: 35px !important;
+                min-width: 0 !important;
+            }
+
+            /* 3. شبكة المنتجات */
+            .products-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                padding: 5px !important;
+                max-width: 100% !important;
+            }
+
+            /* 4. تصميم الكارت */
+            .product-card {
+                width: 100% !important;
+                min-width: 0 !important;
+                border-radius: 12px !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+                border: 1px solid #eee !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* ظبط حجم الصورة */
+            .product-card img {
+                height: 140px !important;
+                object-fit: cover !important;
+            }
+
+            /* ظبط النصوص */
+            .product-card h3, .product-card .product-name {
+                font-size: 14px !important;
+            }
+            
+            .card-info {
+                padding: 8px !important;
+            }
+
+            .btn-browse {
+                padding: 8px 15px !important;
+                font-size: 13px !important;
+            }
+            
+            .product-card .fa-star, .product-card i.fas.fa-star, .product-card i.far.fa-star {
+                font-size: 10px !important;
+                margin-right: 1px !important;
+            }
+            
+            .products-grid .product-card .card-info .btn-browse:active,
+            .products-grid .product-card .card-info .btn-browse:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+                transition: 0.2s;
+            }
+            .empty-wishlist-content{
+                 font-size: 14px;
+            }
+            .wishlist-headers h1{
+                font-size: 26px;
+            }
+        }
+
+        /* تصميم ملصق SALE */
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff0000;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 5px 8px;
+            border-radius: 4px;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+
+        /* تعديل لون النجوم الصفراء */
+        .fa-star {
+            color: #FFB800 !important;
+        }
+
+        /* تنسيق السعر القديم */
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        /* تنسيق الزرار */
+        .btn-browse {
+            background-color: #FF6B00;
+            color: white;
+     
+        }
+
+        .btn-browse:hover {
+            background-color: #28a745 !important;
+        }
+            
+    </style>
+</head>
+<body>
+
+    <headers class="main-headers">
+        <div class="brand-identity">
+            <img src="img/Logo.png" alt="Elhandasia Logo" class="logo-image">
+            <h2 class="brand-name">Elhandasia</h2>
+        </div>
+        <!-- <div class="search-bar" id="search-bar">
+            <input type="text" placeholder="Search for product...">
+            <button class="search-icon-btn"><i class="fas fa-search"></i></button>
+        </div> -->
+        <a href="cart.html" class="icon-items" style="position: relative;">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count" class="cart-badge">0</span>
+        </a>
+    </headers>
+
+    <main class="wishlist-page-container">
+        <div class="wishlist-headers">
+            <h1>My Favorites</h1>
+        </div>
+
+        <div id="empty-state" class="empty-wishlist-content">
+            <div class="heart-circle">
+                <i class="fa-regular fa-heart"></i>
+            </div>
+            <h2>Your favorites list is empty</h2>
+            <p>You haven't added any favorites yet. Start exploring our products!</p>
+            <a href="index.html" class="btn-browse">Browse Products</a>
+        </div>
+
+        <div id="wishlist-grid" class="products-grid"></div>
+    </main>
+    
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+            
+            <div>
+                <div class="footer-footer">
+                    <div class="footer-header">
+                         <div class="footer-left">
+                            <img src="img/Logo.png" alt="El-Handasiya Logo">
+                        </div>
+                        <div class="footer-right">
+                            <h3>El-Handasia</h3>
+                            <p style="margin: 0; ">Electronics & Technology</p>
+                        </div>
+                    </div>
+      
+                    <p class="footer-description">Your trusted partner for electronics, laptops, CCTV systems, and computer accessories in Egypt.</p>
+                    <div class="socials" aria-hidden="false">
+                      <a href="https://www.facebook.com/share/16uDx46Ntk/" target="_blank" rel="noopener noreferrer" aria-label="facebook">
+                          <i class="fab fa-facebook-f"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="twitter">
+                          <i class="fab fa-twitter"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="instagram">
+                          <i class="fab fa-instagram"></i>
+                      </a>
+                  
+                      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="youtube">
+                          <i class="fab fa-youtube"></i>
+                      </a>
+                  </div>
+                  
+                </div>
+            </div>
+      
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <nav class="links" aria-label="Quick Links">
+                    <a href="#">About Us</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Track Order</a>
+                    <a href="#">Returns & Refunds</a>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">FAQs</a>
+                </nav>
+            </div>
+      
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <nav class="cats" aria-label="Categories">
+                    <a href="#">Laptops</a>
+                    <a href="#">Storage Devices</a>
+                    <a href="#">CCTV Systems</a>
+                    <a href="#">Accessories</a>
+                    <a href="#">Keyboards & Mice</a>
+                    <a href="#">Audio Devices</a>
+                </nav>
+            </div>
+      
+            <div class="footer-col contact">
+                <h4>Contact Us</h4>
+                
+                <div class="contact-content">
+                    
+                    <div class="info">
+                        <div class="row"><i class="fa-solid fa-location-dot"></i><div>Cairo, Egypt<br><small style="color:var(--muted)">Nasr City, Main Street</small></div></div>
+                        
+                        <div class="row">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <a href="tel:+201234567890">+20 123 456 7890</a>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <i class="fa-regular fa-envelope"></i>
+                            <div>
+                                <a href="mailto:info@elhandasia.com">info@elhandasia.com</a>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size:12px; color:var(--muted); margin-top:6px; text-align: left;">
+                            <strong style="color:var(--white)">Working Hours:</strong><br>
+                            Sat - Thu: 9:00 AM - 9:00 PM<br>
+                            Friday: 2:00 PM - 9:00 PM
+                        </div>
+                    </div>
+      
+                    <a href="https://maps.app.goo.gl/YZeAaQPLviXbDjHDA?g_st=ac" target="_blank" class="map" aria-label="View location on Google Maps">
+                        <img src="img/WhatsApp Image 2025-12-07 at 11.58.15 PM.jpeg" alt="Map location ">
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+      
+        <div class="footer-divider"></div>
+      
+        <div class="footer-bottom">
+            <div class="copyright">© 2024 El-Handasia Company. All rights reserved.</div>
+      
+            <div class="developed" aria-hidden="false">
+                <span class="by">Developed By</span>
+                <span class="beta">BETA</span>
+            </div>
+            
+            <div class="bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+      </footer>
+    <script>
+      const BASE_URL = "https://el-handasia.runasp.net";
+let allFavorites = [];
+
+// 1. دالة للتحكم في شريط البحث
+function toggleSearchBar(show) {
+    const searchBar = document.getElementById("search-bar");
+    if (searchBar) {
+        if (show && allFavorites.length > 0) {
+            searchBar.style.display = "flex";
+            searchBar.classList.remove("hidden");
+        } else {
+            searchBar.style.display = "none";
+            searchBar.classList.add("hidden");
+        }
+    }
+}
+
+// 2. تحديث عداد السلة من المخزن
+function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('shopping_cart')) || JSON.parse(localStorage.getItem('cartItems')) || [];
+    const badge = document.getElementById("cart-count");
+    if (badge) {
+        const totalCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        badge.innerText = totalCount;
+    }
+}
+
+// 3. إضافة منتج للسلة (تنسيق موحد)
+function addToCart(id, name, price, img, btn) {
+    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+    if (!token) {
+        alert("Please login first!");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+    const existingIndex = cart.findIndex(item => item.id == id || item.productId == id);
+
+    if (existingIndex > -1) {
+        cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+    } else {
+        cart.push({ 
+            id: id, productId: id, 
+            name: name, productName: name, 
+            price: price, currentPrice: price, 
+            img: img, mainImageUrl: img,
+            quantity: 1 
+        });
+    }
+
+    localStorage.setItem('shopping_cart', JSON.stringify(cart));
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    updateCartBadge();
+
+    if (btn) {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = "Added! ✓";
+        btn.style.backgroundColor = "#28a745";
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.backgroundColor = "";
+            btn.disabled = false;
+        }, 1000);
+    }
+}
+
+// 4. تحميل المفضلات من الـ API
+async function loadFavorites() {
+    const grid = document.getElementById("wishlist-grid");
+    const emptyState = document.getElementById("empty-state");
+    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+
+    if (!token) {
+        showEmpty(emptyState, grid);
+        return;
+    }
+
+    try {
+        const res = await fetch(`${BASE_URL}/api/Favorites`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+            allFavorites = await res.json();
+            if (!allFavorites || allFavorites.length === 0) {
+                showEmpty(emptyState, grid);
+            } else {
+                if (emptyState) emptyState.style.display = "none";
+                if (grid) grid.style.display = "grid";
+                renderProducts(allFavorites);
+                toggleSearchBar(true); // إظهار شريط البحث عند وجود منتجات
+            }
+        } else {
+            showEmpty(emptyState, grid);
+        }
+    } catch (err) {
+        console.error("Fetch error:", err);
+        showEmpty(emptyState, grid);
+    }
+}
+
+// 5. عرض الكروت في الصفحة
+function renderProducts(products) {
+    const grid = document.getElementById("wishlist-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    products.forEach(item => {
+        // سحب البيانات من الـ Response
+        const pId = item.productId || item.id;
+        const pName = item.productName || item.name;
+        const originalPrice = item.price;
+        const currentPrice = item.discountPrice || item.displayPrice;
+        const hasDiscount = item.hasDiscount || (currentPrice && currentPrice < originalPrice);
+        const pImg = item.mainImageUrl || item.imageUrl || item.image;
+        const pRating = item.rating || 0;
+        const pCategory = item.categoryName || item.category;
+        const reviewCount = item.reviewCount || 0;
+
+        const imgPath = pImg && pImg.startsWith('http') ? pImg : `${BASE_URL}/${pImg}`;
+        const displayPrice = hasDiscount ? currentPrice : originalPrice;
+
+        // توليد النجوم بلون أصفر ثابت
+        let starsHtml = "";
+        for (let i = 1; i <= 5; i++) {
+            const starClass = i <= pRating ? 'fas fa-star' : 'far fa-star';
+            starsHtml += `<i class="${starClass}" style="color: #FFB800; margin-right: 2px;"></i>`;
+        }
+
+        grid.innerHTML += `
+    <div class="product-card" id="fav-${pId}">
+        <div class="card-img" style="position: relative; overflow: hidden;">
+            ${hasDiscount ? `<span class="sale-badge">SALE</span>` : ''}
+            
+            <div class="img-wrapper" style="position: relative;">
+                <img src="${imgPath}" alt="${pName}" onerror="this.src='img/laptop.jpg'" style="width: 100%; display: block;">
+            </div>
+            
+            <i class="fas fa-trash remove-fav" onclick="removeFromFavorites(${pId})"></i>
+        </div>
+        
+        <div class="card-info" style="text-align: left; padding: 15px;">
+            <span class="category-label" style="color: #888; font-size: 12px; display: block;">${pCategory}</span>
+            <h3 style="margin: 5px 0; font-size: 15px; font-weight: 600;">${pName}</h3>
+            <div class="rating-stars" style="margin-bottom: 8px;">
+                ${starsHtml}
+                <span style="font-size: 12px; color: #888;">(${reviewCount})</span>
+            </div>
+            <div class="price-container" style="display: flex; align-items: center; gap: 8px;">
+                ${hasDiscount 
+                    ? `<span class="old-price" style="text-decoration: line-through; color: #999; font-size: 14px;">${originalPrice} EGP</span>
+                       <span class="current-price" style="color: #FF6B00; font-weight: bold; font-size: 17px;">${displayPrice} EGP</span>`
+                    : `<span class="current-price" style="color: #FF6B00; font-weight: bold; font-size: 17px;">${displayPrice} EGP</span>`
+                }
+            </div>
+            <button class="btn-browse" style="width: 100%; margin-top: 12px; background-color: #FF6B00; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" 
+                onclick="addToCart(${pId}, '${pName.replace(/'/g, "\\'")}', ${displayPrice}, '${imgPath}', this)">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+        </div>
+    </div>
+`;
+    });
+}
+
+// 6. حذف المنتج من المفضلات
+async function removeFromFavorites(productId) {
+    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+    if (!confirm("Remove from favorites?")) return;
+
+    // اخفاء الكارت فوراً
+    const card = document.getElementById(`fav-${productId}`);
+    if (card) {
+        card.style.opacity = "0.3";
+        card.style.pointerEvents = "none";
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/Favorites/${productId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.status === 204 || response.ok) {
+            // تحديث localStorage
+            let currentFavorites = JSON.parse(localStorage.getItem('user_favorites')) || [];
+            currentFavorites = currentFavorites.filter(favId => favId.toString() !== productId.toString());
+            localStorage.setItem('user_favorites', JSON.stringify(currentFavorites));
+            
+            // تحديث المصفوفة المحلية
+            allFavorites = allFavorites.filter(p => (p.productId || p.id).toString() !== productId.toString());
+            
+            // تأثير الحذف
+            if (card) {
+                card.style.transform = "scale(0.8)";
+                card.style.opacity = "0";
+                setTimeout(() => {
+                    card.remove();
+                    
+                    // التحقق إذا كانت المفضلات فارغة
+                    if (allFavorites.length === 0) {
+                        showEmpty(
+                            document.getElementById("empty-state"), 
+                            document.getElementById("wishlist-grid")
+                        );
+                    } else {
+                        // إعادة تحميل القائمة
+                        renderProducts(allFavorites);
+                    }
+                }, 300);
+            }
+            
+            // التحقق من شريط البحث
+            toggleSearchBar(allFavorites.length > 0);
+            
+            // إشعار للمستخدم
+            showNotification("Product removed from favorites!");
+            
+        } else {
+            // إرجاع الكارت إذا فشل الحذف
+            if (card) {
+                card.style.opacity = "1";
+                card.style.pointerEvents = "auto";
+            }
+            alert("Error: Could not remove item.");
+        }
+    } catch (err) {
+        console.error("Delete error:", err);
+        if (card) {
+            card.style.opacity = "1";
+            card.style.pointerEvents = "auto";
+        }
+        alert("Network error. Please try again.");
+    }
+}
+
+// 7. دوال مساعدة
+function showEmpty(empty, grid) {
+    if (empty) empty.style.display = "flex";
+    if (grid) grid.style.display = "none";
+    toggleSearchBar(false); // إخفاء شريط البحث عند عدم وجود منتجات
+}
+
+function showNotification(message) {
+    // إنشاء إشعار مؤقت
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff6b00;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        animation: slideIn 0.3s ease-out;
+    `;
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
+}
+
+// 8. البحث في القائمة المتاحة
+document.querySelector("#search-bar input")?.addEventListener("input", function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const filtered = allFavorites.filter(item => {
+        const itemName = (item.productName || item.name || "").toLowerCase();
+        const itemCategory = (item.categoryName || item.category || "").toLowerCase();
+        return itemName.includes(searchTerm) || itemCategory.includes(searchTerm);
+    });
+    renderProducts(filtered);
+    
+    // إخفاء شريط البحث إذا كانت نتائج البحث فارغة
+    toggleSearchBar(filtered.length > 0);
+});
+
+// 9. تحقق من تسجيل الدخول
+function checkAuth() {
+    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+    if (!token) {
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+}
+
+// 10. تهيئة شريط البحث عند تحميل الصفحة
+function initSearchBar() {
+    const searchBar = document.getElementById("search-bar");
+    if (searchBar) {
+        // إخفاء شريط البحث افتراضياً حتى يتم تحميل البيانات
+        searchBar.style.display = "none";
+        searchBar.classList.add("hidden");
+    }
+}
+
+// بدء التحميل عند فتح الصفحة
+document.addEventListener("DOMContentLoaded", () => {
+    if (checkAuth()) {
+        initSearchBar();
+        loadFavorites();
+        updateCartBadge();
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,1706 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            direction: ltr; 
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* الهيكل الرئيسي والخلفية المتدرجة */
+        .elhandasia-header {
+            background: linear-gradient(to bottom, #222 50px, #FF6B00 50px, #FFB74D 100px, #FFE0B2 150px, #ffffff 400px);
+            color: #333;
+        }
+
+        /* شريط الأدوات العلوي */
+        .top-bar {
+          background-color: #222;
+          display: flex;
+          /* هنخلي التوزيع يبدأ من الشمال */
+          justify-content: flex-start; 
+          align-items: center;
+          height: 50px;
+          padding: 0 20px;
+      }
+      
+      .btn-login {
+
+        background-color: #FF6B00;
+    
+        color: black;
+    
+        padding: 5px 24px;
+    
+        border-radius: 20px;
+    
+        font-weight: bold;
+    
+        font-size: 14px;
+    
+        margin-left: 195px;
+    
+        text-decoration: none;
+    
+    }
+      
+      .contact-info {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          /* السطر ده هو السر: هيخلي الـ contact تروح أقصى اليمين وتثبت هناك */
+          margin-left: auto; 
+      }
+      
+      /* بقية التنسيقات زي ما هي عندك */
+      .contact-text {
+          background-color: #FF6B00;
+          padding: 8px 17px;
+          border-radius: 20px;
+          font-weight: bold;
+          margin-right: 10px;
+          color: black;
+      }
+
+        .contact-number {
+            padding: 8px 0;
+            text-decoration: none; 
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 43px;
+        }
+
+        /* المحتوى الرئيسي (شعار وبحث وأيقونات) */
+     .main-header-content
+
+ {
+    display: flex;
+    align-items: center;
+    padding: 0px 5%;
+    gap: 20px;
+    padding-top: 0;
+    height: 76px;
+}
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            position: relative; 
+        }
+
+        .logo-image {
+          width: 160px;
+          height: 34px;
+          margin-bottom: -3px;
+      
+            mask-size: cover;
+        }
+
+        .logo-container h2 {
+            margin: 0;
+            font-size: 27px; 
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 9px;
+            line-height: 1; 
+        }
+        
+        /* النقطة البرتقالية الكبيرة */
+        .logo-container  h2::after {
+            content: ''; 
+            display: inline-block;
+            width: 10px; 
+            height: 10px;
+            background-color: #FF6B00; 
+            border-radius: 50%;
+            margin-left: 5px; 
+            transform: translateY(-1px);
+        }
+
+        /* شريط البحث (مضبوط يمينًا قليلاً) */
+        .search-bar {
+            display: flex;
+            flex-grow: 1;
+            max-width: 650px;
+            border-radius: 27px;
+            overflow: hidden;
+            background-color: #F2EEEE;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 50px;
+            /* margin-top: 20px; */
+            margin-left: 160px;
+        }
+
+        .category-dropdown {
+            background-color: white; 
+            border: none; 
+            padding: 0 15px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            color: #6CBE45;
+            min-width: 120px;
+            
+            /* السهم الأسود المخصص */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M283.475%20147.712l-14.28-14.28c-1.907-1.907-4.148-2.86-6.84-2.86h-243.3c-2.69%200-4.93%200.953-6.84%202.86l-14.28%2014.28c-1.907%201.907-1.907%204.66%200%206.567l133.74%20133.74c1.907%201.907%204.148%202.86%206.84%202.86s4.93-0.953%206.84-2.86l133.74-133.74c1.907-1.907%201.907-4.66%200-6.567z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 8px;
+            padding-right: 30px; 
+            
+            border-right: 1px solid #ddd;
+        }
+        
+        .search-bar input[type="text"] {
+            flex-grow: 1;
+            border: none;
+            padding: 0 15px;
+            font-size: 16px;
+            outline: none;
+            text-align: left;
+        }
+
+        .search-icon-btn {
+            background-color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* أيقونات المستخدم */
+        .user-icons {
+            display: flex;
+            gap: 12px; 
+            text-align: center;
+            margin-left: auto;
+            /* margin-top: 20px; */
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s;
+            padding: 0 15px; 
+            position: relative;
+        }
+        
+        .icon-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0; 
+            transform: translateY(-50%);
+            height: 70%; 
+            width: 1px;
+            background-color: #ccc;
+        }
+
+        .icon-item i {
+            font-size: 30px; 
+            color: #333;
+            line-height: 1; 
+        }
+
+        .icon-item .icon-label {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+
+       /* ميديا كويري مخصصة للموبايل والشاشات الصغيرة */
+       @media screen and (max-width: 768px) {
+        /* 1. ضبط الخلفية لتناسب المساحة الجديدة */
+        .elhandasia-header {
+          background: linear-gradient(to bottom, #FF7B00 24%,  #FFFFFF 93% )!important;
+            border-bottom: 2px solid #FF6B00;
+        }
+      
+        /* 2. شريط الأدوات العلوي (اتصل بنا والدخول) */
+        .top-bar {
+            padding: 5px 3%;
+            height: auto;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+      
+        .btn-login {
+          margin-left: 6px;/* إزالة الهامش الكبير */
+            padding: 4px 15px;
+            font-size: 12px;
+            /* order: 2; */
+        }
+      
+        .contact-info {
+            /* order: 1; */
+            margin-left: 41px;
+        }
+      
+        .contact-number {
+            margin-right: 0;
+            font-size: 12px;
+        }
+      
+        /* 3. ترتيب العناصر (الشعار، البحث، الأيقونات) */
+        .main-header-content {
+            display: flex;
+            flex-wrap: wrap; /* السماح للعناصر بالنزول لسطر جديد */
+            /* padding: 10px 3%; */
+            gap: 0;
+            justify-content: space-between;
+            align-items: center;
+        }
+      
+        /* الشعار في أقصى اليسار */
+        .logo-container {
+            margin-top: 5px;
+            flex: 0 0 auto;
+            align-items: flex-start;
+        }
+      
+        .logo-image {
+          display: none !important;
+      }
+      
+        .logo-container h2 {
+            font-size: 18px;
+        }
+      
+        /* الأيقونات في أقصى اليمين بجانب الشعار */
+        .user-icons {
+            /* margin-left: 0; */
+            /* margin-top: 5px; */
+            gap: 5px;
+        }
+     
+        .icon-item {
+            padding: 0 8px;
+        }
+      
+        .icon-item i {
+          
+            font-size: 22px; /* تصغير حجم الأيقونة */
+        }
+     
+        .icon-item .icon-label {
+          display: none !important;/* تصغير النص أسفل الأيقونة */
+        }
+      
+        .icon-item:not(:last-child)::after {
+            display: none; /* إخفاء الخط الفاصل لتقليل الزحام */
+        }
+      
+        /* 4. شريط البحث في سطر كامل لوحده بالأسفل */
+        .search-bar {
+            order: 10; /* يضمن ظهوره في الأسفل */
+            width: 100%;
+            max-width: 100%;
+            margin-left: 0; /* إزالة الهامش 160px */
+            margin-top: 4px;
+            margin-bottom: 10px;
+            height: 28px;
+        }
+      
+        .category-dropdown {
+            min-width: 90px;
+            font-size: 13px;
+            padding: 0 5px;
+        }
+    
+        
+        .search-bar input[type="text"] {
+            font-size: 14px;
+        }
+        .contact-text{
+          padding: 4px 9px;
+          font-size: 11px;
+        }
+      
+      }
+      @media (max-width: 991px) {
+        /* 1. إخفاء قسم العرض */
+        .offer-card {
+            display: none !important;
+        }
+    
+        /* 2. الحاوية الأساسية */
+        #product-page {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            flex-direction: row !important;
+            /* gap: 10px; */
+            padding: 10px;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+    
+        /* 3. الصور المصغرة (يسار) */
+        .thumbnails {
+            display: flex !important;
+            flex-direction: column !important;
+            order: 1;
+            flex: 0 0 50px;
+            gap: 5px;
+            height: 178px;
+        }
+       
+     
+        /* 4. الصورة الكبيرة (منتصف) */
+        .main-image-box {
+            order: 2;
+            flex: 1 1 35%;
+            min-width: 0;
+        }
+    
+        #big-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    
+        /* 5. تفاصيل المنتج (يمين) - مع رفع الزراير */
+        .product-details {
+            order: 3;
+            flex: 1 1 45%;
+            min-width: 0;
+            display: flex !important;
+            flex-direction: column !important; /* ترتيب العناصر داخلياً تحت بعض */
+        }
+    
+        /* ضمان ترتيب العناصر داخل الكلام: الاسم > السعر > الكمية > الزراير */
+        .product-details h1 {  font-size: 18px !important; margin-bottom: 5px; }
+        .stars {  margin-top: 12; }
+        .price-row { order: 3; margin-bottom: 5px; }
+        .qty-label, .qty-selector { order: 4; margin-bottom: 10px; }
+        .action-btns { 
+            order: 5 !important; /* الزراير تطلع فوق أي كلام إضافي */
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            margin-top: 5px;
+        }
+    
+        /* 6. الجزء السفلي (الوصف والمواصفات) */
+        .description-box, 
+        .product-specs, 
+        #product-page > h3, 
+        #product-page > ul {
+            order: 4 !important;
+            flex: 0 0 100% !important;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+    
+        /* ضبط حجم الزراير */
+        .btn {
+            width: 100%;
+            padding: 8px 2px !important;
+            font-size: 11px !important;
+            margin: 0 !important;
+        }
+    
+        .current-price { font-size: 16px !important; }
+        /* 7. ضبط المنتجات المتعلقة لتظهر 2 في كل سطر */
+#related-products-grid {
+  display: grid !important;
+  /* تقسيم السطر لعمودين متساويين */
+  grid-template-columns: repeat(2, 1fr) !important; 
+  gap: 10px !important; /* المسافة بين الكروت */
+  padding: 10px !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ضبط حجم الكارت نفسه ليناسب المساحة الصغيرة */
+/* 1. تقليل ارتفاع الصورة */
+#related-products-grid .card img {
+  height: 110px !important; /* تقليل الارتفاع من 150 لـ 110 */
+ 
+  object-fit: contain;
+}
+
+/* 2. تقليل المسافات الداخلية للكارت (padding) ليكون ملموم */
+#related-products-grid .card {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px !important; /* تقليل البادنج الداخلي للكارت */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* توزيع العناصر بانتظام */
+}
+
+/* 3. ضبط النصوص لتشغل مساحة أقل */
+#related-products-grid .card .card-body {
+  padding: 5px 0 !important; /* تقليل المسافة حول النص */
+  margin-left: 8px;
+}
+
+#related-products-grid .card .title {
+  font-size: 12px !important; /* تصغير الخط درجة واحدة */
+  height: 30px !important;    /* تقليل الارتفاع المخصص للنص */
+  line-height: 1.2 !important;
+  margin-bottom: -12px !important;
+}
+
+#related-products-grid .card .price {
+  font-size: 13px !important;
+  /* margin-bottom: 5px !important; */
+  margin-top: 5px;
+}
+
+/* 4. تصغير زر الإضافة للكارت ليناسب الحجم الجديد */
+#related-products-grid .card .add-to-cart-btn, 
+#related-products-grid  {
+  padding: 8px 10px !important;
+  font-size: 13px !important;}
+/* تصغير حاوية الصورة وتقليل المسافات */
+#related-products-grid .card .img-wrap {
+  height: 133px !important;    /* تقليل الارتفاع الكلي للحاوية */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+      /* تقليل المسافة الداخلية */
+  overflow: hidden !important;
+}
+
+/* التأكد من أن الصورة لا تتخطى الحاوية الجديدة */
+
+    }
+    @media (max-width: 768px) {
+      /* ... الأكواد التانية ... */
+  
+      .btn {
+          width: fit-content !important;    /* الزرار ميبقاش ملو الكارت */
+          min-width: 120px !important;      /* عرض أدنى عشان ميبقاش صغير أوي */
+          margin: 0 auto 10px auto !important; /* يوسطن الزرار ويبعده عن الحافة التحتانية */
+          display: block !important;        /* ضروري عشان الـ margin auto يشتغل */
+          padding: 9px 30px !important;   /* حشو داخلي متناسق */
+          font-size: 13px !important;       /* حجم خط مناسب للموبايل */
+      }
+  }
+    @media (max-width: 991px) {
+      /* 1. تصفير أي مسافات في الحاوية */
+      .img-container, 
+      #related-products-grid .card .img-wrap {
+          width: 100% !important;
+          aspect-ratio: 1 / 1 !important; /* مربع مثالي */
+          padding: 0 !important;   /* إلغاء الفراغ الداخلي */
+          margin: 0 !important;    /* إلغاء الفراغ الخارجي */
+          overflow: hidden !important;
+          display: block !important;
+          border: none !important; /* إلغاء الحدود إذا كانت تسبب مسافة */
+      }
+  
+      /* 2. جعل الصورة تتمدد لتغطية كل بكسل في المربع */
+      .img-container img, 
+      #related-products-grid .card .img-wrap img {
+          width: 100% !important;
+          height: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          object-fit: cover !important; /* هذا يضمن عدم وجود فراغات */
+          display: block !important;
+          max-width: none !important; /* إلغاء أي تحديد للعرض */
+      }
+  
+      /* 3. إذا كان المربع داخل كارت (Card)، نلغي المسافات من الكارت نفسه */
+      #related-products-grid .card {
+          padding: 0 !important; 
+          overflow: hidden;
+      }
+  }
+/* تنسيقات الشاشات المتوسطة (التابلت) والاصغر */
+@media screen and (max-width: 991px) {
+  /* الحاوية البيضاء داخل المودال */
+  .modal-content {
+      width: 85% !important; /* تقليل العرض قليلاً لترك هوامش */
+      height: auto !important; /* إلغاء الـ 100% ليكون الطول على قد المحتوى */
+      max-height: 90vh !important; /* منع المودال من الخروج عن الشاشة */
+      padding: 25px !important; /* تقليل الحشو الداخلي */
+      border-radius: 20px !important;
+      overflow-y: auto; /* إضافة سكرول داخلي لو الكلام كتير */
+  }
+
+  /* العنوان */
+  .modal-content div[style*="font-size: 28px"] {
+      font-size: 22px !important; /* تصغير عنوان Order Summary */
+      margin-bottom: 15px !important;
+  }
+
+  /* صندوق الملخص */
+  #summaryBox {
+      padding: 15px !important;
+      margin-bottom: 15px !important;
+      font-size: 14px !important; /* تصغير خط الكلام داخل الصندوق */
+  }
+
+  /* زر الواتساب */
+  .modal-content button {
+      padding: 14px !important; /* تقليل ضخامة الزر */
+      font-size: 16px !important;
+  }
+}
+
+/* تنسيقات الموبايل الصغير جداً */
+@media screen and (max-width: 480px) {
+  .modal-content {
+      width: 92% !important;
+      padding: 20px 15px !important;
+  }
+}
+
+        /* قائمة التنقل (Navigation Menu) */
+        .main-nav-menu-wrapper {
+            border-bottom: 2px solid #aaa; 
+            padding-bottom: 5px;
+        }
+
+        .main-nav-menu {
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 400; 
+            padding: 5px 15px 10px 15px;
+            position: relative;
+            transition: color 0.2s, font-weight 0.2s;
+        }
+        
+        /* التنسيق عند المرور بالماوس (Hover) أو عند الضغط والثبات (Active) */
+        .main-nav-menu a:hover,
+        .main-nav-menu .active-item {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .main-nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background-color: black;
+            transition: width 0.3s ease;
+        }
+
+        /* الخط يظهر عند المرور بالماوس أو عند الضغط والثبات */
+        .main-nav-menu .active-item::after,
+        .main-nav-menu a:hover::after {
+            width: calc(100% - 30px);
+        }
+
+        .site-footer{
+          background: linear-gradient(180deg, #151517 0%, #0f0f10 100%);
+          padding: 48px 16px 2px 16px;
+          border-top: 1px solid rgba(255,255,255,0.02);
+          margin-top: 52px;
+          }
+          
+          .footer-inner{
+          max-width: 1400px;
+          margin: 0 auto;
+          grid-template-columns: 2fr 1fr 1fr 1.8fr; 
+          display: grid;
+          gap: 28px;
+          align-items: start;
+          }
+          
+          
+          .footer-footer{
+          display:flex;
+          flex-direction: column; 
+          gap: 0;
+          align-items:flex-start;
+          }
+          .footer-header{
+          display: flex;
+          gap: 18px;
+          align-items: center; 
+          margin-bottom: 12px;
+          }
+          .footer-left{
+          min-width:120px;
+          }
+          .footer-left img{
+          width:120px;
+          height:auto;
+          display:block;
+          }
+          .footer-right h3{
+          margin:0;
+          font-size:18px;
+          font-weight:700;
+          color:white;
+          }
+          .footer-right p{
+          margin:8px 0 0 0;
+          color:#9a9aa0;
+          font-size:13px;
+          max-width:380px;
+          }
+          .footer-description{
+           margin: 0 0 18px 0;
+           color:#9a9aa0;
+           font-size:13px;
+           max-width:380px;
+          }
+          
+          .socials{
+            display:flex;
+            gap:10px;
+            }
+            .socials a{
+            display:inline-flex;
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            background:#f97316;
+            color:white;
+            align-items:center;
+            justify-content:center;
+            text-decoration:none;
+            box-shadow:0 2px 0 rgba(0,0,0,0.25);
+            font-size:14px;
+            }
+            
+            
+            .footer-col h4{
+            margin:0 0 14px 0;
+            font-size:15px;
+            font-weight:700;
+            color:white;
+            }
+            .links, .cats{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            }
+            .links a, .cats a{
+            color:#9a9aa0;
+            text-decoration:none;
+            font-size:13px;
+            text-align: left; 
+            }
+            .links a:hover, .cats a:hover{color:white}
+            
+            .contact .info{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            color: #9a9aa0;
+            font-size:13px;
+            text-align: left; 
+            margin-top: 0; 
+            }
+            .contact .info .row{
+            display:flex;
+            gap:8px;
+            align-items:center;
+            justify-content: flex-start; 
+            }
+            .contact .info i{
+            color:#f97316;
+             min-width:18px;
+              text-align:center;
+            }
+            
+            .contact .info a {
+            color: inherit;
+            text-decoration: none;
+            }
+            .contact .info a:hover {
+            color:white;
+            text-decoration: underline;
+            }
+            
+            
+            .contact-content {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            }
+            
+            
+            .map{
+            width:100%;
+            max-width:280px; 
+            height: 150px; 
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.03);
+            margin-left: auto;
+            margin-right: 0;
+            
+            display: block; 
+            margin-top: -29px;
+            background-color: transparent; 
+            text-decoration: none;
+            color: white;
+            transition: opacity 0.2s; 
+            }
+            .map:hover {
+            opacity: 0.85;
+            }
+            
+            
+            .map img{
+            display:block;
+            width:100%;
+            height:100%; 
+            object-fit: cover; 
+            }
+            .old-price del {
+            color: #71717A;
+            font-size: 13px; 
+            }
+            
+            
+            
+            .footer-divider{
+            margin:28px auto 18px;
+            max-width: 1400px;
+            border-top: 1px solid #9E9E9E;
+            }
+            
+            
+            .footer-bottom{
+            max-width:1400px;
+            margin: 10px auto 36px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between; 
+            gap:12px;
+            color:#9a9aa0;
+            font-size:13px;
+            direction: ltr; 
+            }
+            .copyright{ color:#9a9aa0 }
+            
+            .developed{
+            text-align:center;
+            /* flex:0 0 280px; */
+            color:white;
+            font-weight:700;
+            direction: ltr; 
+            }
+            .developed .by{ 
+            font-weight:700; 
+            margin-right:0; 
+            color:white; 
+            font-size:13px ;
+            }
+            .developed .beta{ 
+            color:#f97316; 
+            font-size:18px; 
+            margin-left:0; 
+            font-weight:800; 
+            letter-spacing:0.6px ;
+            }
+            
+            .bottom-links{
+            display:flex;
+            gap:18px;
+            flex-direction: row; 
+            }
+            .bottom-links a{ color:#9a9aa0; text-decoration:none; font-size:13px }
+            .bottom-links a:hover{ color:white }
+            
+          
+.containers{
+    max-width:1100px;
+    margin:0 auto;
+    margin-top: 60px;
+  }
+
+ .containers h1{
+    font-size:22px;
+    margin:0 0 6px;
+    font-weight:600;
+  
+  }
+  p.subtitle{
+    margin:0 0 28px;
+    color:#71717A;
+    font-size:13px;
+   
+  }
+
+  /* Grid */
+  .grid2{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:28px;
+  }
+
+  /* Card */
+  .card{
+    background:#fff;
+    border-radius:var(--card-radius);
+    border:1px solid var(--card-border);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 257px;
+
+  }
+
+  .img-wrap{
+    position:relative;
+    height: 230px;
+    background:#f5f5f5;
+  }
+  .img-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  /* heart */
+  .fav{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:34px;
+    height:34px;
+    background:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #fff;
+    box-shadow:var(--small-shadow);
+    cursor:pointer;
+  }
+  .fav i{
+    color:#b3b7bb;
+    font-size:14px;
+  }
+  .fav.active i{
+    color:red;
+  }
+
+  /* Content */
+  .card-body{
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .title{
+    font-weight:600;
+    font-size: 16px;
+    min-height:36px;
+  }
+
+  .rating{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    /* color:var(--muted); */
+    margin-top: -6px;
+  }
+  .rating .stars{
+    color:#f1b33b;
+  }
+  p.num {
+  color:#71717A;
+}
+.rating  span {
+  font-weight: bold;
+  font-size: 16px;
+}
+  /* NEW PRICE + BUTTON UNDER EACH OTHER */
+  .price{
+    font-weight:700;
+    color: #FF6B00;
+    font-size:16px;
+    margin-top:6px;
+    margin-bottom:6px;
+  }
+
+  .btn {
+    border: none;
+    padding: 10px 12px;
+    border-radius: 6px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(52, 179, 58, 0.12);
+    font-size: 14px;
+    background:#FF6B00;
+    color:#fff;
+    /* transition: background 0.2s ease, color 0.2s ease; */
+  }
+  
+  .btn:hover{
+    background:#4CAF50;
+    color:white;
+  }
+  
+.img-wraps{
+position:relative;
+height: 125px;
+background:#f5f5f5;
+}
+
+@media (max-width: 991px) {
+/* هذا الكود يضمن أن الصورة تملأ الحاوية الخاصة بها تماماً */
+.img-container img, 
+#related-products-grid .card .img-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* هذا السطر هو الذي يجعل الصورة تملأ الفراغ وتلغي اللون الرمادي/الأبيض الجانبي */
+    display: block;
+}
+
+/* تأكدي أن الحاوية نفسها لها أبعاد ثابتة */
+.img-container, .img-wrap {
+    width: 100%;
+    height: 200px; /* يمكنك تغيير الارتفاع حسب رغبتك */
+    overflow: hidden; /* لإخفاء أي أجزاء زائدة من الصورة */
+    background-color: #f0f0f0; /* لون احتياطي */
+}
+}
+.services {
+  display: flex;
+  justify-content: space-around; /* توزيع أعدل للأيقونات */
+  align-items: center;
+  padding: 40px 5%; /* بادينج مرن */
+  /* background: #fff; */
+  width: 100%;
+  max-width: 1400px; /* سقف للعرض عشان م يفرشش زيادة */
+  margin: 0 auto;
+  box-sizing: border-box;
+  flex-wrap: wrap; /* عشان لو الزوم كبر أوي الأيقونات تنزل تحت بعض بدل ما تخرج برا */
+}
+
+.service-box {
+  text-align: center;
+  flex: 1; /* بياخد مساحة متساوية */
+  min-width: 150px; /* أقل عرض مسموح به عشان الكلام م يتقطعش */
+  position: relative;
+  padding: 10px;
+}
+
+/* الديفايدر (الخط البرتقالي) - هنخفيه في الشاشات الصغيرة عشان ميبوظش الشكل */
+.divider {
+  width: 1px;
+  height: 54px;
+  background: #FF7B00;
+}
+
+/* @media (max-width: 768px) {
+  .divider { display: none; }
+}
+   */
+  .service-box img {
+  width: 60px;
+  display: block;
+  margin: 0 auto;
+  }
+  
+  
+  /* .divider {
+  width: 1px;
+  height: 54px;
+  background: #FF7B00;
+  }
+   */
+  
+  .service-title {
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 10px;
+  color: #000;
+  }
+  
+  
+  .service-text {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #71717A;
+  }
+  
+  
+    
+    /* support icon with number inside */
+    .support-icon {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        margin: auto;
+      }
+      
+      .support-icon .icon-base {
+        width: 100%;
+        height: 100%;
+      }
+      
+      .support-icon .icon-number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 35px; /* عدّلي حسب حجم الصورة */
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+
+      @media screen and (max-width: 1024px) {
+        .services {
+            flex-direction: column; /* السطر ده هو اللي هيجيبهم تحت بعض */
+            align-items: center;    /* يسنترهم في نص الشاشة */
+            gap: 20px;             /* يخلي فيه مسافة بين كل واحدة والتانية */
+            padding: 30px 15px;
+        }
+      
+        .service-box {
+            width: 100%;           /* يخلي كل بوكس ياخد عرض الشاشة كله */
+            max-width: 300px;      /* اختياري: عشان ميبقوش عراض زيادة عن اللزوم */
+        }
+      
+        .divider {
+            display: none;         /* يخفي الخطوط البرتقالي عشان بيبقى شكلها وحش لما يجوا تحت بعض */
+        }
+      }
+      
+      @media screen and (max-width: 600px) {
+      .service-box {
+        width: 100%; 
+        margin-bottom: 15px;
+      }
+      }
+      
+      
+      /* ////////////////////////////////////////////////////////////////////// */
+      .grid-header {
+        text-align: center;         /* يجعل كل النص في المنتصف */
+        margin-bottom: 0.5em; 
+        margin-top: 50px;
+      /* مسافة بين العنوان والشبكة */
+      }
+      
+      .grid-header h1 {
+        font-size: 34px;
+        margin: 0;
+        font-weight: 400;
+      }
+      .grid-header p {
+        font-size: 12px;            /* حجم الفقرة */
+        margin: 8px 0 0 0;          /* مسافة صغيرة فوق وتحت */
+        color: #71717A;                /* لون رمادي خفيف */
+      }
+      
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 20px;
+        width: 90%;
+        margin: 0 auto;  
+        margin-top: 50px;
+
+      }
+    
+      .box {
+    border-radius: 12px;
+    padding: 25px; /* خلي padding كامل من كل الجوانب */
+    color: #fff;
+    font-size: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* يضمن أن الزر في الأسفل */
+    height: 100%;
+  }
+  
+  .box h2 {
+    margin: 0; /* العنوان مباشرة فوق */
+    font-size: 24px;
+  }
+  
+  .box p {
+    font-size: 12px;
+    color: #dcdcdc;
+    
+  
+    margin: -33px 0 0 0; /* الفقرة مباشرة تحت العنوان */
+  }
+  
+  .box button {
+    width: 120px;
+    padding: 10px;
+    border: none;
+    background: #FF4141;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start; /* الزر على اليسار */
+    margin-bottom: 10px; /* يرفع الزر قليلًا عن أسفل المربع */
+  }
+  p.computers {
+    margin-top: -240px;
+  }
+  
+      /* ========== TOP ROW ========= */
+      #big {
+        grid-column: 1 / 13;
+        height: 189px;
+        background: #241468;
+      }
+    
+      /* ========== SECOND ROW ========= */
+      #lap { 
+        grid-column: 1 / 7;
+        height: 189px;
+        background: #592525; 
+      }
+    
+      #print { 
+        grid-column: 7 / 13;
+        height: 189px;
+        background: #241468; 
+      }
+    
+      /* ========== THIRD ROW ========= */
+      #s1 { 
+        grid-column: 1 / 4;
+        height: 189px;
+        background: #720D0D; 
+      }
+  
+      #s2 { 
+        grid-column: 4 / 7;
+        height: 189px;
+        background: #224a6b; 
+      }
+  
+      #right { 
+        grid-column: 7 / 13; 
+        grid-row: 3 / 5;  /* يغطي الصفين على نفس العرض */
+        height: 398px;
+        /* مجموع الصفين السفليين */
+        background: #8D819C;
+      }
+  
+      /* ========== FOURTH ROW ========= */
+      #s3 { 
+        grid-column: 1 / 4;
+        height: 189px;
+        background: #504E72; 
+      }
+  
+      #s4 { 
+        grid-column: 4 / 7;
+        height: 189px;
+        background: #3A6344; 
+      }
+
+
+
+
+
+
+
+
+      .section1 {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+      
+      /* الصورة نفسها */
+      .hero-img {
+        width: 100%;
+        height: auto;          /* ✔️ مهم */
+        display: block;
+      }
+      
+      /* المحتوى */
+      .container.section1-content {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 80px 16px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: white;
+      }
+      
+      /* النص */
+      .section1-title {
+        font-size: 42px;
+        margin: 35px 0;
+        font-family: Nunito;
+      }
+      
+      .section1-desc {
+        max-width: 395px;
+        font-size: 17px;
+        margin-bottom: 25px;
+      }
+      
+      .section1-actions {
+        display: flex;
+        gap: 16px;
+      }
+      
+      /* الأزرار */
+      .btn-black {
+        background: #0b0b0b;
+        color: #fff;
+        padding: 18px 22px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 600;
+      }
+      
+      .btn-light {
+        background: #D9D9D9;
+        color: #222;
+        padding: 18px 22px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 600;
+      }
+      
+      /* Trusted */
+      .trusted-wrap {
+        position: absolute;
+        right: 4vw;
+        bottom: 4vh;
+        color: white;
+      }
+      
+      .trusted {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .trusted-plus {
+        font-size: 28px;
+        font-weight: 800;
+      }
+      
+      .trusted-underline {
+        width: 280px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .trusted-underline .line {
+        height: 2px;
+        width: 100%;
+        background: #FF7B00;
+      }
+      
+      .trusted-underline .dot {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #FF7B00;
+        margin-left: -18px;
+      }
+
+
+      /* ////////////////////////////////////////////////////////////////////////////////// */
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #fff; color: #333; }
+        
+        /* الحاوية الرئيسية: جعلنا الأطوال متساوية بـ stretch */
+        .container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 80px 1.2fr 1.2fr 280px;
+            gap: 30px;
+            align-items: stretch; /* يضمن تساوي طول الصورة مع السايد بار */
+        }
+
+        /* 1. عمود الصور المصغرة */
+        .thumbnails { display: flex; flex-direction: column; gap: 15px; }
+        .thumbnails img {
+            width: 60px; height: 60px; object-fit: contain;
+            border: 1px solid #ddd; border-radius: 4px; cursor: pointer; padding: 5px;
+        }
+        .thumbnails img.active { border: 2px solid #e77600; }
+
+        /* 2. عرض الصورة الكبيرة - ظبطنا الطول هنا */
+        .main-image-box { 
+            border: 1px solid #f3f3f3; 
+            padding: 20px; 
+            text-align: center; 
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 500px; /* نفس طول السايد بار الأحمر */
+            background: #fff;
+        }
+        .main-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .zoom-icon { position: absolute; bottom: 10px; right: 10px; color: #999; }
+
+        /* 3. بيانات المنتج (الوسط) */
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            height: 500px; /* توحيد الطول */
+        }
+        .product-details h1 { font-size: 22px; line-height: 1.4; font-weight: 500; margin-top: 0; }
+        .stars { color: #febd69; font-size: 14px; }
+        .price-row { border-top: 1px solid #eee; padding-top: 15px; }
+        .discount-tag { color: #CC0C39; font-size: 24px; }
+        .old-price { text-decoration: line-through; color: #565959; margin-left: 8px; }
+        
+        /* جزء الكمية (Quantity) */
+        .qty-label { font-weight: bold; margin: 15px 0 8px; font-size: 14px; }
+        .qty-selector { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+        .qty-controls { display: flex; align-items: center; border: 1px solid #D5D9D9; border-radius: 8px; box-shadow: 0 2px 5px rgba(15,17,17,.15); overflow: hidden; }
+        .qty-controls button { background: #F0F2F2; border: none; padding: 8px 14px; cursor: pointer; font-size: 18px; }
+        .qty-controls input { width: 40px; text-align: center; border: none; background: transparent; font-weight: bold; }
+        .stock-status { color: #007600; font-weight: bold; font-size: 14px; }
+
+        /* أزرار الشراء */
+        .action-btns { display: flex; gap: 15px; margin-top: auto; padding-bottom: 26px; }
+        .btn { flex: 1; padding: 12px;  border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
+        /* .btn-cart { background: #FFD814; border: 1px solid #FCD200; }
+        .btn-order { background: #2D8C61; color: white; } */
+
+        /* 4. السايد بار الأحمر (يمين) */
+        .offer-card {
+            background-color: #801313;
+            color: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            height: 500px; /* الطول موحد مع الصورة والبيانات */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+        .offer-card h2 { font-size: 38px; margin: 0; font-weight: bold; }
+        .offer-card p { font-size: 16px; line-height: 1.5; opacity: 0.9; }
+        .btn-shop { background: #FF4444; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* الوصف (تحت) */
+        .description-box { grid-column: span 4; margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; }
+        .description-box h3 { font-size: 18px; margin-bottom: 15px; }
+        .description-box ul { list-style: none; padding: 0; }
+        .description-box li { position: relative; padding-left: 20px; margin-bottom: 12px; line-height: 1.6; }
+        .description-box li::before { content: "•"; position: absolute; left: 0; font-weight: bold; }
+
+        @media (max-width: 992px) {
+            .container { grid-template-columns: 1fr; }
+            .thumbnails { flex-direction: row; order: 2; }
+            .main-image-box, .product-details, .offer-card { height: auto; }
+        }
+        /* تنسيق جدول مواصفات المنتج */
+.product-specs-container {
+  margin: 40px 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+}
+.product-specs-container h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.details-table tr:nth-child(even) {
+  background-color: #f8f9fa; /* لون رمادي فاتح صف بعد صف */
+}
+.details-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+.spec-label {
+  font-weight: 600;
+  width: 30%;
+  color: #444;
+}
+.spec-value {
+  color: #666;
+}
+
+/* تنسيق كروت المنتجات المرتبطة */
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.btn-grid-cart {
+  background: #27ae60;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+  .footer-inner {
+    
+      grid-template-columns: 1fr 1fr; 
+      gap: 20px;
+      justify-items: start; 
+      text-align: left; 
+  }
+  
+  
+  .footer-inner > div:nth-child(1) {
+      grid-column: 1 / 3;
+      text-align: center; 
+  }
+  
+  
+  
+  
+  .footer-col:nth-child(3) {
+      /* grid-column: 2 / 3; */
+      margin-right: 17px;
+  }
+  
+  
+  .footer-col:nth-child(4) {
+      grid-column: 1 / 3; 
+      text-align: left; 
+  }
+  
+  
+  .contact-content {
+  
+      flex-direction: row; 
+      align-items: flex-start;
+      gap: 20px;
+      flex-wrap: wrap; 
+  }
+  
+  .map {
+  
+      max-width: 250px; 
+      height: 150px;
+      margin: 0; 
+      order: 2; 
+  }
+  
+  .info {
+      flex: 1;
+      order: 1;
+  }
+   .contact h4{
+   
+    margin: 0px 4px 14px 42px;
+  }
+  
+  .footer-col h4,
+  .links, .cats, .contact .info {
+      text-align: left; 
+      align-items: flex-start;
+  }
+  
+  
+  .footer-left,
+  .footer-right,
+  .footer-footer {
+      text-align: center; 
+      justify-content: center;
+      align-items: center;
+  } 
+  
+  .socials {
+      justify-content: center;
+  }
+  
+  
+  .footer-bottom {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+  }
+  
+  .bottom-links {
+      order: -1; 
+      flex-direction: row;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 10px;
+  }
+  }
+  
+  
+  
+  
+  @media screen and (max-width: 600px) {
+  .footer-inner {
+      grid-template-columns: 1fr; 
+      gap: 15px;
+      justify-items: center;
+      text-align: center;
+  }
+  
+  
+  .contact-content {
+   
+      flex-direction: row; 
+      align-items: flex-start;
+      gap: 15px;
+      flex-wrap: nowrap; 
+      width: 100%; 
+      justify-content: space-between; 
+      padding: 0 16px;
+  }
+  
+  
+  .info {
+    
+      flex: 1 1 58%; 
+      text-align: left; 
+  }
+  
+  .map {
+   
+      max-width: 120px; 
+      min-width: 120px;
+      height: 120px;
+      margin: 0; 
+      flex: 0 0 auto; 
+      order: 2;
+  }
+  
+  
+  .contact .info {
+      text-align: left; 
+      align-items: flex-start;
+  }
+  
+  
+  .footer-left img {
+      margin: 0 auto;
+  }
+  
+  .footer-left,
+  .footer-right,
+  .footer-footer {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .footer-right p,
+  .footer-description {
+      max-width: 300px;
+      margin: 0 auto;
+  }
+  
+  .socials {
+      justify-content: center;
+      margin-bottom: 15px; 
+      margin-top: 11px;
+  }
+  
+  
+  .footer-bottom {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+  }
+  
+  .bottom-links {
+      order: -1; 
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+  }
+  }
+
+  /* //////////////////////////////////////////////////////////// */
+  /* الحاوية لازم تكون relative عشان الأيقونة تتحرك جواها */
+.main-image-box {
+  position: relative;
+  display: inline-block; /* أو width: 100% حسب تصميمك */
+  overflow: hidden;
+}
+
+#big-img {
+  display: block;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+/* الأيقونة هتبقى فوق الصورة */
+.zoom-icon {
+  position: absolute; /* دي اللي بتخليها فوق الصورة */
+
+  right: 15px;    /* مسافة من اليمين */
+  z-index: 10;    /* عشان تضمن إنها فوق طبقة الصورة */
+  background: rgba(255, 255, 255, 0.7); /* خلفية شفافة بسيطة */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* لما الصورة تكبر */
+.is-zoomed {
+  transform: scale(1.8);
+  cursor: zoom-out;
+}
+/* لما القلب يكون مختار */
+.fav.active i {
+    color: #e74c3c !important; /* لون أحمر */
+    font-weight: 900; /* يخلي القلب ممتد (Solid) */
+}
+
+/* شكل الأيقونة الأساسي */
+.fav i {
+    transition: all 0.3s ease;
+}

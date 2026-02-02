@@ -1,0 +1,16 @@
+{
+  "name": "elhandasia-frontend",
+  "version": "1.0.0",
+  "description": "El-Handasia E-commerce Frontend",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "serve:python": "python -m http.server 8000",
+    "serve:node": "npx http-server -p 8000"
+  },
+  "keywords": [
+    "ecommerce",
+    "frontend"
+  ],
+  "author": "",
+  "license": "ISC"
+}

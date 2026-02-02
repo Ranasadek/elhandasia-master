@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product | Elhandasiya</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fe; padding: 20px; direction: ltr; }
+        .edit-container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #1e293b; margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #475569; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+        .save-btn { background: #2563eb; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 20px; }
+        .save-btn:disabled { background: #94a3b8; }
+        .main-img-preview { width: 150px; height: 150px; object-fit: cover; border-radius: 10px; margin-top: 10px; display: none; border: 3px solid #e2e8f0; }
+        .specs-section { background: #f8fafc; padding: 15px; border-radius: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="edit-container">
+    <h2>Update Product Data</h2>
+    <form id="fullUpdateForm">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" id="p-name" required>
+            </div>
+            <div class="form-group">
+                <label>Replace Main Image</label>
+                <input type="file" id="p-main-image" accept="image/*">
+                <img id="img-preview" class="main-img-preview">
+            </div>
+            <div class="form-group">
+                <label>Base Price</label>
+                <input type="number" id="p-price" required step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Discount Price</label>
+                <input type="number" id="p-discount" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Discount Start Date</label>
+                <input type="datetime-local" id="p-discount-start">
+            </div>
+            <div class="form-group">
+                <label>Discount End Date</label>
+                <input type="datetime-local" id="p-discount-end">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="p-category" required></select>
+            </div>
+            <div class="form-group">
+                <label>Brand</label>
+                <select id="p-brand" required></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="p-desc" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Additional Information</label>
+            <textarea id="p-additional-info" rows="3" placeholder="Warranty, shipping info, etc."></textarea>
+        </div>
+
+        <div class="specs-section">
+            <label style="color: #2563eb; font-weight: bold;">Technical Specifications</label>
+            <div id="specs-container"></div>
+        </div>
+
+        <button type="submit" class="save-btn" id="saveBtn">Save & Apply Changes</button>
+    </form>
+</div>
+
+<script>
+    const BASE_URL = 'https://el-handasia.runasp.net';
+    const getToken = () => localStorage.getItem('userToken') || localStorage.getItem('token');
+    const productId = new URLSearchParams(window.location.search).get('id');
+    let currentSpecs = [];
+    let categorySpecsMap = {}; // خريطة للمواصفات المتاحة لكل قسم
+
+    // معاينة الصورة المختارة
+    document.getElementById('p-main-image').onchange = e => {
+        if(e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = document.getElementById('img-preview');
+                img.src = reader.result;
+                img.style.display = 'block';
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+
+    // جلب مواصفات القسم
+    async function loadCategorySpecifications(categoryId) {
+        if (!categoryId) {
+            currentSpecs = [];
+            document.getElementById('specs-container').innerHTML = '';
+            return;
+        }
+
+        try {
+            // استخدام الخريطة المخزنة إذا كانت موجودة
+            if (categorySpecsMap[categoryId]) {
+                updateSpecificationsUI(categorySpecsMap[categoryId]);
+                return;
+            }
+
+            const response = await fetch(`${BASE_URL}/api/admin/categories/${categoryId}/specifications`, {
+                headers: { 'Authorization': `Bearer ${getToken()}` }
+            });
+
+            if (!response.ok) throw new Error('Specs not found');
+
+            const specifications = await response.json();
+            categorySpecsMap[categoryId] = specifications;
+            updateSpecificationsUI(specifications);
+        } catch (error) {
+            console.error("Specs Error:", error);
+            Swal.fire('Warning', 'Could not load specifications for this category', 'warning');
+        }
+    }
+
+    // تحديث واجهة المواصفات
+    function updateSpecificationsUI(specifications) {
+        // دمج المواصفات الحالية مع القيم الموجودة
+        const existingValues = {};
+        currentSpecs.forEach(s => {
+            if (s.categorySpecificationId) {
+                existingValues[s.categorySpecificationId] = s.value;
+            }
+        });
+
+        currentSpecs = specifications.map(spec => ({
+            categorySpecificationId: spec.id,
+            specificationName: spec.specificationName,
+            value: existingValues[spec.id] || ''
+        }));
+
+        document.getElementById('specs-container').innerHTML = currentSpecs.map((s, i) => `
+            <div style="margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                <span style="font-size:13px; width:30%;">${s.specificationName || 'Specification'}:</span>
+                <input type="text" 
+                       value="${s.value || ''}" 
+                       onchange="currentSpecs[${i}].value=this.value" 
+                       style="flex:1; padding:8px;">
+            </div>
+        `).join('');
+    }
+
+    async function initializePage() {
+        try {
+            // 1. جلب بيانات المنتج
+            const res = await fetch(`${BASE_URL}/api/admin/products/${productId}`, {
+                headers: { 'Authorization': `Bearer ${getToken()}` }
+            });
+            const product = await res.json();
+
+            // 2. جلب الأقسام والبراندات
+            const [catRes, brandRes] = await Promise.all([
+                fetch(`${BASE_URL}/api/admin/categories`, { headers: { 'Authorization': `Bearer ${getToken()}` } }),
+                fetch(`${BASE_URL}/api/Brands`, { headers: { 'Authorization': `Bearer ${getToken()}` } })
+            ]);
+            const categories = await catRes.json();
+            const brands = await brandRes.json();
+
+            // 3. ملء القوائم
+            document.getElementById('p-category').innerHTML = categories.map(c => `<option value="${c.id}" ${c.id == product.categoryId ? 'selected' : ''}>${c.name}</option>`).join('');
+            document.getElementById('p-brand').innerHTML = brands.map(b => `<option value="${b.id}" ${b.id == product.brandId ? 'selected' : ''}>${b.name}</option>`).join('');
+            
+            // إضافة معالج لتغيير القسم
+            document.getElementById('p-category').addEventListener('change', async (e) => {
+                await loadCategorySpecifications(parseInt(e.target.value));
+            });
+
+            // 4. ملء البيانات
+            document.getElementById('p-name').value = product.name;
+            document.getElementById('p-price').value = product.price;
+            document.getElementById('p-discount').value = product.discountPrice || '';
+            document.getElementById('p-desc').value = product.description || '';
+            document.getElementById('p-additional-info').value = product.additionalInformation || '';
+            
+            // ملء تواريخ الخصم
+            if (product.discountStartDate) {
+                const startDate = new Date(product.discountStartDate);
+                document.getElementById('p-discount-start').value = startDate.toISOString().slice(0, 16);
+            }
+            if (product.discountEndDate) {
+                const endDate = new Date(product.discountEndDate);
+                document.getElementById('p-discount-end').value = endDate.toISOString().slice(0, 16);
+            }
+            
+            if(product.mainImageUrl) {
+                const img = document.getElementById('img-preview');
+                img.src = (product.mainImageUrl.startsWith('http') ? product.mainImageUrl : BASE_URL + product.mainImageUrl) + '?v=' + Date.now();
+                img.style.display = 'block';
+            }
+
+            // 5. تحميل مواصفات القسم أولاً ثم دمجها مع مواصفات المنتج الحالية
+            await loadCategorySpecifications(product.categoryId);
+            
+            // دمج مواصفات المنتج الحالية مع مواصفات القسم
+            if (product.specifications && product.specifications.length > 0) {
+                const existingValues = {};
+                product.specifications.forEach(s => {
+                    if (s.categorySpecificationId) {
+                        existingValues[s.categorySpecificationId] = s.value || '';
+                    }
+                });
+                
+                // تحديث القيم الموجودة
+                currentSpecs.forEach((spec, index) => {
+                    if (existingValues[spec.categorySpecificationId] !== undefined) {
+                        currentSpecs[index].value = existingValues[spec.categorySpecificationId];
+                    }
+                });
+                
+                // تحديث الواجهة بالقيم المحدثة
+                document.getElementById('specs-container').innerHTML = currentSpecs.map((s, i) => `
+                    <div style="margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:13px; width:30%;">${s.specificationName || 'Specification'}:</span>
+                        <input type="text" 
+                               value="${s.value || ''}" 
+                               onchange="currentSpecs[${i}].value=this.value" 
+                               style="flex:1; padding:8px;">
+                    </div>
+                `).join('');
+            }
+        } catch (e) {
+            Swal.fire('Error', 'فشل في تحميل بيانات المنتج', 'error');
+        }
+        
+    }
+
+    document.getElementById('fullUpdateForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('saveBtn');
+        btn.disabled = true; btn.innerText = "جاري الحفظ...";
+
+        const formData = new FormData();
+        formData.append('Id', productId);
+        formData.append('Name', document.getElementById('p-name').value.trim());
+        formData.append('Price', parseFloat(document.getElementById('p-price').value));
+        
+        // Discount price - only send if provided
+        const discountPrice = document.getElementById('p-discount').value;
+        if (discountPrice && parseFloat(discountPrice) > 0) {
+            formData.append('DiscountPrice', parseFloat(discountPrice));
+        }
+        
+        // Discount dates
+        const discountStart = document.getElementById('p-discount-start').value;
+        const discountEnd = document.getElementById('p-discount-end').value;
+        if (discountStart) {
+            formData.append('DiscountStartDate', new Date(discountStart).toISOString());
+        }
+        if (discountEnd) {
+            formData.append('DiscountEndDate', new Date(discountEnd).toISOString());
+        }
+        
+        formData.append('Description', document.getElementById('p-desc').value || '');
+        formData.append('CategoryId', parseInt(document.getElementById('p-category').value));
+        formData.append('BrandId', parseInt(document.getElementById('p-brand').value));
+        
+        // Additional information
+        const additionalInfo = document.getElementById('p-additional-info').value;
+        if (additionalInfo) {
+            formData.append('AdditionalInformation', additionalInfo);
+        }
+
+        // إرسال المواصفات - استخدام CategorySpecificationId حسب API
+        currentSpecs.forEach((s, i) => {
+            if (s.categorySpecificationId && s.value && s.value.trim()) {
+                formData.append(`Specifications[${i}].CategorySpecificationId`, parseInt(s.categorySpecificationId));
+                formData.append(`Specifications[${i}].Value`, s.value.trim());
+            }
+        });
+
+        // إرسال الصورة - handle keepExistingImage
+        const fileInput = document.getElementById('p-main-image');
+        if(fileInput.files[0]) {
+            formData.append('MainImage', fileInput.files[0]);
+            formData.append('KeepExistingImage', 'false');
+        } else {
+            // If no new image, keep the existing one
+            formData.append('KeepExistingImage', 'true');
+        }
+
+        try {
+            const res = await fetch(`${BASE_URL}/api/admin/products`, {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${getToken()}` },
+                body: formData
+            });
+
+            if(res.ok) {
+                Swal.fire('نجاح', 'تم تحديث البيانات والصورة بنجاح', 'success').then(() => {
+                    window.location.href = 'product.html?v=' + Date.now();
+                });
+            } else {
+                const errData = await res.json();
+                console.error("Validation Errors:", errData);
+                // إظهار سبب الـ 400 بالتحديد
+                let msg = "فشل التحديث، تأكد من صحة البيانات";
+                if(errData.errors) msg = Object.values(errData.errors).flat().join('\n');
+                Swal.fire('خطأ من السيرفر', msg, 'error');
+            }
+        } catch (err) {
+            Swal.fire('خطأ', 'تعذر الاتصال بالسيرفر', 'error');
+        } finally {
+            btn.disabled = false; btn.innerText = "Save & Apply Changes";
+        }
+    };
+
+    initializePage();
+</script>
+</body>
+</html>

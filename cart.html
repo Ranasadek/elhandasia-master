@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | El Handasia</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --primary: #FF6B00; --bg: #f4f7f6; --text: #333; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--text); }
+        
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        /* Back Button */
+        .back-nav { margin-bottom: 20px; }
+        .btn-back { text-decoration: none; color: #666; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-back:hover { color: var(--primary); }
+
+        /* Equal Height Wrapper */
+        .wrapper { display: flex; align-items: stretch; gap: 25px; }
+        .col-main { flex: 1.8; }
+        .col-side { flex: 1.2; }
+
+        .card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            height: 100%; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 { color: var(--primary); font-size: 20px; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .full { grid-column: span 2; }
+        
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(255,107,0,0.1); }
+        
+        /* Quantity Controls */
+        .item-row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .item-row img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+        
+        .qty-wrapper { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+        .qty-btn { background: #eee; border: none; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .qty-btn:hover { background: var(--primary); color: white; }
+        .qty-num { font-weight: 700; font-size: 14px; min-width: 20px; text-align: center; }
+
+        .cart-items-container { flex-grow: 1; overflow-y: auto; max-height: 400px; }
+        
+        .summary-details { background: #fafafa; padding: 20px; border-radius: 12px; margin-top: auto; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 500; }
+        .total-row { border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; font-size: 22px; font-weight: 800; color: var(--primary); }
+        
+        .btn-confirm { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-confirm:hover { background: #e66000; transform: translateY(-2px); }
+
+        @media (max-width: 850px) { 
+            .wrapper { 
+                flex-direction: column; 
+                display: flex; /* التأكد من أن الحاوية flex */
+            } 
+            
+            .col-main { 
+                order: 2; /* اجعل بيانات الشحن هي الثانية */
+            }
+            
+            .col-side { 
+                order: 1; /* اجعل ملخص الطلب هو الأول (فوق) */
+                margin-bottom: 20px; /* مسافة بسيطة بين الكارتين */
+            }
+
+            .card { 
+                height: auto; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Shopping
+        </a>
+    </div>
+
+    <div class="wrapper">
+        <div class="col-main">
+            <div class="card">
+                <h2><i class="fas fa-shipping-fast"></i> Shipping Information</h2>
+                <div class="form-grid">
+                    <div>
+                        <label>Full Name *</label>
+                        <input type="text" id="custName" placeholder="Full Name">
+                    </div>
+                    <div>
+                        <label>Email Address *</label>
+                        <input type="email" id="custEmail" placeholder="example@mail.com">
+                    </div>
+                    <div>
+                        <label>Phone Number *</label>
+                        <input type="tel" id="custPhone" placeholder="01xxxxxxxxx">
+                    </div>
+                    <div>
+                        <label>WhatsApp Number</label>
+                        <input type="tel" id="custWhatsapp" placeholder="01xxxxxxxxx">
+                    </div>
+                    <div class="full">
+                        <label>Governorate *</label>
+                        <select id="governorate" onchange="updateFinalTotals()"></select>
+                    </div>
+                    <div class="full">
+                        <label>Detailed Address *</label>
+                        <input type="text" id="custAddress" placeholder="Area, Street, Building No.">
+                    </div>
+                    <div class="full">
+                        <label>Order Notes (Optional)</label>
+                        <textarea id="custNotes" rows="3" placeholder="Notes for delivery..."></textarea>
+                    </div>
+                </div>
+                <button class="btn-confirm" onclick="processOrderNow()">
+                    CONFIRM ORDER
+                </button>
+            </div>
+        </div>
+
+        <div class="col-side">
+            <div class="card">
+                <h2><i class="fas fa-shopping-basket"></i> Order Summary</h2>
+                <div class="cart-items-container" id="cartItemsList"></div>
+                
+                <div class="summary-details">
+                    <div class="row">
+                        <span>Subtotal:</span>
+                        <span id="subtotalPrice">0 EGP</span>
+                    </div>
+                    <div class="row">
+                        <span>Shipping Fee:</span>
+                        <span id="shippingFeeLabel" style="color: #28a745;">0 EGP</span>
+                    </div>
+                    <div class="row total-row">
+                        <span>Total:</span>
+                        <span id="finalTotalLabel">0 EGP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://el-handasia.runasp.net";
+    let cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+
+    window.onload = async () => {
+        await loadGovs();
+        renderCartItems();
+    };
+
+    async function loadGovs() {
+        try {
+            const res = await fetch(`${API_URL}/api/shipping-governorates`);
+            const data = await res.json();
+            let html = '<option value="0" data-price="0">-- Select Governorate --</option>';
+            data.forEach(g => html += `<option value="${g.id}" data-price="${g.shippingFee}">${g.name}</option>`);
+            document.getElementById('governorate').innerHTML = html;
+        } catch (e) { console.error("Error loading govs", e); }
+    }
+
+    // Updated render function with +/- buttons
+    function renderCartItems() {
+        let html = '', subtotal = 0;
+        if(cart.length === 0) {
+            html = '<p style="text-align:center; color:#999; margin-top:20px;">Your cart is empty</p>';
+        } else {
+            cart.forEach((item, index) => {
+                const price = parseFloat(item.price.toString().replace(/[^0-9.]/g, '')) || 0;
+                const qty = parseInt(item.quantity) || 1;
+                subtotal += price * qty;
+                html += `
+                    <div class="item-row">
+                        <img src="${item.img}" onerror="this.src='https://via.placeholder.com/60'">
+                        <div style="flex:1">
+                            <div style="font-weight:bold">${item.name}</div>
+                            <small>${price} EGP</small>
+                            <div class="qty-wrapper">
+                                <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                <span class="qty-num">${qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        document.getElementById('cartItemsList').innerHTML = html;
+        document.getElementById('subtotalPrice').innerText = subtotal.toLocaleString() + " EGP";
+        updateFinalTotals();
+    }
+
+    // Function to handle quantity changes
+    function changeQty(index, delta) {
+        cart[index].quantity = (parseInt(cart[index].quantity) || 1) + delta;
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1); // Remove item if qty is 0
+        }
+        localStorage.setItem("shopping_cart", JSON.stringify(cart));
+        renderCartItems();
+    }
+
+    function updateFinalTotals() {
+        const subtotalText = document.getElementById('subtotalPrice').innerText;
+        const subtotal = parseFloat(subtotalText.replace(/[^0-9.]/g, '')) || 0;
+        const select = document.getElementById('governorate');
+        const shippingFee = parseFloat(select.options[select.selectedIndex]?.dataset.price) || 0;
+        
+        document.getElementById('shippingFeeLabel').innerText = shippingFee + " EGP";
+        document.getElementById('finalTotalLabel').innerText = (subtotal + shippingFee).toLocaleString() + " EGP";
+    }
+
+    async function processOrderNow() {
+        const name = document.getElementById('custName').value.trim();
+        const email = document.getElementById('custEmail').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+        const whatsapp = document.getElementById('custWhatsapp').value.trim();
+        const address = document.getElementById('custAddress').value.trim();
+        const userNotes = document.getElementById('custNotes').value.trim() || "No notes";
+        const govSelect = document.getElementById('governorate');
+        const govId = parseInt(govSelect.value);
+        
+        const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+
+        // Address is now mandatory
+        if (!name || !phone || !email || !address || govId === 0 || cart.length === 0) {
+            return Swal.fire({ 
+                icon: 'warning', 
+                title: 'Missing Info', 
+                text: 'Please complete all required fields (Name, Email, Phone, and Address).' 
+            });
+        }
+
+        const orderData = {
+            customerName: name,
+            customerEmail: email,
+            customerPhone: phone,
+            governorateId: govId,
+            whatsappNumber: whatsapp || phone,
+            address: address,
+            notes: `Web Cart Order | ${userNotes}`,
+            items: cart.map(item => ({ productId: parseInt(item.id), quantity: parseInt(item.quantity) }))
+        };
+
+        Swal.fire({ title: 'Sending Order...', didOpen: () => Swal.showLoading() });
+
+        try {
+            const response = await fetch(`${API_URL}/api/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            if (response.ok) {
+                Swal.fire({ 
+                    icon: 'success', 
+                    title: 'Order Successful!', 
+                    text: 'Thank you! Your order has been placed.',
+                    confirmButtonColor: '#FF6B00'
+                }).then(() => {
+                    localStorage.removeItem("shopping_cart");
+                    window.location.href = "index.html";
+                });
+            } else {
+                Swal.fire({ icon: 'error', title: 'Oops!', text: 'Order submission failed.' });
+            }
+        } catch (error) {
+            Swal.fire({ icon: 'error', title: 'Error', text: 'Connection to server failed.' });
+        }
+    }
+</script>
+</body>
+</html>

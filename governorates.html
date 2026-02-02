@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipping Management - Elhandasiya</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .main-content { padding: 30px; background: #f9f9f9; min-height: 100vh; }
+        .title-section h1 { font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .table-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 900px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; color: #888; font-weight: 600; border-bottom: 2px solid #eee; text-transform: uppercase; font-size: 12px; }
+        td { padding: 15px; border-bottom: 1px solid #f5f5f5; font-size: 14px; color: #333; }
+        .price-badge { background: #e8f5e9; color: #2e7d32; padding: 6px 12px; border-radius: 8px; font-weight: bold; }
+        .btn-edit { background: #ff7a00; color: white; border: none; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .btn-edit:hover { background: #e66e00; transform: rotate(45deg); }
+
+        /* --- Custom Modal Style (Like Add New Brand) --- */
+        .custom-modal {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); animation: fadeIn 0.3s;
+        }
+        .modal-content h2 { margin-bottom: 20px; color: #333; font-size: 22px; }
+        .modal-content input {
+            width: 100%; padding: 15px; margin-bottom: 25px; border: 1px solid #ddd;
+            border-radius: 8px; font-size: 16px; outline: none; transition: 0.3s; box-sizing: border-box;
+        }
+        .modal-content input:focus { border-color: #ff7a00; }
+        .modal-actions { display: flex; gap: 10px; justify-content: center; }
+        .btn-ok { background: #ff7a00; color: white; border: none; padding: 12px 35px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-cancel { background: #7f8c8d; color: white; border: none; padding: 12px 35px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-area">
+            <div class="hamburger">&#9776;</div>
+            <img src="img/Logo.png" alt="Logo" class="logo-img">
+            <div class="logo-info"><h2>Elhandasiya</h2><p>Admin Panel</p></div>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <aside class="sidebar">
+            <div class="close-btn">&times;</div>
+            <nav class="menu">
+                <a href="index.html" class="item"><i data-lucide="home"></i>Home</a>
+                <a href="Dashboard.html" class="item"><i data-lucide="layout-grid"></i>Dashboard</a>
+                <a href="product.html" class="item"><i data-lucide="package"></i>Products</a>
+                <a href="categories.html" class="item"><i data-lucide="folder"></i>Categories</a>
+                <a href="order.html" class="item"><i data-lucide="shopping-cart"></i>Orders</a>
+                <a href="brands.html" class="item"><i data-lucide="award"></i>Brands</a>
+                <a href="governorates.html" class="item active"><i data-lucide="truck"></i>Governorates</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="title-section">
+                <h1>Shipping Rates</h1>
+                <p>Update delivery fees for different governorates</p>
+            </div>
+            <div class="table-card">
+                <div id="govTableContainer"></div>
+            </div>
+        </main>
+    </div>
+
+    <div id="priceModal" class="custom-modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Update Price</h2>
+            <input type="number" id="newPriceInput" placeholder="Enter shipping fee">
+            <div class="modal-actions">
+                <button class="btn-ok" id="saveBtn">OK</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    lucide.createIcons();
+    const BASE_URL = "https://el-handasia.runasp.net";
+    let currentEditingId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadGovernorates();
+        setupSidebar();
+    });
+
+    async function loadGovernorates() {
+        const container = document.getElementById('govTableContainer');
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        try {
+            const response = await fetch(`${BASE_URL}/api/shipping-governorates`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            let html = `<table><thead><tr><th>Governorate Name</th><th>Shipping Fee</th><th style="text-align: center;">Action</th></tr></thead><tbody>`;
+            data.forEach(gov => {
+                html += `<tr><td>${gov.name}</td><td><span class="price-badge">${gov.shippingFee} EGP</span></td>
+                    <td style="display: flex; justify-content: center;">
+                        <button class="btn-edit" onclick="openPriceModal(${gov.id}, '${gov.name}', ${gov.shippingFee})"><i class="fas fa-cog"></i></button>
+                    </td></tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        } catch (e) { container.innerHTML = "Error loading data."; }
+    }
+
+    // فتح النافذة بدل الـ prompt
+    function openPriceModal(id, name, currentPrice) {
+        currentEditingId = id;
+        document.getElementById('modalTitle').innerText = `Update ${name} Fee`;
+        document.getElementById('newPriceInput').value = currentPrice;
+        document.getElementById('priceModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('priceModal').style.display = 'none';
+    }
+
+    // حفظ السعر الجديد
+    document.getElementById('saveBtn').onclick = async () => {
+        const newPrice = document.getElementById('newPriceInput').value;
+        if (!newPrice || isNaN(newPrice)) return alert("Please enter a valid price");
+
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        try {
+            const response = await fetch(`${BASE_URL}/api/shipping-governorates/${currentEditingId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ shippingFee: parseFloat(newPrice) })
+            });
+
+            if (response.ok || response.status === 204) {
+                closeModal();
+                loadGovernorates();
+            } else { alert("Update failed."); }
+        } catch (e) { alert("Error connecting to server."); }
+    };
+
+    function setupSidebar() {
+        const hb = document.querySelector('.hamburger');
+        const sb = document.querySelector('.sidebar');
+        if(hb) hb.onclick = () => sb.classList.add('show');
+        document.querySelector('.close-btn').onclick = () => sb.classList.remove('show');
+    }
+</script>
+</body>
+</html>

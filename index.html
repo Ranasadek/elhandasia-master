@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Elhandasiya</title>
+      <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Spray+Paint&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="logo-box">
+        <h2>Elhandasiya<span>.</span></h2>
+        <p>Welcome to Elhandasiya</p>
+      </div>
+  
+      <div class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-item">Home</a>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Laptops" class="nav-item" data-category-id="1">Laptops</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Printer" class="nav-item" data-category-id="2">Printer</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Computer" class="nav-item" data-category-id="3">Computer</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Computer Accessories" class="nav-item" data-category-id="4">Computer Accessories</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Companies Solution" class="nav-item" data-category-id="5">Companies Solution</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Smart Home" class="nav-item" data-category-id="6">Smart Home</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+  
+        <div class="nav-item-wrapper">
+          <a href="category.html?type=Uncategorized" class="nav-item" data-category-id="7">Uncategorized</a>
+          <ul class="dropdown-menu"></ul>
+        </div>
+        
+        <a class="get-started" href="#">Get Started</a>
+      </div>
+  
+      <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </div>
+  
+ <header class="elhandasia-header">
+  <div class="top-bar">
+    <div class="title-row">
+      <p style="color: white;">Welcome to Elhandasiya</p>
+      <a href="login.html" id="mainLoginBtn" class="btn-login">Log In</a>
+    </div>
+    <div class="contact-row">
+      <a href="#" class="contact-text">Contact Us</a>
+      <a href="tel:0123456789" class="contact-number">0123456789</a>
+    </div>
+  </div>
+
+  <div class="main-header-content">
+    <div class="logo-container">
+      <h2>Elhandasiya</h2>
+    </div>
+
+   
+
+ 
+
+    <div class="user-icons">
+      <a href="settings.html" class="icon-item" id="userAccountIcon" style="display: none;">
+        <i class="far fa-user"></i>
+        <span class="icon-label">Account</span>
+      </a>
+   
+      <a href="Dashboard.html" class="icon-item" id="admin-dash-link">
+        <i class="fas fa-th-large"></i>
+        <span style="    font-size: 12px;
+    margin-top: 5px;">Dashboard</span> </a>
+      <a href="cart.html" class="icon-item" style="position: relative;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="icon-label">Cart</span>
+        <span id="cart-count" style="position: absolute; top: -5px; right: 5px; background: #FF6B00; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; display: none;">0</span>
+      </a>
+      <a href="Favorite.html" class="icon-item" id="wishlist-link" style="position: relative; display: none;">
+        <i class="fa-regular fa-heart"></i>
+        <span class="icon-label">Favorite</span>
+        <span id="wishlist-count" style="position: absolute; top: -5px; right: 26px; background: #FF6B00; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; display: none; visibility: hidden;">0</span>
+    </a>
+    </div>
+    <div class="mobile-search-icon">
+      <a href="cart.html" class="icon-item" style="position: relative; display: inline-block; text-decoration: none;">
+          <i class="fas fa-shopping-cart" style="font-size: 20px; color: #333;"></i>
+          <span class="cart-badge-global" id="cart-count-mobile" style="
+              position: absolute; 
+              top: -2px;  
+              background: #FF6B00; 
+              color: white; 
+              border-radius: 50%; 
+              padding: 2px 6px; 
+              font-size: 11px; 
+              font-weight: bold; 
+              min-width: 14px;
+              height: 14px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              visibility: hidden; /* سنحوله لـ visible بالجافا سكريبت */
+          ">0</span>
+      </a>
+  </div>
+    <div class="icon-item mobile-menu-icon" id="hamburger">
+      <i class="fa fa-bars"></i>
+    </div>
+  </div>
+
+  <div class="main-nav-menu-wrapper desktop-only">
+    <nav class="main-nav-menu">
+        <a href="#go-laptop">Laptops</a>
+        <a href="#go-accessories">Printer</a>
+        <a href="#go-monitors">Computer</a>
+        <a href="#go-storage">Computer Accessories</a>
+        <a href="#go-recommended">Recommended</a>
+    </nav>
+</div>
+
+<ul class="mobile-categories mobile-only" id="mobile-categories">
+    <li><a href="#go-laptop">Laptops</a></li>
+    <li><a href="#go-accessories">Printer</a></li>
+    <li><a href="#go-monitors">Computer</a></li>
+    <li><a href="#go-storage">Computer Accessories</a></li>
+    <li><a href="#go-recommended">Recommended</a></li>
+</ul>
+</header>
+
+<div id="search-results-container" class="containers" style="display: none; min-height: 400px; padding-top: 20px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #fff; padding: 15px; border-radius: 8px; border-bottom: 3px solid #FF6B00; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+      <h2 id="search-status-text" style="font-size: 20px; color: #333; margin: 0;"></h2>
+      <!-- <button id="close-search" style="background: #FF6B00; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">الرجوع للرئيسية ×</button> -->
+  </div>
+  <div id="search-grid-main" class="grid2"></div>
+</div>
+
+<div id="all-home-sections">
+  </div>
+  <div id="search-grid" class="grid2"></div>
+</div>
+ 
+<div class="section1">
+    <!-- <div class="section1-overlay"></div> -->
+  
+    <div class="container section1-content">
+      <div class="lefts">
+        <a class="company-btn" href="#">Companies solution <i class="fa-regular fa-circle-right"></i>
+        </a>
+  
+        <h1 class="section1-title">Your best choice for the modern<br> world of technology</h1>
+  
+        <div class="accent-line"></div>
+  
+        <p class="section1-desc">
+          Our goal is to make your day easier, enhance your experience, and provide technology
+          solutions you can truly rely on.<br> With us, every choice you make is an<br> investment in your
+          comfort and your future.
+        </p>
+  
+        <div class="section1-actions">
+          <button class="btn-black">Shop Now</button>
+          <button class="btn-light">Browse Categories</button>
+        </div>
+      </div>
+  
+  
+      <div class="rights">
+     
+      </div>
+    </div>
+  
+   
+    <div class="trusted-wrap">
+      <div class="trusted">
+        <span class="trusted-plus">+150</span>
+        <span class="trusted-text">users trusted us</span>
+      </div>
+      <div class="trusted-underline">
+        <span class="line"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section2">
+<div class="services">
+    <div class="service-box">
+    <img src="img/2.jpeg" alt="Free Shipping">
+    <div class="service-title">Free Shipping</div>
+    <div class="service-text">Orders above 20K EGP</div>
+    </div>
+    
+    
+    <div class="divider" aria-hidden="true"></div>
+    
+    
+    
+    <div class="service-box">
+    <img src="img/3.jpeg" alt="Secure Payment">
+    <div class="service-title">Secure Payment</div>
+    <div class="service-text">Got 100% Payment Safe</div>
+    </div>
+    
+    
+    <div class="divider" aria-hidden="true"></div>
+    
+    
+    <div class="service-box">
+        <div class="support-icon">
+          <img src="img/4.jpeg" class="icon-base" alt="Support">
+          <img src="img/5.jpeg" class="icon-number" alt="24">
+        </div>
+      
+        <div class="service-title">Support 24/7</div>
+        <div class="service-text">Top quality 24/7 Support</div>
+      </div>
+      
+    
+    <div class="divider" aria-hidden="true"></div>
+    
+    
+    
+    <div class="service-box">
+    <img src="img/6.jpeg" alt="Money Back">
+    <div class="service-title">100% Money Back</div>
+    <div class="service-text">Customers Money Backs</div>
+    </div>
+    
+    
+    <div class="divider" aria-hidden="true"></div>
+    
+    
+   
+    <div class="service-box">
+    <img src="img/8.jpeg" alt="Quality Products">
+    <div class="service-title">Quality Products</div>
+    <div class="service-text">15 Years of Quality and Trust</div>
+    </div>
+
+    </div>
+</div>
+   
+    <div class="section3" id="featured-collections">
+
+    <div class="section3-header">
+        <h1>Featured Collections</h1>
+        <p>Explore our curated selection of premium products</p>
+      </div>
+
+    
+    <div class="section3-text">
+
+        <div class="box" id="big">  
+          <h2>Companies Solution</h2>
+          <p>Discover amazing deals and exclusive offers</p>
+          <button> <a href="category.html?type=Companies Solution" > Shop Now</a> </button>
+        </div>
+    
+        <div class="box" id="lap">
+          <h2>Laptops</h2>
+          <p>Discover amazing deals and exclusive offers</p>
+          <button>  <a href="category.html?type=Laptops" > Shop Now</a></button>
+        </div>
+    
+        <div class="box" id="print">
+          <h2>Printers</h2>
+          <p>Discover amazing deals and exclusive offers</p>
+          <button> <a href="category.html?type=Printer" > Shop Now</a></button>
+        </div>
+    
+        <div class="box" id="s1">
+          <h2>Smart Home</h2>
+          <p>Discover amazing deals </p>
+          <button> <a href="category.html?type=Smart Home" > Shop Now</a></button>
+        </div>
+    
+        <div class="box" id="s2">
+          <h2>Computer Accessories</h2>
+          <p>Discover amazing deals </p>
+          <button> <a href="category.html?type=Computer Accessories" > Shop Now</a></button>
+        </div>
+    
+        <!-- <div class="box" id="s3">
+          <h2>Systems</h2>
+          <p>Discover amazing </p>
+          <button>Shop Now</button>
+        </div>
+     -->
+        <div class="box" id="s4">
+          <h2>Uncategorized</h2>
+          <p>Discover amazing deals </p>
+          <button> <a href="category.html?type=Uncategorized" > Shop Now</a></button>
+        </div>
+    
+        <div class="box" id="right">
+          <h2>Computer</h2>
+          <p class="computers">Discover amazing deals and exclusive offers</p>
+          <button> <a href="category.html?type=Computer" > Shop Now</a></button>
+        </div>
+    
+      </div>
+    </div>
+   
+    <span id="go-laptop"></span>
+    <div class="containers" data-id="1" style="position: relative;">
+      <h1>Laptop</h1>
+      <p class="subtitle">Modern, Powerful Laptops</p>
+      
+      <!-- <a href="category.html?type=Laptops" class="show-more-btn">Show More →</a> -->
+  
+      <div class="grid2"></div>
+  </div>
+</div>
+<div class="section5">
+
+   
+  <div class="banner1">
+    <img src="img/banner02.jpg" 
+         alt="banner02" 
+         onclick="window.location.href='category.html?type=Laptops';" 
+         style="cursor: pointer;">
+</div>
+</div>
+
+
+<span id="go-accessories"></span>
+<div class="containers" data-id="2">
+  <h1>Accessories</h1>
+  <p class="subtitle">Modern Accessories</p>
+  <!-- <a href="category.html?type=Printer" class="show-more-btn">Show More →</a> -->
+  <div class="grid2"></div>
+</div>
+
+<div class="section6">
+
+    
+  <div class="big-banner">
+
+  <img src="img/intel_ai_ar.png" 
+  alt="banner02" 
+  onclick="window.location.href='category.html?type=Printer';" 
+  style="cursor: pointer;">
+</div>
+ 
+  <div class="row-banners">
+      <div class="small-banner">
+        
+        <img src="img/banner3.png" 
+        alt="banner02" 
+        onclick="window.location.href='category.html?type= Computer';" 
+        style="cursor: pointer;">
+        
+      </div>
+      <div class="smalls-banner">
+     
+        <img src="img/_385x300_790x300_-__4.png" 
+        alt="banner02" 
+        onclick="window.location.href='category.html?type= Computer Accessories';" 
+        style="cursor: pointer;">
+        
+      </div>
+  </div>
+
+
+
+</div>
+<span id="go-monitors"></span>
+<div class="containers" data-category-id="3">
+  <h1>Monitors</h1>
+  <p class="subtitle">4K, 8K Monitors</p>
+  <!-- <a href="category.html?type=Computer" class="show-more-btn">Show More →</a> -->
+  <div class="grid2">
+      <p>Loading Monitors...</p>
+  </div>
+</div>
+
+
+<div class="section7">
+  <div class="sec7">
+    <img src="img/banner3.png" alt="banner3">
+  </div>
+
+  <div class="sec7">
+    <img src="img/banner2.png" alt="banner2">
+  </div>
+
+  <div class="sec7">
+    <img src="img/banner3.png" alt="banner3">
+  </div>
+
+  <div class="sec7">
+    <img src="img/banner2.png" alt="banner2">
+  </div>
+</div>
+
+
+<span id="go-storage"></span>
+<div class="containers" data-category-id="4">
+  <h1>Storage</h1>
+  <p class="subtitle">HDD, SSD M2</p>
+  <!-- <a href="category.html?type=Computer Accessories" class="show-more-btn">Show More →</a> -->
+  <div class="grid2">
+      <p>Loading Storage...</p>
+  </div>
+</div>
+
+<!-- <div class="section8">
+  <div class="top">
+    <img data-banner="8" src="" alt="banner4">
+  </div>
+
+  <div class="bottom">
+    <div class="left-box">
+      <img data-banner="9" src="" alt="banner3">
+    </div>
+
+    <div class="left-box">
+      <img data-banner="10" src="" alt="banner2">
+    </div>
+
+    <div class="right-box">
+      <img data-banner="11" src="" alt="banner1">
+    </div>
+  </div>
+</div> -->
+<div class="section8">
+
+  <div class="top">
+ 
+    <img src="img/banner4.jpg" alt="banner4" 
+    onclick="window.location.href='category.html?type=Companies Solution';" 
+    style="cursor: pointer;">
+  </div>
+
+  <div class="bottom">
+
+    <div class="left-box">
+
+      <img src="img/banner3.png" alt="banner3" 
+      onclick="window.location.href='category.html?type=Smart Home';" 
+      style="cursor: pointer;">
+    </div>
+
+    <div class="left-box">
+     
+      
+      <img src="img//banner2.png" alt="banner2" 
+      onclick="window.location.href='category.html?type=Uncategorized';" 
+      style="cursor: pointer;">
+    </div>
+
+    <div class="right-box">
+      <img src="img/banner1.png" alt="banner1">
+    
+    </div>
+
+  </div>
+
+</div>
+
+<div id="category-icons-wrapper" class="category-slider"></div>
+<span id="go-recommended"></span>
+<div class="containers">
+  <h1 id="category-title">Recommended for You</h1>
+  <p class="subtitle">Based on your browsing history</p>
+
+  <button class="arrow left" id="prevBtn">❮</button>
+  
+  <div class="slider-wrapper">
+      <div class="slider" id="slider">
+          </div>
+  </div>
+
+  <button class="arrow right" id="nextBtn">❯</button>
+</div>
+
+<footer class="site-footer" aria-label="Footer">
+  <div class="footer-inner">
+      
+      <div>
+          <div class="footer-footer">
+              <div class="footer-header">
+                   <div class="footer-left">
+                      <img src="img/Logo.png" alt="El-Handasiya Logo">
+                  </div>
+                  <div class="footer-right">
+                      <h3>El-Handasia</h3>
+                      <p style="margin: 0; ">Electronics & Technology</p>
+                  </div>
+              </div>
+
+              <p class="footer-description">Your trusted partner for electronics, laptops, CCTV systems, and computer accessories in Egypt.</p>
+              <div class="socials" aria-hidden="false">
+                <a href="https://www.facebook.com/share/16uDx46Ntk/" target="_blank" rel="noopener noreferrer" aria-label="facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+          </div>
+      </div>
+
+      <div class="footer-col">
+          <h4>Quick Links</h4>
+          <nav class="links" aria-label="Quick Links">
+              <a href="#">About Us</a>
+              <a href="#">Contact Us</a>
+              <a href="#">Track Order</a>
+              <a href="#">Returns & Refunds</a>
+              <a href="#">Shipping Info</a>
+              <a href="#">FAQs</a>
+          </nav>
+      </div>
+
+      <div class="footer-col">
+          <h4>Categories</h4>
+          <nav class="cats" aria-label="Categories">
+              <a href="#">Laptops</a>
+              <a href="#">Storage Devices</a>
+              <a href="#">CCTV Systems</a>
+              <a href="#">Accessories</a>
+              <a href="#">Keyboards & Mice</a>
+              <a href="#">Audio Devices</a>
+          </nav>
+      </div>
+
+      <div class="footer-col contact">
+          <h4>Contact Us</h4>
+          
+          <div class="contact-content">
+              
+              <div class="info">
+                  <div class="row"><i class="fa-solid fa-location-dot"></i><div>Cairo, Egypt<br><small style="color:var(--muted)">Nasr City, Main Street</small></div></div>
+                  
+                  <div class="row">
+                      <i class="fa-solid fa-phone"></i>
+                      <div>
+                          <a href="tel:+201234567890">+20 123 456 7890</a>
+                      </div>
+                  </div>
+                  
+                  <div class="row">
+                      <i class="fa-regular fa-envelope"></i>
+                      <div>
+                          <a href="mailto:info@elhandasia.com">info@elhandasia.com</a>
+                      </div>
+                  </div>
+                  
+                  <div style="font-size:12px; color:var(--muted); margin-top:6px; text-align: left;">
+                      <strong style="color:var(--white)">Working Hours:</strong><br>
+                      Sat - Thu: 9:00 AM - 9:00 PM<br>
+                      Friday: 2:00 PM - 9:00 PM
+                  </div>
+              </div>
+
+              <a href="https://maps.app.goo.gl/YZeAaQPLviXbDjHDA?g_st=ac" target="_blank" class="map" aria-label="View location on Google Maps">
+                  <img src="img/WhatsApp Image 2025-12-07 at 11.58.15 PM.jpeg" alt="Map location ">
+              </a>
+          </div>
+      </div>
+  </div>
+  
+
+  <div class="footer-divider"></div>
+
+  <div class="footer-bottom">
+      <div class="copyright">© 2024 El-Handasia Company. All rights reserved.</div>
+
+      <div class="developed" aria-hidden="false">
+          <span class="by">Developed By</span>
+          <span class="beta">BETA</span>
+      </div>
+      
+      <div class="bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+      </div>
+  </div>
+</footer>
+
+
+    <script src="js/script.js"></script>
+    <script src="js/jss.js"></script>
+</body>
+</html>

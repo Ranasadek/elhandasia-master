@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Dashboard - Elhandasiya</title>
+
+    <link rel="icon" type="image/png" href="img/Logo.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+
+        .recent-orders-section { margin-top: 30px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .status-tag { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; background: #e6f4ea; color: #1e7e34; text-transform: capitalize; }
+
+        .table-container { overflow-x: auto; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+
+        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; color: #666; font-size: 14px; white-space: nowrap; }
+
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; color: #333; }
+
+       
+
+        .product-summary { color: #666; font-size: 13px; }
+
+        .view-all-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+
+        .view-all-link { background: #ff6b00; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+<header class="main-header">
+
+    <div class="logo-area">
+
+        <div class="hamburger">&#9776;</div>
+
+        <img src="img/Logo.png" alt="Logo" class="logo-img">
+
+        <div class="logo-info">
+
+            <h2>Elhandasiya</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+    </div>
+
+    <div class="header-body">
+
+        <div class="welcome">
+
+            <h1>Welcome back, Admin</h1>
+
+            <p>Here's what's happening today</p>
+
+        </div>
+
+        <div class="user-info">
+
+            <strong>Admin User</strong>
+
+            <span>admin@eshop.com</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<div class="page-container">
+
+    <aside class="sidebar">
+
+        <div class="close-btn">&times;</div>
+
+        <nav class="menu">
+
+          <a href="index.html" class="item"><i data-lucide="home"></i>Home</a>
+
+            <a href="Dashboard.html" class="item active"><i data-lucide="layout-grid"></i>Dashboard</a>
+
+            <a href="product.html" class="item"><i data-lucide="package"></i>Products</a>
+
+            <a href="categories.html" class="item"><i data-lucide="folder"></i>Categories</a>
+
+            <a href="order.html" class="item"><i data-lucide="shopping-cart"></i>Orders</a>
+
+            <a href="brands.html" class="item"><i data-lucide="award"></i>Brands</a>
+            <a href="governorates.html" class="item "><i data-lucide="truck"></i>Governorates</a>
+
+            <!-- <a href="#" class="item"><i data-lucide="image"></i>Banners</a> -->
+
+            <!-- <a class="item"><i data-lucide="settings"></i>Settings</a> -->
+
+        </nav>
+
+    </aside>
+
+
+
+    <main class="main-content">
+
+        <div class="page-header">
+
+            <h2>Dashboard Overview</h2>
+
+            <p>Real-time statistics for your store</p>
+
+        </div>
+
+
+
+        <div class="stats-grid">
+
+            <div class="cardss">
+
+                <div class="cardss-info"><span>Total Products</span><h3 id="totalProducts">0</h3></div>
+
+                <div class="icon-wrapper blue-box"><i data-lucide="package"></i></div>
+
+            </div>
+
+            <div class="cardss">
+
+                <div class="cardss-info"><span>Total Categories</span><h3 id="totalCategories">0</h3></div>
+
+                <div class="icon-wrapper green-box"><i data-lucide="folder"></i></div>
+
+            </div>
+
+            <div class="cardss">
+
+                <div class="cardss-info"><span>Total Orders</span><h3 id="totalOrders">0</h3></div>
+
+                <div class="icon-wrapper orange-box"><i data-lucide="shopping-cart"></i></div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="recent-orders-section">
+
+            <div class="view-all-header">
+
+                <h3>Recent Orders</h3>
+
+                <a href="order.html" class="view-all-link">Manage Orders</a>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Customer Name</th>
+
+                            <th>Phone</th>
+
+                            <th>Product Summary</th>
+
+                            <th>Date</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="latestOrdersTable">
+
+                        <tr><td colspan="5" style="text-align:center; padding: 20px;">Loading latest orders...</td></tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+    lucide.createIcons();
+
+    const DASHBOARD_URL = 'https://el-handasia.runasp.net/api/admin/dashboard';
+    const BASE_ORDERS_URL = 'https://el-handasia.runasp.net/api/admin/orders';
+    
+    const statusMap = [
+        { id: 0, name: "Pending" },
+        { id: 1, name: "Shipped" },
+        { id: 2, name: "Delivered" },
+        { id: 3, name: "Cancelled" },
+        { id: 4, name: "Returned" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        if (!token) { 
+            window.location.href = "login.html"; 
+        } else { 
+            loadData(); // دي دلوقتي هتجيب العدادات والأوردرات مع بعض
+        }
+    });
+
+    async function updateOrderStatus(orderId, statusValue) {
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        const selectElement = event.target;
+        const numericStatus = parseInt(statusValue);
+        
+        // تثبيت محلي
+        let savedStatuses = JSON.parse(localStorage.getItem('admin_order_fixes') || "{}");
+        savedStatuses[orderId] = numericStatus;
+        localStorage.setItem('admin_order_fixes', JSON.stringify(savedStatuses));
+
+        selectElement.disabled = true;
+        updateSelectStyle(selectElement, numericStatus);
+
+        try {
+            const response = await fetch(`${BASE_ORDERS_URL}/${orderId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ newStatus: numericStatus })
+            });
+
+            if (response.ok) {
+                Swal.fire({ icon: 'success', title: 'تم التثبيت', timer: 800, showConfirmButton: false });
+                // تحديث العدادات فقط بعد التغيير عشان لو عدد الاوردرات اتغير
+                setTimeout(() => loadData(), 2000);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            selectElement.disabled = false;
+        }
+    }
+
+    async function loadData() {
+        const token = localStorage.getItem('userToken') || localStorage.getItem('token');
+        const t = Date.now();
+        
+        try {
+            // 1. طلب بيانات الأوردرات للجدول
+            const ordersRes = await fetch(`${BASE_ORDERS_URL}?pageNumber=1&pageSize=5&t=${t}`, {
+                headers: { 'Authorization': `Bearer ${token}`, 'Cache-Control': 'no-cache' }
+            });
+            if (ordersRes.status === 200) {
+                const oData = await ordersRes.json();
+                renderTable(oData.data || []);
+            }
+
+            // 2. رجعتلك الجزء ده: طلب بيانات العدادات (Stats)
+            const dashRes = await fetch(`${DASHBOARD_URL}?t=${t}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (dashRes.ok) {
+                const d = await dashRes.json();
+                // التأكد من وجود العناصر في الصفحة قبل الكتابة فيها
+                if(document.getElementById('totalProducts')) document.getElementById('totalProducts').innerText = d.totalProducts || 0;
+                if(document.getElementById('totalCategories')) document.getElementById('totalCategories').innerText = d.totalCategories || 0;
+                if(document.getElementById('totalOrders')) document.getElementById('totalOrders').innerText = d.totalOrders || 0;
+            }
+        } catch (e) { 
+            console.error("Dashboard Stats Error:", e); 
+        }
+    }
+
+    function renderTable(orders) {
+        const tbody = document.getElementById('latestOrdersTable');
+        if (!tbody) return;
+
+        const savedStatuses = JSON.parse(localStorage.getItem('admin_order_fixes') || "{}");
+
+        tbody.innerHTML = orders.map(order => {
+            let currentId = savedStatuses[order.id] !== undefined 
+                ? savedStatuses[order.id] 
+                : (typeof order.status === 'number' ? order.status : (statusMap.find(s => s.name === order.status)?.id || 0));
+
+            return `
+                <tr>
+                    <td><strong>${order.customerName || 'N/A'}</strong></td>
+                    <td>${order.phone || 'N/A'}</td>
+                    <td>${order.productSummary || 'N/A'}</td>
+                    <td>${order.day || 'N/A'}</td>
+                    <td>
+                        <select class="status-dropdown" 
+                                style="${getDynamicStyle(currentId)}"
+                                onchange="updateOrderStatus(${order.id}, this.value)">
+                            ${statusMap.map(s => `
+                                <option value="${s.id}" ${currentId === s.id ? 'selected' : ''}>${s.name}</option>
+                            `).join('')}
+                        </select>
+                    </td>
+                </tr>`;
+        }).join('');
+    }
+
+    function getDynamicStyle(id) {
+        let style = "padding: 5px; border-radius: 4px; border: 1px solid #ddd; font-weight: bold;";
+        if (id == 2) return style + " background: #e8f5e9; color: #2e7d32;";
+        if (id == 3) return style + " background: #ffebee; color: #d32f2f;";
+        return style + " background: #fff; color: #333;";
+    }
+
+    function updateSelectStyle(el, id) { el.style = getDynamicStyle(id); }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    lucide.createIcons();
+
+ 
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+ 
+
+      // -------- Sidebar Hamburger --------
+
+      const sidebarHamburger = document.querySelector('.hamburger'); // متغير مختلف عشان ما يتعارضش
+
+      const sidebar = document.querySelector('.sidebar');
+
+      const sidebarCloseBtn = document.querySelector('.close-btn');
+
+ 
+
+      if (sidebarHamburger && sidebar && sidebarCloseBtn) {
+
+        sidebarHamburger.addEventListener('click', () => {
+
+          sidebar.classList.add('show'); // فتح الـ sidebar
+
+        });
+
+ 
+
+        sidebarCloseBtn.addEventListener('click', () => {
+
+          sidebar.classList.remove('show'); // غلق الـ sidebar
+
+        });
+
+      }
+
+ 
+
+      // -------- Sidebar Active Toggle --------
+
+      const menuItems = document.querySelectorAll('.menu .item');
+
+ 
+
+      menuItems.forEach(item => {
+
+        item.addEventListener('click', () => {
+
+          // إزالة active من كل العناصر
+
+          menuItems.forEach(el => el.classList.remove('active'));
+
+ 
+
+          // إضافة active للعنصر اللي اتضغط
+
+          item.classList.add('active');
+
+        });
+
+      });
+
+ 
+
+      // أي كود جديد ممكن تضيفيه هنا بدون مشاكل
+
+      // مثال: hamburger آخر لقائمة موبايل
+
+      const mobileMenuIcon = document.querySelector('.mobile-menu-icon'); // لو موجود
+
+      const mobileCategories = document.querySelector('.mobile-categories'); // لو موجود
+
+ 
+
+      if (mobileMenuIcon && mobileCategories) {
+
+        mobileMenuIcon.addEventListener('click', () => {
+
+          mobileCategories.classList.toggle('show');
+
+        });
+
+ 
+
+        document.addEventListener('click', (e) => {
+
+          if (!mobileCategories.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
+
+            mobileCategories.classList.remove('show');
+
+          }
+
+        });
+
+      }
+
+ 
+
+    });
+
+  </script>
+
+</body>
+
+</html>

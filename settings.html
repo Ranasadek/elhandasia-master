@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ElHandasia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #ff6600;
+            --bg-gray: #f4f7f9;
+            --input-border: #e2e8f0;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-gray);
+            padding: 20px;
+            color: var(--text-primary);
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .settings-card {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--primary-orange);
+            text-align: center;
+        }
+        
+        .section-header {
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-orange);
+            padding-left: 15px;
+        }
+        
+        .section-header h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .section-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            text-align: left;
+            font-family: inherit;
+        }
+        
+        input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+        }
+        
+        input::placeholder {
+            color: #a0aec0;
+            text-align: left;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            left: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #a0aec0;
+        }
+        
+        .footer-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 40px;
+            border-top: 1px solid #edf2f7;
+            padding-top: 25px;
+        }
+        
+        .btn-save {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-save:hover {
+            background: #e65c00;
+        }
+        
+        .btn-save:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-save i {
+            font-size: 14px;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 1px solid #edf2f7;
+            margin: 40px 0;
+        }
+        
+        .form-note {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.5;
+        }
+        
+        .status-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .success {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .error {
+            background-color: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .warning {
+            background-color: #feebc8;
+            color: #744210;
+        }
+        
+        .info {
+            background-color: #bee3f8;
+            color: #2a4365;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #e53e3e;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .settings-card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            input {
+                padding: 12px;
+            }
+            
+            .btn-save {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="settings-card">
+    <h1>Profile</h1>
+    
+    <div id="statusMessage" class="status-message" style="display: none;"></div>
+
+    <form id="combinedSettingsForm">
+        <div class="section-header">
+            <h2>Personal Information</h2>
+            <p>Update your personal details here</p>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="phoneNumber" placeholder="Enter mobile number">
+        </div>
+
+        <div class="form-group">
+            <label>WhatsApp Number</label>
+            <input type="tel" id="whatsappNumber" placeholder="Enter WhatsApp number">
+            <small class="form-note">Note: This field is for contact only</small>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Email Address</label>
+            <input type="email" id="email" placeholder="example@email.com" required>
+        </div>
+
+        <hr>
+
+        <div class="section-header">
+            <h2>Security</h2>
+            <p>Update your password to keep your account secure</p>
+        </div>
+
+        <div class="form-group">
+            <label>Current Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="currentPassword" placeholder="••••••••">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>New Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="newPassword" placeholder="Minimum 8 characters">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Confirm New Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmNewPassword" placeholder="Confirm your new password">
+            </div>
+        </div>
+
+        <div class="footer-actions">
+            <button type="submit" class="btn-save" id="saveButton">
+                <span id="saveText">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </span>
+                <span id="saveLoading" class="loading" style="display: none;"></span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const API_BASE = "https://el-handasia.runasp.net/api/user/settings";
+    
+    // Show status message
+    function showMessage(message, type = 'success') {
+        const messageDiv = document.getElementById('statusMessage');
+        messageDiv.textContent = message;
+        messageDiv.className = `status-message ${type}`;
+        messageDiv.style.display = 'block';
+        
+        // Scroll to top to show message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000);
+    }
+    
+    // Toggle loading state
+    function setLoading(isLoading) {
+        const saveButton = document.getElementById('saveButton');
+        const saveText = document.getElementById('saveText');
+        const saveLoading = document.getElementById('saveLoading');
+        
+        if (isLoading) {
+            saveButton.disabled = true;
+            saveText.style.display = 'none';
+            saveLoading.style.display = 'inline-block';
+        } else {
+            saveButton.disabled = false;
+            saveText.style.display = 'block';
+            saveLoading.style.display = 'none';
+        }
+    }
+    
+    // 1. Toggle Password Visibility
+    function addPasswordToggles() {
+        const passwordFields = [
+            { id: 'currentPassword' },
+            { id: 'newPassword' },
+            { id: 'confirmNewPassword' }
+        ];
+        
+        passwordFields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (!input) return;
+            
+            const wrapper = input.parentElement;
+            const eyeIcon = document.createElement('i');
+            eyeIcon.className = `fa-regular fa-eye toggle-password`;
+            eyeIcon.style.cssText = 'position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #a0aec0; z-index: 10;';
+            
+            eyeIcon.addEventListener('click', () => {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                eyeIcon.classList.toggle('fa-eye');
+                eyeIcon.classList.toggle('fa-eye-slash');
+            });
+            
+            wrapper.style.position = 'relative';
+            wrapper.appendChild(eyeIcon);
+        });
+    }
+    
+    // 2. Load User Data on Startup
+    async function loadData() {
+        const token = localStorage.getItem('token'); 
+        if (!token) {
+            showMessage('Please login first', 'warning');
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const res = await fetch(`${API_BASE}/profile`, {
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                console.log("Loaded profile data:", data);
+                
+                // Try different property names based on API response
+                document.getElementById('fullName').value = 
+                    data.name || data.Name || data.fullName || data.FullName || '';
+                document.getElementById('phoneNumber').value = 
+                    data.phoneNumber || data.PhoneNumber || data.phone || data.Phone || '';
+                document.getElementById('whatsappNumber').value = 
+                    data.whatsappNumber || data.WhatsAppNumber || data.whatsapp || data.WhatsApp || '';
+                document.getElementById('email').value = 
+                    data.email || data.Email || '';
+                
+                showMessage('Your data has been loaded successfully', 'success');
+            } else if (res.status === 401) {
+                showMessage('Session expired, please login again', 'error');
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 2000);
+            } else {
+                const errorText = await res.text();
+                console.error("Load error response:", errorText);
+                showMessage('Failed to load data', 'error');
+            }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            showMessage('Server connection error', 'error');
+        } finally {
+            setLoading(false);
+        }
+    }
+    
+    // Validate email
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+    
+    // Validate phone number
+    function validatePhone(phone) {
+        if (!phone) return true; // Phone is optional
+        const re = /^[\+]?[0-9\s\-\(\)]+$/;
+        return re.test(phone);
+    }
+    
+    // Validate form
+    function validateForm() {
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmNewPassword').value;
+        
+        // Check required fields
+        if (!fullName) {
+            showMessage('Please enter full name', 'error');
+            document.getElementById('fullName').focus();
+            return false;
+        }
+        
+        if (!email) {
+            showMessage('Please enter email address', 'error');
+            document.getElementById('email').focus();
+            return false;
+        }
+        
+        if (!validateEmail(email)) {
+            showMessage('Please enter a valid email address', 'error');
+            document.getElementById('email').focus();
+            return false;
+        }
+        
+        if (phone && !validatePhone(phone)) {
+            showMessage('Please enter a valid phone number', 'error');
+            document.getElementById('phoneNumber').focus();
+            return false;
+        }
+        
+        // Check passwords
+        if (newPass || confirmPass) {
+            if (!newPass && confirmPass) {
+                showMessage('Please enter new password', 'error');
+                document.getElementById('newPassword').focus();
+                return false;
+            }
+            
+            if (newPass && !confirmPass) {
+                showMessage('Please confirm new password', 'error');
+                document.getElementById('confirmNewPassword').focus();
+                return false;
+            }
+            
+            if (newPass && newPass.length < 8) {
+                showMessage('Password must be at least 8 characters', 'error');
+                document.getElementById('newPassword').focus();
+                return false;
+            }
+            
+            if (newPass && confirmPass && newPass !== confirmPass) {
+                showMessage('Passwords do not match', 'error');
+                document.getElementById('confirmNewPassword').focus();
+                return false;
+            }
+            
+            const currentPass = document.getElementById('currentPassword').value;
+            if (newPass && !currentPass) {
+                showMessage('Please enter current password to change password', 'error');
+                document.getElementById('currentPassword').focus();
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    // 3. Form Submission Logic - FIXED VERSION
+    async function handleSubmit(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            showMessage('Please login first', 'error');
+            window.location.href = "login.html";
+            return;
+        }
+        
+        setLoading(true);
+        
+        // Get values
+        const fullName = document.getElementById('fullName').value.trim();
+        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const whatsappNumber = document.getElementById('whatsappNumber').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const currentPass = document.getElementById('currentPassword').value;
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmNewPassword').value;
+        
+        try {
+            let profileUpdated = false;
+            let passwordUpdated = false;
+            let profileErrorMessage = '';
+            
+            // 1. Update Profile - FIXED: Try different data formats
+            const profileDataAttempts = [
+                // Attempt 1: Standard format
+                {
+                    Name: fullName,
+                    PhoneNumber: phoneNumber || undefined,
+                    Email: email,
+                    WhatsAppNumber: whatsappNumber || undefined
+                },
+                // Attempt 2: Lowercase properties
+                {
+                    name: fullName,
+                    phoneNumber: phoneNumber || undefined,
+                    email: email,
+                    whatsappNumber: whatsappNumber || undefined
+                },
+                // Attempt 3: Camel case
+                {
+                    name: fullName,
+                    phoneNumber: phoneNumber || undefined,
+                    email: email,
+                    whatsAppNumber: whatsappNumber || undefined
+                },
+                // Attempt 4: Only required fields
+                {
+                    Name: fullName,
+                    Email: email
+                }
+            ];
+            
+            let profileResponse = null;
+            let successfulAttempt = null;
+            
+            // Try different data formats
+            for (let i = 0; i < profileDataAttempts.length; i++) {
+                console.log(`Attempt ${i + 1} - Sending profile data:`, profileDataAttempts[i]);
+                
+                try {
+                    profileResponse = await fetch(`${API_BASE}/profile`, {
+                        method: 'PUT',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(profileDataAttempts[i])
+                    });
+                    
+                    console.log(`Attempt ${i + 1} - Response status:`, profileResponse.status);
+                    
+                    if (profileResponse.ok) {
+                        profileUpdated = true;
+                        successfulAttempt = i + 1;
+                        console.log(`Profile updated successfully with attempt ${i + 1}`);
+                        break;
+                    } else if (profileResponse.status === 400) {
+                        const errorText = await profileResponse.text();
+                        console.log(`Attempt ${i + 1} - Bad request:`, errorText);
+                        
+                        try {
+                            const errorJson = JSON.parse(errorText);
+                            profileErrorMessage = errorJson.message || errorJson.title || 'Invalid data';
+                            
+                            // If we get validation errors, show them
+                            if (errorJson.errors) {
+                                const errorMessages = Object.values(errorJson.errors).flat();
+                                profileErrorMessage = errorMessages.join(', ');
+                            }
+                        } catch {
+                            profileErrorMessage = errorText || 'Invalid data';
+                        }
+                        
+                        // Continue to next attempt
+                        continue;
+                    } else {
+                        const errorText = await profileResponse.text();
+                        console.log(`Attempt ${i + 1} - Error:`, errorText);
+                        profileErrorMessage = `Error ${profileResponse.status}`;
+                    }
+                } catch (err) {
+                    console.error(`Attempt ${i + 1} - Fetch error:`, err);
+                    profileErrorMessage = 'Connection error';
+                }
+            }
+            
+            if (!profileUpdated) {
+                showMessage(`Profile update error: ${profileErrorMessage || 'Please check your data'}`, 'error');
+            } else {
+                console.log(`Profile update successful with attempt ${successfulAttempt}`);
+            }
+            
+            // 2. Update Password if provided
+            if (currentPass && newPass && confirmPass) {
+                try {
+                    const passwordData = {
+                        currentPassword: currentPass,
+                        newPassword: newPass,
+                        confirmNewPassword: confirmPass
+                    };
+                    
+                    console.log("Sending password data:", passwordData);
+                    
+                    const passRes = await fetch(`${API_BASE}/change-password`, {
+                        method: 'PUT',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(passwordData)
+                    });
+                    
+                    console.log("Password response status:", passRes.status);
+                    
+                    if (passRes.ok) {
+                        passwordUpdated = true;
+                        console.log("Password updated successfully");
+                        
+                        // Clear password fields
+                        document.getElementById('currentPassword').value = '';
+                        document.getElementById('newPassword').value = '';
+                        document.getElementById('confirmNewPassword').value = '';
+                        
+                        showMessage('Password changed successfully', 'success');
+                    } else {
+                        const errorText = await passRes.text();
+                        console.error("Password update error:", errorText);
+                        
+                        try {
+                            const errorJson = JSON.parse(errorText);
+                            const errorMsg = errorJson.description || errorJson.message || 'Current password is incorrect';
+                            showMessage(`Password change error: ${errorMsg}`, 'error');
+                        } catch {
+                            showMessage('Password change error', 'error');
+                        }
+                    }
+                } catch (err) {
+                    console.error("Password update fetch error:", err);
+                    showMessage('Connection error while changing password', 'error');
+                }
+            }
+            
+            // Show final success message
+            if (profileUpdated) {
+                if (passwordUpdated) {
+                    showMessage('Profile updated and password changed successfully!', 'success');
+                } else if (!currentPass) {
+                    showMessage('Profile updated successfully!', 'success');
+                }
+            }
+            
+        } catch (err) {
+            console.error("Submission error:", err);
+            showMessage('Server connection error, please try again', 'error');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM loaded, initializing...");
+        
+        // Add event listener to form
+        const form = document.getElementById('combinedSettingsForm');
+        form.addEventListener('submit', handleSubmit);
+        
+        // Load data and add password toggles
+        loadData();
+        addPasswordToggles();
+        
+        // Also handle button click (additional safety)
+        document.getElementById('saveButton').addEventListener('click', function(e) {
+            console.log("Save button clicked directly");
+            // The form submit event will handle it
+        });
+    });
+
+    // Debug info
+    console.log("Settings page JavaScript loaded");
+    console.log("API Base URL:", API_BASE);
+</script>
+
+</body>
+</html>
